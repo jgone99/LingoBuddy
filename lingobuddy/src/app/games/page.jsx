@@ -24,7 +24,7 @@ const GamesPage = () => {
 
     function alphabetButtons() {
         return alphabetArray.map((letter) => {
-            return <button className='m-1 text-white bg-blue-500 px-2 rounded' value={letter}>{letter}</button>
+            return <button className='m-1 text-white bg-cyan-500 px-2 rounded hover:bg-cyan-800' value={letter}>{letter}</button>
         })
     }
 
@@ -42,6 +42,7 @@ const GamesPage = () => {
 
     return (
         <>
+            <div className='text-center'>TEST PAGE</div>
             <div className='text-center mb-20'>
                 <h4>word: {word}</h4>
             </div>
@@ -54,11 +55,11 @@ const GamesPage = () => {
                     <div className='flow-root'>
                         <Conditional showWhen={!gameOver} childrenTrue={
                             <div className="float-left">
-                                <button onClick={errorMade}>Make Error</button>
+                                <button onClick={errorMade} className='bg-cyan-500 rounded text-white px-2 hover:bg-cyan-800'>Make Error</button>
                             </div>
                         } childrenFalse={
                             <div className="float-right">
-                                <button onClick={reset}>Play Again</button>
+                                <button onClick={reset} className='bg-cyan-500 rounded text-white px-2 hover:bg-cyan-800'>Play Again</button>
                             </div>
                         }>
                         </Conditional>
