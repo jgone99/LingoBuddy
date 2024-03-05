@@ -12,6 +12,14 @@ const Header = () => {
             <div className="text-lg font-bold text-white">LingoBuddy</div>
           </Link>
         </div>
+        <div className="flex-1 text-center">
+          <Link
+            href="learningCourses"
+            className="text-white mx-2 hover:text-gray-300 cursor-pointer"
+          >
+            Learning Courses
+          </Link>
+        </div>
         <div className="text-white flex items-center">
           {!userId && (
             <>
