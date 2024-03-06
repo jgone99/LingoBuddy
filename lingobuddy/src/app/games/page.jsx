@@ -1,74 +1,112 @@
 'use client';
 
 import Figure from '../components/figure'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const alphabetArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "ñ", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+const word_bank = [ "denotation", "elementary", "car", "waffle" ]
 
 const Conditional = ({
     showWhen,
-    childrenTrue,
-    childrenFalse,
+    children,
 }) => {
     if (showWhen) {
-        return <>{childrenTrue}</>
+        return <>{children}</>
     }
-    return <>{childrenFalse}</>
 }
 
-const GamesPage = () => {
-    const [ word ] = useState("denotation")
-    const [ gameOver, setGameOver ] = useState(false);
-    const [ maxErrors ] = useState(6);
-    const [ errors, setErrors ] = useState(0);
 
-    function alphabetButtons() {
-        return alphabetArray.map((letter) => {
-            return <button className='m-1 text-white bg-cyan-500 px-2 rounded hover:bg-cyan-800' value={letter}>{letter}</button>
+const GamesPage = () => {
+    const [ firstRender, setFirstRender ] = useState(true)
+    const [ loading, setLoading ] = useState(true)
+    const [ word, setWord ] = useState()
+    const [ gameOver, setGameOver ] = useState(false)
+    const [ playAgain, setPlayAgain ] = useState(false)
+    const [ maxErrors ] = useState(6)
+    const [ errorCount, setErrorCount ] = useState(0)
+
+    useEffect(() => {
+        if((gameOver && playAgain) || firstRender) {
+            setWord(word_bank[Math.floor(Math.random()*(word_bank.length))])
+            setFirstRender(false)
+            setPlayAgain(false)
+            setGameOver(false)
+            resetGuessBoxes()
+        }
+        setLoading(false)
+    })
+
+    const guessBoxes = () => {
+        console.log('guessBoxes')
+        return String(word).split('').map((letter) => {
+            return <div className={`flex mx-1 border-solid items-center justify-center border-2 w-8 h-8 border-cyan-500 guessbox letter-${letter}`}></div>
         })
     }
 
-    function errorMade() {
-        setErrors(errors + 1)
-        if (errors + 1 >= maxErrors) {
+    const resetGuessBoxes = () => {
+        const boxes = document.querySelectorAll('.guessbox')
+        boxes.forEach((div) => {div.innerHTML=''})
+    }
+
+    const buttonClicked = (letter) => {
+        const boxes = document.querySelectorAll('.letter-'+letter)
+        if(boxes.length > 0) {
+            boxes.forEach((div) => {div.innerHTML=letter.toUpperCase()})
+            return
+        }
+        errorMade()
+    }
+
+    const alphabetButtons = () => {
+        return alphabetArray.map((letter) => {
+            return <button onClick={() => {buttonClicked(letter)}} className='m-1 text-white bg-cyan-500 w-8 h-8 rounded hover:bg-cyan-800' value={letter}>{letter.toUpperCase()}</button>
+        })
+    }
+
+    const errorMade = () => {
+        setErrorCount(errorCount + 1)
+        if (errorCount + 1 >= maxErrors) {
             setGameOver(true)
         }
     }
 
-    function reset() {
-        setErrors(0)
-        setGameOver(false)
+    const reset = () => {
+        setErrorCount(0)
+        setPlayAgain(true)
     }
 
-    return (
+    return loading ? 
+        <>
+            <div>
+                Loading...
+            </div>
+        </> : (
         <>
             <div className='text-center'>TEST PAGE</div>
             <div className='text-center mb-20'>
-                <h4>word: {word}</h4>
+                <h4>WORD: {word.toUpperCase()}</h4>
             </div>
-            <div className="flex">
+            <div className="flex m-20">
                 <div className='mr-10'>
                     <div className='flex'>
-                        <Figure errors={ errors } />
-                    </div>
-                    <p>{errors}</p>
-                    <div className='flow-root'>
-                        <Conditional showWhen={!gameOver} childrenTrue={
-                            <div className="float-left">
-                                <button onClick={errorMade} className='bg-cyan-500 rounded text-white px-2 hover:bg-cyan-800'>Make Error</button>
-                            </div>
-                        } childrenFalse={
-                            <div className="float-right">
-                                <button onClick={reset} className='bg-cyan-500 rounded text-white px-2 hover:bg-cyan-800'>Play Again</button>
-                            </div>
-                        }>
-                        </Conditional>
+                        <Figure errors={ errorCount } />
                     </div>
                 </div>
-                <div>
-                    <div className='mb-20'>guess: </div>
-                    <div className="flex">
-                        {alphabetButtons()}
+                <div className='w-96'>
+                    <div className='mb-20 flex justify-center'>
+                        {guessBoxes()}
+                    </div>
+                    <div className="w-96">
+                        {gameOver ? (
+                            <div className='flex justify-center'>
+                                <button onClick={reset} className='bg-cyan-500 rounded text-white px-2 hover:bg-cyan-800'>Play Again</button> 
+                            </div>
+                            ) : (
+                                <div className='grid grid-cols-9 justify-items-center'>
+                                    {alphabetButtons()}
+                                </div>
+                            )
+                        }
                     </div>
                 </div>
             </div>

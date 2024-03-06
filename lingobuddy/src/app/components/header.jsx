@@ -15,15 +15,11 @@ const Header = () => {
                     </Link>
                 </div>
                 <div className='flex items-center'>
-                    {userId && (
-                        <>
-                            <Link href="/games">
-                                <div className="text-lg font-bold text-white">
-                                    Games
-                                </div>
-                            </Link>
-                        </>
-                    )}
+                    <Link href="/games">
+                        <div className="text-lg font-bold text-white">
+                            Games
+                        </div>
+                    </Link>
                 </div>
                 <div className="text-white flex items-center">
                     {!userId && (
