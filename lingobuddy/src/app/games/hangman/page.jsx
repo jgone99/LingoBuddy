@@ -1,6 +1,6 @@
 'use client';
 
-import Figure from '../components/figure'
+import Figure from '../../components/figure'
 import { use, useEffect, useState } from 'react'
 
 const alphabetArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "ñ", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]

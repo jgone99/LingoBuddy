@@ -15,7 +15,7 @@ const Header = () => {
                     </Link>
                 </div>
                 <div className='flex items-center'>
-                    <Link href="/games">
+                    <Link href="/games/hangman">
                         <div className="text-lg font-bold text-white">
                             Games
                         </div>
