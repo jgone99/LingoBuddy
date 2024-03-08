@@ -14,7 +14,7 @@ const Header = () => {
         </div>
         <div className="flex-1 text-center">
           <Link
-            href="/learningCourses"
+            href="/courseList"
             className="text-white mx-2 hover:text-gray-300 cursor-pointer"
           >
             Learning Courses
