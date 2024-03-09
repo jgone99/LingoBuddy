@@ -20,11 +20,11 @@ const Header = () => {
             Learning Courses
           </Link>
         </div>
-        <div className='flex items-center'>
+        <div className='flex-1 items-center'>
             {userId && (
                 <>
                     <Link href="/games">
-                        <div className="text-lg font-bold text-white">
+                        <div className="text-white mx-2 hover:text-gray-300 cursor-pointer">
                             Games
                         </div>
                     </Link>
