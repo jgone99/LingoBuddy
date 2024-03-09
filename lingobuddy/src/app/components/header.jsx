@@ -15,16 +15,13 @@ const Header = () => {
                         </div>
                     </Link>
                 </div>
-                <div className='flex-1 items-center'>
-                  {userId && (
-                      <>
-                          <Link href="/games">
-                              <div className="text-white mx-2 hover:text-gray-300 cursor-pointer">
-                                  Games
-                              </div>
-                          </Link>
-                      </>
-                  )}
+                <div className="flex-1 text-center">
+                  <Link
+                    href="/courseList"
+                    className="text-white mx-2 hover:text-gray-300 cursor-pointer"
+                  >
+                    Learning Courses
+                  </Link>
                 </div>
                 <GamesDropdown />
                 <div className="text-white flex items-center">

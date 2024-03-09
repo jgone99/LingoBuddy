@@ -15,36 +15,24 @@ const GamesDropdown = () => {
       };
 
     return (
-        <div className='justify-self-stretch h-full' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-            <button className="text-lg font-bold h-full text-white">
+        <div className='flex-1 bg-inherit text-center h-full' onMouseLeave={handleMouseLeave}>
+            <button className="text-white h-full hover:text-gray-300 cursor-pointer" onMouseEnter={handleMouseEnter}>
                 Games
             </button>
             {visible && (
                 <>
-                    <div className="games-dropdown absolute bg-blue-700">
-                        <ul className="m-2">
-                            <li>
-                                <Link href="/games/hangman">
-                                    <div className="text-lg font-bold text-white">
-                                        Hangman
-                                    </div>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/games/hangman">
-                                    <div className="text-lg font-bold text-white">
-                                        Hangman
-                                    </div>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/games/hangman">
-                                    <div className="text-lg font-bold text-white">
-                                        Hangman
-                                    </div>
-                                </Link>
-                            </li>
-                        </ul>
+                <div className="flex flex-col bg-inherit items-center">
+                    <div className="games-dropdown absolute bg-inherit rounded-b">
+                            <ul className="m-2">
+                                <li>
+                                    <Link href="/games/hangman">
+                                        <div className="text-lg font-bold text-white">
+                                            Hangman
+                                        </div>
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </>
             )}

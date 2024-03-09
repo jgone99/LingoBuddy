@@ -53,7 +53,7 @@ const GamesPage = () => {
     const guessBoxes = () => {
         console.log('guessBoxes')
         return String(word['spanishWord']).split('').map((letter) => {
-            return <div className={`flex mx-1 border-solid items-center justify-center border-2 w-8 h-8 border-cyan-500 guessbox letter-${letter} is-empty`}></div>
+            return <div className={`flex mx-1 border-solid items-center justify-center rounded border-2 w-8 h-8 border-cyan-500 guessbox letter-${letter} is-empty`}></div>
         })
     }
 
