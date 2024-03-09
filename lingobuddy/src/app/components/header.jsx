@@ -1,12 +1,13 @@
 import Link from 'next/link'
 import { UserButton, auth } from '@clerk/nextjs';
+import GamesDropdown from './games-dropdown';
 
 const Header = () => {
     const { userId } = auth();
 
     return (
         <>
-            <nav className="bg-blue-700 py-4 px-6 flex items-center justify-between mb-5">
+            <nav className="bg-blue-700 h-16 px-6 flex items-center justify-between mb-5">
                 <div className="flex items-center">
                     <Link href={(!userId && "/") || (userId && "/home-page")}>
                         <div className="text-lg font-bold text-white">
@@ -14,13 +15,7 @@ const Header = () => {
                         </div>
                     </Link>
                 </div>
-                <div className='flex items-center'>
-                    <Link href="/games/hangman">
-                        <div className="text-lg font-bold text-white">
-                            Games
-                        </div>
-                    </Link>
-                </div>
+                <GamesDropdown />
                 <div className="text-white flex items-center">
                     {!userId && (
                         <>
