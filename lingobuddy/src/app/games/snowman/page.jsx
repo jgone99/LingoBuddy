@@ -1,7 +1,7 @@
 'use client';
 
-import Figure from '../../components/figure'
-import { use, useEffect, useState } from 'react'
+import SnowmanFigure from '../../components/snowman/snowmanFigure';
+import { useEffect, useState } from 'react'
 
 const alphabetArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "ñ", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
 const word_bank = { 
@@ -26,7 +26,7 @@ const GamesPage = () => {
     const [ loading, setLoading ] = useState(true)
     const [ word, setWord ] = useState()
     const [ gameOver, setGameOver ] = useState(false)
-    const [ maxErrors ] = useState(6)
+    const [ maxErrors ] = useState(4)
     const [ errorCount, setErrorCount ] = useState(0)
     const [ gamesWon, setGamesWon ] = useState(0)
     const [ correctLetterCount, setCorrectLetterCount ] = useState(0)
@@ -71,7 +71,6 @@ const GamesPage = () => {
             errorMade()
             return
         }
-
         const emptyBoxes = document.querySelectorAll(`.letter-${letter}.is-empty`)
         emptyBoxes.forEach((div) => {
             div.innerHTML=letter.toUpperCase()
@@ -125,18 +124,18 @@ const GamesPage = () => {
             </div>
             <div className="flex m-20">
                 <div className='mr-10'>
-                    <div className='flex'>
-                        <Figure errors={ errorCount } />
+                    <div className=''>
+                        <SnowmanFigure errors={ errorCount } />
                     </div>
                 </div>
-                <div className='w-96'>
+                <div className='w-96 ml-80 mt-40'>
                     <div className='mb-20 flex justify-center'>
                         {guessBoxes()}
                     </div>
-                    <div className="w-96">
+                    <div className="h-full">
                         {gameOver ? (
                             <div className='flex justify-center'>
-                                <button onClick={playAgain} className='bg-cyan-500 rounded text-white px-2 hover:bg-cyan-800'>Play Again</button> 
+                                <button onClick={playAgain} className='bg-cyan-500 rounded text-white w-28 h-8 hover:bg-cyan-800'>Play Again</button> 
                             </div>
                             ) : (
                                 <div className='grid grid-cols-9 justify-items-center'>

@@ -25,9 +25,16 @@ const GamesDropdown = () => {
                     <div className="games-dropdown absolute bg-inherit rounded-b">
                             <ul className="m-2">
                                 <li>
-                                    <Link href="/games/hangman">
-                                        <div className="text-lg font-bold text-white">
-                                            Hangman
+                                    <Link href="/games/snowman">
+                                        <div className="text-white h-full hover:text-gray-300 cursor-pointer mb-2">
+                                            Snowman
+                                        </div>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/games/matching">
+                                        <div className="text-white h-full hover:text-gray-300 cursor-pointer mt-2">
+                                            Matching
                                         </div>
                                     </Link>
                                 </li>
