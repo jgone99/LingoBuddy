@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import QuestionCard from "./QuestionCard";
 import ProgressBar from "./ProgressBar";
-
+import Modal from "./Modal";
+import CloseButton from "./CloseButton";
 const levelOneQuestions = [
   {
     id: 1,
@@ -28,18 +29,31 @@ const levelOneQuestions = [
 const QuizManager = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState([]);
-
+  const [showModal, setShowModal] = useState(false);
   const totalQuestions = levelOneQuestions.length;
 
-  const handleAnswerSelected = (answer) => {
-    const newUserAnswers = [...userAnswers, answer];
+  const handleAnswerSelected = (selectedAnswer, isCorrect) => {
+    const newUserAnswers = [
+      ...userAnswers,
+      {
+        question: levelOneQuestions[currentQuestionIndex].question,
+        selectedAnswer,
+        isCorrect,
+        correctAnswer: levelOneQuestions[currentQuestionIndex].correctAnswer,
+      },
+    ];
     setUserAnswers(newUserAnswers);
 
+    // Proceed to next question or end quiz
     if (currentQuestionIndex < totalQuestions - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
-      console.log("Quiz completed", newUserAnswers);
+      setShowModal(true);
     }
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
   };
 
   return (
@@ -52,6 +66,18 @@ const QuizManager = () => {
         currentQuestionIndex={currentQuestionIndex}
         totalQuestions={totalQuestions}
       />
+      <Modal isOpen={showModal} onClose={handleCloseModal}>
+        {/* Quiz summary or feedback */}
+        <p>Quiz Completed! Here's how you did:</p>
+        {/* Iterate through userAnswers to show the results */}
+        {userAnswers.map((userAnswer, index) => (
+          <div key={index}>
+            Question {index + 1}: {userAnswer.answer} -{" "}
+            {userAnswer.isCorrect ? "Correct" : "Incorrect"}
+          </div>
+        ))}
+        <CloseButton onClose={handleCloseModal} />
+      </Modal>
     </div>
   );
 };

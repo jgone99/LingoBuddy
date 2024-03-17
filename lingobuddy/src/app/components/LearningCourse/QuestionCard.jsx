@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import ProgressBar from "./ProgressBar";
+import AnswerButton from "./AnswerButton";
+
 const QuestionCard = ({
   question,
   answers,
@@ -17,13 +19,6 @@ const QuestionCard = ({
     onAnswerSelected(answer === correctAnswer);
   };
 
-  const getAnswerClassNames = (answer) => {
-    if (!isAnswered) return "bg-gray-200 text-gray-700 hover:bg-gray-300";
-    if (answer === correctAnswer) return "bg-green-500 text-white";
-    if (answer === selectedAnswer) return "bg-red-500 text-white";
-    return "bg-gray-200 text-gray-700";
-  };
-
   return (
     <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
       <ProgressBar
@@ -33,16 +28,13 @@ const QuestionCard = ({
       <h2 className="block text-gray-700 text-xl font-bold mb-2">{question}</h2>
       <div className="mt-4">
         {answers.map((answer, index) => (
-          <button
+          <AnswerButton
             key={index}
-            onClick={() => handleAnswerClick(answer)}
-            className={`font-semibold py-2 px-4 border border-gray-400 rounded shadow ${getAnswerClassNames(
-              answer
-            )}`}
-            disabled={isAnswered}
-          >
-            {answer}
-          </button>
+            answerText={answer}
+            onSelectAnswer={handleAnswerClick}
+            isCorrect={answer === correctAnswer}
+            isSelected={answer === selectedAnswer}
+          />
         ))}
       </div>
       {isAnswered && (
