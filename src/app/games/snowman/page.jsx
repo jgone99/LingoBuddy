@@ -1,17 +1,17 @@
 
-import SnowmanGame from '../../components/SnowmanGame';
+import SnowmanGame from '../../components/snowman/snowman-game';
 import { query } from '../../db/queries';
 
 const GamesPage = () => {
     
     const getLearningLevel = async() => {
-        const level_id = await query('SELECT level_id FROM learning_levels')
-        console.log(level_id)
-        return <div>learning level: {level_id}</div>
+        const ans = await query("SELECT question_text FROM checkpoint_questions where level_id = 1 order by question_id")
+        console.log(ans)
+        return <div>learning level: {ans[1]['question_text']}</div>
     }
 
     return (
-        <> 
+        <>
             {getLearningLevel()}
             <div className='text-center'>TEST PAGE</div>
             <SnowmanGame />

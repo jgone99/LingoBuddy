@@ -11,5 +11,5 @@ export const query = async (text, params) => {
     const client = await pool.connect()
     const res = await client.query(text, params)
     client.release()
-    return res.rows[0]['level_id']
+    return res.rows
 }

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import SnowmanFigure from "./snowman/snowmanFigure"
+import SnowmanFigure from "./snowman-figure"
 
 const alphabetArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "ñ", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
 const word_bank = { 
@@ -28,7 +28,7 @@ const SnowmanGame = () => {
             setFirstRender(false)
         }
         setLoading(false)
-    })
+    },[firstRender])
     
     const guessBoxes = () => {
         return String(word['spanishWord']).split('').map((letter, index) => {

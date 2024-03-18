@@ -1,4 +1,5 @@
-import CloseButton from "./CloseButton";
+import CloseButton from "./close-button"
+
 const Modal = ({ children, isOpen, onClose }) => {
   if (!isOpen) return null;
 

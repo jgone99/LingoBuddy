@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { UserButton, auth, SignedIn, SignInButton, SignedOut } from '@clerk/nextjs';
-import GamesDropdown from './games-dropdown';
+import GamesDropdown from './snowman/games-dropdown';
 
 const Header = () => {
 	const { userId } = auth();
@@ -17,7 +17,7 @@ const Header = () => {
 				</div>
 				<div className="flex-1 text-center">
 					<Link
-						href="/courseList"
+						href="/course-list"
 						className="text-white mx-2 hover:text-gray-300 cursor-pointer"
 					>
 						Learning Courses
