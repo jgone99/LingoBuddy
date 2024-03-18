@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ProgressBar from "./ProgressBar";
+import ProgressBar from "./progressBar";
 const QuestionCard = ({
   question,
   answers,

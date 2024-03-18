@@ -1,5 +1,5 @@
 
-import SnowmanGame from '../../components/ssnowmanGame';
+import SnowmanGame from '../../components/snowmanGame';
 import { query } from '../../db/queries';
 
 const GamesPage = () => {

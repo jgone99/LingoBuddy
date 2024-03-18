@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import QuestionCard from "./QuestionCard";
-import ProgressBar from "./ProgressBar";
+import QuestionCard from "./questionCard";
+import ProgressBar from "./progressBar";
 
 const levelOneQuestions = [
   {
