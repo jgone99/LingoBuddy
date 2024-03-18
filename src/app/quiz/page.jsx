@@ -1,5 +1,5 @@
 // pages/quiz.jsx
-import QuizManager from "../src/app/components/learningCourse/QuizManager";
+import QuizManager from "../src/app/components/learningCourse/quizManager";
 
 const QuizPage = () => {
   return <QuizManager />;

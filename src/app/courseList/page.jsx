@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import QuizManager from "../components/learningCourse/QuizManager";
+import QuizManager from "../components/learningCourse/quizManager";
 
 const CourseList = () => {
 	const [courses, setCourses] = useState([]);
