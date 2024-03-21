@@ -1,21 +1,23 @@
-'use client'
 
-import { useEffect, useState } from 'react'
-import Connection from '../../components/matching/curves'
+import MatchingGame from '../../components/matching/matching-game'
+import { query } from '../../db/queries'
 
-const MatchingGame = () => {
+const MatchingPage = async() => {
+    const matchCount = 5
+
+    const queryWords = async() => {
+        const ans = (await query(`SELECT * FROM word_pairs ORDER BY RANDOM() LIMIT ${matchCount}`)).map((match) => [match['english'], match['spanish']])
+        //console.log(ans)
+        return ans;
+    }
+
+    const data = await queryWords()
+
     return (
         <>
-            <div className="container mx-auto my-8">
-                <svg id='connections'></svg>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div id='test-div' className="block p-4 border rounded hover:shadow-lg bg-black" draggable='true' onDrag={addConnection}>
-                    <h3>Word</h3>
-                    </div>
-                </div>
-            </div>
+            <MatchingGame matches={data}/>
         </>
     )
 }
 
-export default MatchingGame
+export default MatchingPage
