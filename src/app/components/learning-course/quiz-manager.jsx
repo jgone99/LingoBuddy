@@ -1,60 +1,53 @@
-'use client'
+"use client";
+
 import React, { useState } from "react";
 import QuestionCard from "./question-card";
-import ProgressBar from "./progress-bar";
 
-const levelOneQuestions = [
-  {
-    id: 1,
-    question: "¿Cómo te llamas? (What is your name?)",
-    answers: [
-      "A) Me llamo [Your Name].",
-      "B) Tengo [Your Age] años.",
-      "C) Soy de [Your Country].",
-    ],
-    correctAnswer: "A) Me llamo [Your Name].",
-  },
-  {
-    id: 2,
-    question: "¿De dónde eres? (Where are you from?)",
-    answers: [
-      "A) Soy de [City, Country].",
-      "B) Vivo en [City, Country].",
-      "C) Me gusta [City, Country].",
-    ],
-    correctAnswer: "A) Soy de [City, Country].",
-  },
-];
-
-const QuizManager = () => {
+export default function QuizManager({ questions }) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState([]);
+  const totalQuestions = questions.length;
 
-  const totalQuestions = levelOneQuestions.length;
-
-  const handleAnswerSelected = (answer) => {
-    const newUserAnswers = [...userAnswers, answer];
-    setUserAnswers(newUserAnswers);
+  const handleAnswerSelected = (selectedAnswer) => {
+    const isCorrect =
+      selectedAnswer === questions[currentQuestionIndex].correct_answers;
+    setUserAnswers((prevAnswers) => [
+      ...prevAnswers,
+      { answer: selectedAnswer, isCorrect },
+    ]);
 
     if (currentQuestionIndex < totalQuestions - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
-      console.log("Quiz completed", newUserAnswers);
+      console.log("Quiz Finished", userAnswers);
+      // navigate to a results page or change the state to show results
     }
   };
 
+  if (
+    !questions ||
+    questions.length === 0 ||
+    currentQuestionIndex >= questions.length
+  ) {
+    return <div>Loading questions or no questions found...</div>;
+  }
+
+  // Render the question card for the current question
   return (
     <div>
       <QuestionCard
-        question={levelOneQuestions[currentQuestionIndex].question}
-        answers={levelOneQuestions[currentQuestionIndex].answers}
-        correctAnswer={levelOneQuestions[currentQuestionIndex].correctAnswer}
+        question={questions[currentQuestionIndex].question_text}
+        answers={[
+          questions[currentQuestionIndex].option_a,
+          questions[currentQuestionIndex].option_b,
+          questions[currentQuestionIndex].option_c,
+        ]}
+        correctAnswer={questions[currentQuestionIndex].correct_answers}
         onAnswerSelected={handleAnswerSelected}
         currentQuestionIndex={currentQuestionIndex}
         totalQuestions={totalQuestions}
       />
+      {/* Here you would conditionally render the results modal or component based on quiz completion */}
     </div>
   );
-};
-
-export default QuizManager;
+}
