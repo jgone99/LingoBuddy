@@ -1,6 +1,7 @@
+'use client'
 import React, { useState } from "react";
-import QuestionCard from "./QuestionCard";
-import ProgressBar from "./ProgressBar";
+import QuestionCard from "./question-card";
+import ProgressBar from "./progress-bar";
 
 const levelOneQuestions = [
   {

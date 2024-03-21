@@ -1,5 +1,6 @@
+'use client'
 import React, { useState } from "react";
-import ProgressBar from "./ProgressBar";
+import ProgressBar from "./progress-bar";
 const QuestionCard = ({
   question,
   answers,
