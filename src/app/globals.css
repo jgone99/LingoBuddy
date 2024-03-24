@@ -17,3 +17,43 @@ nav {
     font-size: 22px;
     font-weight: bold;
 }
+
+button {
+    background: #614AEB;
+}
+
+.guessbox {
+    border-color: #614AEB;
+}
+
+.word-card.unmatched {
+    background: #614AEB;
+    color: white;
+    font-size: 20px;
+    width: 10rem;
+    height: 4rem;
+}
+
+.word-card.matched {
+    background: #4aeb60;
+    color: black;
+    font-size: 20px;
+    width: 10rem;
+    height: 4rem;
+}
+
+.word-card.wrong-match {
+    background: #e62e2e;
+    color: white;
+    font-size: 20px;
+    width: 10rem;
+    height: 4rem;
+}
+
+.word-card.selected {
+    background: rgb(255,170,43);
+    color: black;
+    font-size: 20px;
+    width: 10rem;
+    height: 4rem;
+}

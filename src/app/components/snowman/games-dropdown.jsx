@@ -16,7 +16,7 @@ const GamesDropdown = () => {
 
     return (
         <div className='flex-1 bg-inherit text-center h-full' onMouseLeave={handleMouseLeave}>
-            <button className="h-full hover:text-gray-300 cursor-pointer" onMouseEnter={handleMouseEnter}>
+            <button className="h-full hover:text-gray-300 cursor-pointer bg-inherit" onMouseEnter={handleMouseEnter}>
                 Games
             </button>
             {visible && (

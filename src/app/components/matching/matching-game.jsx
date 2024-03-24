@@ -9,6 +9,8 @@ const spanish_lang = 'spanish'
 const MatchingGame = ({ matches, orders }) => {
     const [ firstWord, setFirstWord ] = useState(null)
     const [ matchesFound, setMatchesFound ] = useState(0)
+    const [ wrong, setWrong ] = useState(false)
+    const [ wrongWords, setWrongWords ] = useState([])
 
     const matchCards = () => {
         const matchesArray = [...matches]
@@ -18,11 +20,11 @@ const MatchingGame = ({ matches, orders }) => {
         var cards = []
         ordersArray.forEach((order, index) => {
             cards.push(
-                <div key={`english-word-${index}`} content={order[0]} word-lang={english_lang} className={`word-card text-center content-center col-start-1 row-start-${index+1} block w-28 h-16 border rounded hover:shadow-lg bg-cyan-500 bg-opacity-30`} onClick={buttonClick}>
+                <div key={`english-word-${index}`} content={order[0]} word-lang={english_lang} className={`word-card unmatched text-center content-center col-start-1 row-start-${index+1} block border rounded hover:shadow-lg`} onClick={buttonClick}>
                     {order[0]}
                 </div>)
             cards.push(
-                <div key={`spanish-word-${index}`} content={order[1]} word-lang={spanish_lang} className={`word-card text-center content-center col-start-4 row-start-${index+1} block w-28 h-16 border rounded hover:shadow-lg bg-cyan-500 bg-opacity-30`} onClick={buttonClick}>
+                <div key={`spanish-word-${index}`} content={order[1]} word-lang={spanish_lang} className={`word-card unmatched text-center content-center col-start-4 row-start-${index+1} block border rounded hover:shadow-lg`} onClick={buttonClick}>
                     {order[1]}
                 </div>
             )
@@ -32,6 +34,7 @@ const MatchingGame = ({ matches, orders }) => {
 
     const buttonClick = (e) => {
         console.log('click')
+        resetWords()
         const wordCard = e.target
         var matchFound = false
         if (firstWord !== null) {
@@ -42,30 +45,34 @@ const MatchingGame = ({ matches, orders }) => {
                     matchFound = matchFound || isMatch
                 })
                 if (matchFound) {
-                    wordCard.classList.replace('bg-cyan-500', 'bg-green-500')
+                    firstWord.classList.replace('selected', 'matched')
+                    wordCard.classList.replace('unmatched', 'matched')
                     firstWord.classList.add('pointer-events-none')
                     wordCard.classList.add('pointer-events-none')
                     setMatchesFound(matchesFound+1)
                 }
                 else {
-                    firstWord.classList.replace('bg-green-500', 'bg-cyan-500')
+                    firstWord.classList.replace('selected', 'wrong-match')
+                    wordCard.classList.replace('unmatched', 'wrong-match')
+                    setWrongWords([firstWord, wordCard])
+                    setWrong(true)
                 }
                 setFirstWord(null)
             }
         }
         else {
             setFirstWord(wordCard)
-            wordCard.classList.replace('bg-cyan-500', 'bg-green-500')
+            wordCard.classList.replace('unmatched', 'selected')
         }
     }
 
-    const resetAll = () => {
+    const resetWords = () => {
         console.log('reset')
-        setFirstWord(null)
-        setMatchesFound(0)
-        document.querySelectorAll('.word-card').forEach((card) => {
-            card.classList.replace('bg-green-500', 'bg-cyan-500')
-        })
+        if (wrong) {
+            wrongWords[0].classList.replace('wrong-match', 'unmatched')
+            wrongWords[1].classList.replace('wrong-match', 'unmatched')
+            setWrong(false)
+        }
     }
 
     return (
