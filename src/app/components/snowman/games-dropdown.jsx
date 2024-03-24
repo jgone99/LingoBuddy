@@ -16,7 +16,7 @@ const GamesDropdown = () => {
 
     return (
         <div className='flex-1 bg-inherit text-center h-full' onMouseLeave={handleMouseLeave}>
-            <button className="text-white h-full hover:text-gray-300 cursor-pointer" onMouseEnter={handleMouseEnter}>
+            <button className="h-full hover:text-gray-300 cursor-pointer bg-inherit" onMouseEnter={handleMouseEnter}>
                 Games
             </button>
             {visible && (
@@ -26,14 +26,14 @@ const GamesDropdown = () => {
                             <ul className="m-2">
                                 <li>
                                     <Link href="/games/snowman">
-                                        <div className="text-white h-full hover:text-gray-300 cursor-pointer mb-2">
+                                        <div className="h-full hover:text-gray-300 cursor-pointer mb-2">
                                             Snowman
                                         </div>
                                     </Link>
                                 </li>
                                 <li>
                                     <Link href="/games/matching">
-                                        <div className="text-white h-full hover:text-gray-300 cursor-pointer mt-2">
+                                        <div className="h-full hover:text-gray-300 cursor-pointer mt-2">
                                             Matching
                                         </div>
                                     </Link>

@@ -64,7 +64,7 @@ const SnowmanGame = () => {
     
     const alphabetButtons = () => {
         return alphabetArray.map((letter, index) => {
-            return <button key={'btn-'+letter+index} onClick={() => {buttonClicked(letter)}} className='m-1 text-white bg-cyan-500 w-8 h-8 rounded hover:bg-cyan-800' value={letter}>{letter.toUpperCase()}</button>
+            return <button key={'btn-'+letter+index} onClick={() => {buttonClicked(letter)}} className='m-1 text-white w-8 h-8 rounded hover:bg-cyan-800' value={letter}>{letter.toUpperCase()}</button>
         })
     }
     
