@@ -14,7 +14,7 @@ const ChatbotUI = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ text: input }),
+        body: JSON.stringify({ userMessage : input }),
       });
 
       if (response.ok) {
