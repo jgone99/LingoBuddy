@@ -23,6 +23,14 @@ const Header = () => {
 						Learning Courses
 					</Link>
 				</div>
+				<div className="flex-1 text-center">
+					<Link
+						href="/chatbot"
+						className="text-white mx-2 hover:text-gray-300 cursor-pointer"
+					>
+						ChatBot
+					</Link>
+				</div>
 				<GamesDropdown />
 				<div className="flex items-center">
 					<SignedIn>

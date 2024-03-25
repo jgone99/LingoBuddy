@@ -1,6 +1,9 @@
-'use client'
-import React, { useState } from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import ProgressBar from "./progress-bar";
+import AnswerButton from "./answer-button";
+
 const QuestionCard = ({
   question,
   answers,
@@ -8,21 +11,24 @@ const QuestionCard = ({
   onAnswerSelected,
   currentQuestionIndex,
   totalQuestions,
+  isAnswering, // New prop
 }) => {
+  console.log(correctAnswer);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [isAnswered, setIsAnswered] = useState(false);
 
+  useEffect(() => {
+    // Reset the selected answer and isAnswered state when the question changes
+    setSelectedAnswer(null);
+    setIsAnswered(false);
+  }, [question]);
+
   const handleAnswerClick = (answer) => {
+    if (isAnswering) return; // Prevent answer selection while isAnswering is true
+
     setSelectedAnswer(answer);
     setIsAnswered(true);
-    onAnswerSelected(answer === correctAnswer);
-  };
-
-  const getAnswerClassNames = (answer) => {
-    if (!isAnswered) return "bg-gray-200 text-gray-700 hover:bg-gray-300";
-    if (answer === correctAnswer) return "bg-green-500 text-white";
-    if (answer === selectedAnswer) return "bg-red-500 text-white";
-    return "bg-gray-200 text-gray-700";
+    onAnswerSelected(answer);
   };
 
   return (
@@ -33,26 +39,31 @@ const QuestionCard = ({
       />
       <h2 className="block text-gray-700 text-xl font-bold mb-2">{question}</h2>
       <div className="mt-4">
-        {answers.map((answer, index) => (
-          <button
-            key={index}
-            onClick={() => handleAnswerClick(answer)}
-            className={`font-semibold py-2 px-4 border border-gray-400 rounded shadow ${getAnswerClassNames(
-              answer
-            )}`}
-            disabled={isAnswered}
-          >
-            {answer}
-          </button>
-        ))}
+        {answers.map((answer, index) => {
+          console.log("Answer:", answer);
+          console.log("Correct Answer:", correctAnswer);
+          console.log("Includes:", correctAnswer.includes(answer));
+          return (
+            <AnswerButton
+              key={index}
+              answerText={answer}
+              isCorrect={correctAnswer.includes(answer)}
+              isSelected={answer === selectedAnswer}
+              onSelectAnswer={() => handleAnswerClick(answer)}
+              disabled={isAnswering} // Disable the button while isAnswering is true
+            />
+          );
+        })}
       </div>
       {isAnswered && (
         <div
           className={`text-lg mt-4 font-semibold ${
-            selectedAnswer === correctAnswer ? "text-green-500" : "text-red-500"
+            correctAnswer.includes(selectedAnswer)
+              ? "text-green-500"
+              : "text-red-500"
           }`}
         >
-          {selectedAnswer === correctAnswer ? "Correct!" : "Incorrect"}
+          {correctAnswer.includes(selectedAnswer) ? "Correct!" : "Incorrect"}{" "}
         </div>
       )}
     </div>
