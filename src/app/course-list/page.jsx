@@ -1,12 +1,35 @@
 import React from "react";
 import { query } from "../db/queries";
 import LevelCard from "../components/learning-course/level-card";
+import { auth } from "@clerk/nextjs";
 
 export default async function CourseListPage() {
+  const { userId } = auth();
+
+  // Insert a row for a new user or update the level_id for an existing user
+  await query(
+    "INSERT INTO user_section_progress (user_id, level_id, section_id, score, passed) VALUES ($1, $2, $3, $4, $5) ON CONFLICT (user_id) DO UPDATE SET level_id = $2, section_id = $3, score = $4, passed = $5",
+    [userId, 1, 1, 0, false]
+  );
+
+  const fetchScore = async (levelId) => {
+    const res = await query(
+      "SELECT score FROM user_section_progress WHERE user_id = $1 AND level_id = $2",
+      [userId, levelId]
+    );
+    return res[0] ? res[0].score : 0;
+  };
+
+  // Fetch the user's current level and section
+  const userProgress = await query(
+    "SELECT level_id, section_id FROM user_section_progress WHERE user_id = $1",
+    [userId]
+  );
+
   const fetchLevelQuestions = async (levelId) => {
     const res = await query(
-      "SELECT section_id, section_text, question_text, option_a, option_b, option_c, correct_answers FROM level_questions WHERE level_id = $1 ORDER BY section_id, question_id",
-      [levelId]
+      "SELECT section_id, section_text, question_text, option_a, option_b, option_c, correct_answers, (SELECT score FROM user_section_progress WHERE user_id = $2 AND level_id = $1) as score FROM level_questions WHERE level_id = $1 ORDER BY section_id, question_id",
+      [levelId, userId]
     );
     return res.map((q) => ({
       section_id: q.section_id,
@@ -25,8 +48,6 @@ export default async function CourseListPage() {
       [levelId]
     );
     return res.map((a) => ({
-      section_id: a.section_id,
-      section_text: a.section_text,
       question_text: a.question_text,
       option_a: a.option_a,
       option_b: a.option_b,
@@ -38,6 +59,7 @@ export default async function CourseListPage() {
   const levels = Array.from({ length: 10 }, (_, i) => i + 1);
   const levelQuestions_one = await Promise.all(levels.map(fetchLevelQuestions));
   const questions = await Promise.all(levels.map(fetchQuestions));
+  const scores = await Promise.all(levels.map(fetchScore));
 
   const groupedQuestions = levelQuestions_one.map((levelQuestions) =>
     levelQuestions.reduce((groups, question) => {
@@ -61,6 +83,8 @@ export default async function CourseListPage() {
                 levelId={level}
                 title={section}
                 questions={questions}
+                score={scores[index]}
+                userId={userId}
               />
             )
           )}

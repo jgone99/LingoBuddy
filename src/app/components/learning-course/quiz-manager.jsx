@@ -1,17 +1,20 @@
 "use client";
 import React, { useState } from "react";
 import QuestionCard from "./question-card";
-import CloseButton from "./close-button";
 import Modal from "./modal";
+import axios from "axios";
 
-export default function QuizManager({ questions }) {
+export default function QuizManager({ questions, userId, levelId }) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [correctAnswers, setCorrectAnswers] = useState(0);
   const [userAnswers, setUserAnswers] = useState([]);
   const [showResults, setShowResults] = useState(false);
   const [isAnswering, setIsAnswering] = useState(false);
   const totalQuestions = questions.length;
 
-  const handleAnswerSelected = (selectedAnswer) => {
+  // QuizManager component
+
+  const handleAnswerSelected = async (selectedAnswer) => {
     if (isAnswering) return;
 
     setIsAnswering(true);
@@ -28,9 +31,9 @@ export default function QuizManager({ questions }) {
         selectedAnswerKey
       );
 
-    console.log("selectedAnswer:", selectedAnswer);
-    console.log("selectedAnswerKey:", selectedAnswerKey);
-    console.log("isCorrect:", isCorrect);
+    if (isCorrect) {
+      setCorrectAnswers((prevCorrectAnswers) => prevCorrectAnswers + 1);
+    }
 
     setUserAnswers((prevAnswers) => [
       ...prevAnswers,
@@ -43,9 +46,38 @@ export default function QuizManager({ questions }) {
         setIsAnswering(false); // Set isAnswering to false after currentQuestionIndex is incremented
       }, 1000); // 1 second delay
     } else {
+      if (correctAnswers >= 4) {
+        console.log("Section Passed");
+        try {
+          const response = await axios.post("/api/update-progress", {
+            userId: userId,
+            levelId: levelId,
+            sectionId: sectionId, // This should be provided to QuizManager as a prop
+            score: correctAnswers,
+            passed: correctAnswers >= 4,
+          });
+          console.log(response.data);
+        } catch (error) {
+          console.error(error);
+        }
+      } else {
+        console.log("Section Failed");
+        // Update user progress here
+        try {
+          const response = await axios.post("/api/update-progress", {
+            userId: "your-user-id", // replace with actual user id
+            levelId: "your-level-id", // replace with actual level id
+            score: correctAnswers,
+            passed: false,
+          });
+          console.log(response.data);
+        } catch (error) {
+          console.error(error);
+        }
+      }
       console.log("Quiz Finished", userAnswers);
       setShowResults(true);
-      // navigate to a results page or change the state to show results
+      // change the state to show results
     }
   };
 
@@ -89,13 +121,11 @@ export default function QuizManager({ questions }) {
         onAnswerSelected={handleAnswerSelected}
         currentQuestionIndex={currentQuestionIndex}
         totalQuestions={totalQuestions}
-        isAnswering={isAnswering} // Pass isAnswering as a prop
+        isAnswering={isAnswering}
       />
       {showResults && (
         <Modal isOpen={showResults} onClose={() => setShowResults(false)}>
-          {/* Here you can display the results */}
           <h2>Quiz Results</h2>
-          {/* Display the user's answers and whether they were correct */}
           {userAnswers.map((answer, index) => (
             <p key={index}>
               Question {index + 1}: {answer.answer} -{" "}
