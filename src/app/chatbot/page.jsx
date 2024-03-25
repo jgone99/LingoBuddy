@@ -7,23 +7,28 @@ const ChatbotUI = () => {
 
   const sendMessage = async () => {
     if(!input.trim()) return;
-    const response = await fetch('/api', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ text: input }),
-    });
 
-    if (response.ok) {
-      const data = await response.json();
-      setConversation((prevConvo) => [
-        ...prevConvo,
-        { text: input, from: 'user' },
-        { text: data.response, from: 'bot' },
-      ]);
-    } else {
-      console.error('Failed to send message:', response.statusText);
+    try {
+      const response = await fetch('/api', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ text: input }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setConversation((prevConvo) => [
+          ...prevConvo,
+          { text: input, from: 'user' },
+          { text: data.response, from: 'bot' },
+        ]);
+      } else {
+        console.error('Failed to send message:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error sending message:', error);
     }
 
     setInput('');
