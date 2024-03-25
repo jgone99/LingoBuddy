@@ -32,8 +32,6 @@ const Header = () => {
 					</Link>
 				</div>
 				<GamesDropdown />
-			
-				<div className="text-white flex items-center">
 				<div className="flex items-center">
 					<SignedIn>
 						<div className="ml-auto">
