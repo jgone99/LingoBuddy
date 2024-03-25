@@ -18,8 +18,8 @@ export function HomePageComponent({translateText}) {
     return (
         <div>
           <div>
-            <div className="bg-blue-400">
-                <div className="bg-cover bg-center w-screen h-1/2 flex items-center justify-center relative">
+            <div className="h-full bg-blue-400">
+                <div className="travel-div bg-cover bg-center w-screen h-1/2 flex items-center justify-center relative">
                     <img src="/travelbanner.jpg" alt="Banner" className="h-1/2 w-full object-cover opacity-95" />
                     <div className="absolute top-1/3 transform -translate-y-1/2 text-center">
                         <h1 className="text-4xl font-bold text-black" style={{ fontFamily: 'Comic Sans MS, Comic Sans, cursive' }}>Your Best Friend For Spanish Learning!</h1>

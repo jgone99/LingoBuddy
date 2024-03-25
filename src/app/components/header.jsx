@@ -7,9 +7,9 @@ const Header = () => {
 
 	return (
 		<>
-			<nav className="h-16 px-6 flex items-center justify-between mb-5">
+			<nav className="h-16 px-6 flex items-center justify-between relative">
 				<div className="flex items-center title">
-					<Link href={(!userId && "/") || (userId && "/home-page")}>
+					<Link href="/home-page">
 						<div>
 							LingoBuddy
 						</div>
@@ -27,7 +27,7 @@ const Header = () => {
 				<div className="flex items-center">
 					<SignedIn>
 						<div className="ml-auto">
-							<UserButton afterSignOutUrl='/' />
+							<UserButton afterSignOutUrl='/home-page' />
 						</div>
 					</SignedIn>
 					<SignedOut>
