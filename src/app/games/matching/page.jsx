@@ -1,4 +1,4 @@
-'use server';
+
 import MatchingGame from '../../components/matching/matching-game'
 import { query } from '../../db/queries'
 
