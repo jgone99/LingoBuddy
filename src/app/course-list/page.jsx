@@ -1,55 +1,77 @@
-"use client";
+import React from "react";
+import { query } from "../db/queries";
+import LevelCard from "../components/learning-course/level-card";
 
-import { useState, useEffect } from "react";
-import QuizManager from "../components/learning-course/quiz-manager";
+export default async function CourseListPage() {
+  const fetchLevelQuestions = async (levelId) => {
+    const res = await query(
+      "SELECT section_id, section_text, question_text, option_a, option_b, option_c, correct_answers FROM level_questions WHERE level_id = $1 ORDER BY section_id, question_id",
+      [levelId]
+    );
+    return res.map((q) => ({
+      section_id: q.section_id,
+      section_text: q.section_text,
+      question_text: q.question_text,
+      option_a: q.option_a,
+      option_b: q.option_b,
+      option_c: q.option_c,
+      correct_answers: q.correct_answers,
+    }));
+  };
 
-const CourseList = () => {
-	const [courses, setCourses] = useState([]);
-	const [selectedCourseId, setSelectedCourseId] = useState(null);
+  const fetchQuestions = async (levelId) => {
+    const res = await query(
+      "SELECT * FROM checkpoint_questions WHERE level_id = $1 ORDER BY question_id",
+      [levelId]
+    );
+    return res.map((a) => ({
+      section_id: a.section_id,
+      section_text: a.section_text,
+      question_text: a.question_text,
+      option_a: a.option_a,
+      option_b: a.option_b,
+      option_c: a.option_c,
+      correct_answers: a.correct_answers,
+    }));
+  };
 
-	useEffect(() => {
-		const fetchData = async () => {
-			const result = await new Promise((resolve) => {
-				setTimeout(() => {
-					resolve([
-						{ id: 1, title: "Introduce Yourself", level: 1 },
-						{ id: 2, title: "Introduce Your Friends", level: 1 },
-						{ id: 3, title: "Checkpoint Level 1", level: 1 },
-						{ id: 4, title: "Describe Yourself and Others", level: 2 },
-						{ id: 5, title: "Talk About Your Family", level: 2 },
-						{ id: 6, title: "Checkpoint Level 2", level: 2 },
-					]);
-				}, 500);
-			});
-			setCourses(result);
-		};
+  const levels = Array.from({ length: 10 }, (_, i) => i + 1);
+  const levelQuestions_one = await Promise.all(levels.map(fetchLevelQuestions));
+  const questions = await Promise.all(levels.map(fetchQuestions));
 
-		fetchData();
-	}, []);
-	const handleCourseClick = (courseId) => {
-		setSelectedCourseId(courseId);
-	};
+  const groupedQuestions = levelQuestions_one.map((levelQuestions) =>
+    levelQuestions.reduce((groups, question) => {
+      const key = question.section_text;
+      if (!groups[key]) {
+        groups[key] = [];
+      }
+      groups[key].push(question);
+      return groups;
+    }, {})
+  );
 
-	return (
-		<div className="container mx-auto my-8">
-			{selectedCourseId == null ? (
-				<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-					{courses.map((course) => (
-						<button
-							key={course.id}
-							onClick={() => handleCourseClick(course.id)}
-							className="block p-4 border rounded hover:shadow-lg"
-						>
-							<h3>{course.title}</h3>
-							<p>Level {course.level}</p>
-						</button>
-					))}
-				</div>
-			) : (
-				<QuizManager selectedCourseId={selectedCourseId} />
-			)}
-		</div>
-	);
-};
-
-export default CourseList;
+  return (
+    <div>
+      {levels.map((level, index) => (
+        <React.Fragment key={index}>
+          {Object.entries(groupedQuestions[index]).map(
+            ([section, questions], sectionIndex) => (
+              <LevelCard
+                key={sectionIndex}
+                levelId={level}
+                title={section}
+                questions={questions}
+              />
+            )
+          )}
+          <LevelCard
+            key={index + 10}
+            levelId={level}
+            title={`Checkpoint Level ${level}`}
+            questions={questions[index]}
+          />
+        </React.Fragment>
+      ))}
+    </div>
+  );
+}

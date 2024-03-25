@@ -3,9 +3,10 @@ const AnswerButton = ({
   onSelectAnswer,
   isCorrect,
   isSelected,
+  disabled, // New prop
 }) => {
   const handleClick = () => {
-    onSelectAnswer(answerText, isCorrect);
+    onSelectAnswer(answerText);
   };
 
   const buttonStyle = `block w-full text-left p-4 border rounded ${
@@ -17,7 +18,11 @@ const AnswerButton = ({
   }`;
 
   return (
-    <button onClick={handleClick} className={buttonStyle} disabled={isSelected}>
+    <button
+      onClick={handleClick}
+      className={buttonStyle}
+      disabled={disabled || isSelected}
+    >
       {answerText}
     </button>
   );
