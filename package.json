@@ -10,6 +10,7 @@
 	},
 	"dependencies": {
 		"@clerk/nextjs": "^4.29.9",
+		"@google-cloud/translate": "^8.1.0",
 		"dotenv": "^16.4.5",
 		"next": "14.1.1",
 		"openai": "^4.29.2",

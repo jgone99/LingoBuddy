@@ -7,10 +7,10 @@ const Header = () => {
 
 	return (
 		<>
-			<nav className="bg-blue-700 h-16 px-6 flex items-center justify-between mb-5">
-				<div className="flex items-center">
+			<nav className="h-16 px-6 flex items-center justify-between mb-5">
+				<div className="flex items-center title">
 					<Link href={(!userId && "/") || (userId && "/home-page")}>
-						<div className="text-lg font-bold text-white">
+						<div>
 							LingoBuddy
 						</div>
 					</Link>
@@ -18,7 +18,7 @@ const Header = () => {
 				<div className="flex-1 text-center">
 					<Link
 						href="/course-list"
-						className="text-white mx-2 hover:text-gray-300 cursor-pointer"
+						className="mx-2 hover:text-gray-300 cursor-pointer"
 					>
 						Learning Courses
 					</Link>
@@ -34,16 +34,17 @@ const Header = () => {
 				<GamesDropdown />
 			
 				<div className="text-white flex items-center">
+				<div className="flex items-center">
 					<SignedIn>
 						<div className="ml-auto">
 							<UserButton afterSignOutUrl='/' />
 						</div>
 					</SignedIn>
 					<SignedOut>
-						<Link href='sign-in' className='text-gray-300 hover:text-white mr-4'>
+						<Link href='sign-in' className='hover:text-white mr-4'>
 							Sign In
 						</Link>
-						<Link href='sign-up' className='text-gray-300 hover:text-white mr-4'>
+						<Link href='sign-up' className='hover:text-white mr-4'>
 							Sign Up
 						</Link>
 					</SignedOut>

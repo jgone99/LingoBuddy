@@ -2,7 +2,7 @@
 import SnowmanGame from '../../components/snowman/snowman-game';
 import { query } from '../../db/queries';
 
-const GamesPage = () => {
+const SnowmanPage = () => {
     
     const getLearningLevel = async() => {
         const ans = await query("SELECT question_text FROM checkpoint_questions where level_id = 1 order by question_id")
@@ -12,11 +12,11 @@ const GamesPage = () => {
 
     return (
         <>
-            {getLearningLevel()}
+            {/* {getLearningLevel()} */}
             <div className='text-center'>TEST PAGE</div>
             <SnowmanGame />
         </>
     )
 };
 
-export default GamesPage;
+export default SnowmanPage;
