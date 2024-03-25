@@ -9,12 +9,16 @@ const spanish_lang = 'spanish'
 const matchTypeClasses = ['unmatched','selected','wrong-match','matched']
 
 const MatchingGame = ({ matches, orders, getMoreMatches }) => {
+    const [ loading, setLoading ] = useState(false)
     const [ firstWord, setFirstWord ] = useState(null)
     const [ matchesFound, setMatchesFound ] = useState(0)
     const [ wrong, setWrong ] = useState(false)
     const [ wrongWords, setWrongWords ] = useState([])
     const [ showModal, setShowModal ] = useState(false)
+    const [ wordPairs, setWordPairs ] = useState(matches)
+    const [ wordOrder, setWordOrder ] = useState(orders)
     const wordCount = matches.length
+    var isLoading = false
 
     const resetAll = () => {
         document.querySelectorAll('.word-card').forEach((wordCard) => {
@@ -26,15 +30,19 @@ const MatchingGame = ({ matches, orders, getMoreMatches }) => {
     }
 
     const closeModal = () => {
-        resetAll()
         fetchNewWordBatch()
+        resetAll()
         setShowModal(false)
     }
 
     const fetchNewWordBatch = () => {
-        const newWords = getMoreMatches()
-        matches = newWords['matches']
-        orders = newWords['order']
+        isLoading = true
+        getMoreMatches().then(result => {
+            setWordPairs(result['matches'])
+            setWordOrder(result['order'])
+            console.log('wordsset')
+            isLoading = false
+        })
     }
 
     const setToMatched = (element) => {
@@ -70,8 +78,9 @@ const MatchingGame = ({ matches, orders, getMoreMatches }) => {
     }
 
     const matchCards = () => {
-        const matchesArray = [...matches]
-        const ordersArray = [...orders]
+        console.log('matchcards')
+        const matchesArray = [...wordPairs]
+        const ordersArray = [...wordOrder]
         var cards = []
         ordersArray.forEach((order, index) => {
             cards.push(
@@ -94,7 +103,7 @@ const MatchingGame = ({ matches, orders, getMoreMatches }) => {
         var matchFound = false
         if (firstWord !== null) {
             if (wordCard.getAttribute('word-lang') !== firstWord.getAttribute('word-lang')) {
-                matches.forEach((match) => {
+                wordPairs.forEach((match) => {
                     const isMatch = (firstWord.getAttribute('content') == match[0] && wordCard.getAttribute('content')) == match[1] || (wordCard.getAttribute('content') == match[0] && firstWord.getAttribute('content') == match[1])
                     console.log(isMatch)
                     matchFound = matchFound || isMatch
@@ -135,7 +144,7 @@ const MatchingGame = ({ matches, orders, getMoreMatches }) => {
         }
     }
 
-    return (
+    return loading || isLoading ? 'Loading...' : (
         <>
             <div className="container mx-auto my-8" >
                 <svg id='connections'></svg>

@@ -9,6 +9,7 @@ var wordOrder = []
 const queryWords = async() => {
     'use server'
     wordMatches.length = 0;
+    wordOrder.length = 0;
     const ans = await query(
         `WITH words_num AS (
             SELECT *, ROW_NUMBER() OVER(ORDER BY RANDOM()) AS num
