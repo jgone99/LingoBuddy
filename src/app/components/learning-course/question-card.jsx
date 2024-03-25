@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ProgressBar from "./progress-bar";
 import AnswerButton from "./answer-button";
 
@@ -11,11 +11,21 @@ const QuestionCard = ({
   onAnswerSelected,
   currentQuestionIndex,
   totalQuestions,
+  isAnswering, // New prop
 }) => {
+  console.log(correctAnswer);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [isAnswered, setIsAnswered] = useState(false);
 
+  useEffect(() => {
+    // Reset the selected answer and isAnswered state when the question changes
+    setSelectedAnswer(null);
+    setIsAnswered(false);
+  }, [question]);
+
   const handleAnswerClick = (answer) => {
+    if (isAnswering) return; // Prevent answer selection while isAnswering is true
+
     setSelectedAnswer(answer);
     setIsAnswered(true);
     onAnswerSelected(answer);
@@ -29,23 +39,31 @@ const QuestionCard = ({
       />
       <h2 className="block text-gray-700 text-xl font-bold mb-2">{question}</h2>
       <div className="mt-4">
-        {answers.map((answer, index) => (
-          <AnswerButton
-            key={index}
-            answerText={answer}
-            isCorrect={answer === correctAnswer}
-            isSelected={answer === selectedAnswer}
-            onSelectAnswer={() => handleAnswerClick(answer)}
-          />
-        ))}
+        {answers.map((answer, index) => {
+          console.log("Answer:", answer);
+          console.log("Correct Answer:", correctAnswer);
+          console.log("Includes:", correctAnswer.includes(answer));
+          return (
+            <AnswerButton
+              key={index}
+              answerText={answer}
+              isCorrect={correctAnswer.includes(answer)}
+              isSelected={answer === selectedAnswer}
+              onSelectAnswer={() => handleAnswerClick(answer)}
+              disabled={isAnswering} // Disable the button while isAnswering is true
+            />
+          );
+        })}
       </div>
       {isAnswered && (
         <div
           className={`text-lg mt-4 font-semibold ${
-            selectedAnswer === correctAnswer ? "text-green-500" : "text-red-500"
+            correctAnswer.includes(selectedAnswer)
+              ? "text-green-500"
+              : "text-red-500"
           }`}
         >
-          {selectedAnswer === correctAnswer ? "Correct!" : "Incorrect"}
+          {correctAnswer.includes(selectedAnswer) ? "Correct!" : "Incorrect"}{" "}
         </div>
       )}
     </div>
