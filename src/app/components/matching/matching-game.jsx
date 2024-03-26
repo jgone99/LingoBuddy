@@ -8,6 +8,7 @@ const english_lang = 'english'
 const spanish_lang = 'spanish'
 const matchTypeClasses = ['unmatched','selected','wrong-match','matched']
 var currentScore = 0;
+var won = false
 
 const MatchingGame = ({ matches, orders, getMoreMatches }) => {
     const [ loading, setLoading ] = useState(false)
@@ -118,6 +119,7 @@ const MatchingGame = ({ matches, orders, getMoreMatches }) => {
                     console.log(matchesFound+1)
                     console.log(wordCount)
                     if(matchesFound+1>=wordCount) {
+                        won = true
                         setShowModal(true)
                     }
                     setMatchesFound(matchesFound+1)
@@ -152,7 +154,7 @@ const MatchingGame = ({ matches, orders, getMoreMatches }) => {
                 <div>Highest Score:{}</div>
                 <div>Current Score:{currentScore}</div>
                 <svg id='connections'></svg>
-                {showModal && <Modal closeModal={modalContinue} />}
+                {showModal && <Modal won={won} modalContinue={modalContinue} />}
                 <div className="grid grid-cols-4 gap-4">
                     {matchCards()}
                 </div>
