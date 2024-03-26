@@ -1,6 +1,6 @@
 {
   "extends": "next/core-web-vitals",
   "rules": {
-    "prettier/prettier": ["error", { "doubleQuotes": true } ]
+    "avoidEscape": true
   }
 }
