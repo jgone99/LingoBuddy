@@ -10,11 +10,12 @@ function LevelCard({
   userId,
   updateUserProgress,
   sectionId,
+  passed,
 }) {
   const [startQuiz, setStartQuiz] = useState(false);
   console.log("Score:", score);
 
-  const isDisabled = levelId > 1 && score < 4;
+  const isDisabled = !(levelId === 1 && sectionId === 1) && !passed;
 
   const handleStartClick = () => {
     if (!isDisabled) {

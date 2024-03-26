@@ -35,6 +35,14 @@ export default async function CourseListPage() {
     );
   }
 
+  const fetchPassedStatus = async (levelId, sectionId) => {
+    const res = await query(
+      "SELECT passed FROM user_section_progress WHERE user_id = $1 AND level_id = $2 AND section_id = $3",
+      [userId, levelId, sectionId - 1]
+    );
+    return res[0] ? res[0].passed : false;
+  };
+
   const fetchScore = async (levelId) => {
     const res = await query(
       "SELECT score FROM user_section_progress WHERE user_id = $1 AND level_id = $2",
@@ -83,6 +91,9 @@ export default async function CourseListPage() {
   const levelQuestions_one = await Promise.all(levels.map(fetchLevelQuestions));
   const questions = await Promise.all(levels.map(fetchQuestions));
   const scores = await Promise.all(levels.map(fetchScore));
+  const passedStatuses = await Promise.all(
+    levels.map((level) => fetchPassedStatus(level, 2))
+  );
 
   const groupedQuestions = levelQuestions_one.map((levelQuestions) =>
     levelQuestions.reduce((groups, question) => {
@@ -110,6 +121,7 @@ export default async function CourseListPage() {
                 score={scores[index]}
                 userId={userId}
                 updateUserProgress={updateUserProgress}
+                passed={passedStatuses[index]}
               />
             )
           )}
