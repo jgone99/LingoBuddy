@@ -7,13 +7,6 @@ const alphabetArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l
 const tilde_letters = ['a', 'e', 'i', 'o', 'u']
 const tilde_variants= ['á', 'é', 'í', 'ó', 'ú']
 
-const word_bank = { 
-    0: ["purple", "morado"], 
-    1: ["horse", "caballo"], 
-    2: ["parasol", "sombrilla"], 
-    3: ["beans", "frijoles"],
-}
-
 const SnowmanGame = ({ wordPair, getNewWord }) => {
     const [ firstRender, setFirstRender ] = useState(true)
     const [ loading, setLoading ] = useState(true)
@@ -45,10 +38,6 @@ const SnowmanGame = ({ wordPair, getNewWord }) => {
             div.innerHTML=''
             div.classList.add('is-empty')
         })
-    }
-    
-    const chosenWord = () => {
-        return <h4>WORD: {word['english'].toUpperCase()}</h4>
     }
     
     const playAgain = () => {
