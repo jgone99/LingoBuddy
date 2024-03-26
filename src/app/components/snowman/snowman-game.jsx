@@ -4,9 +4,9 @@ import { useState, useEffect } from 'react'
 import SnowmanFigure from "./snowman-figure"
 import Modal from '../matching/modal'
 
-const alphabetArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "ñ", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", 'á', 'é', 'í', 'ó', 'ú']
-const tilde_letters = ['a', 'e', 'i', 'o', 'u']
-const tilde_variants= ['á', 'é', 'í', 'ó', 'ú']
+const alphabetArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "ñ", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "á", "é", "í", "ó", "ú"]
+const tilde_letters = ["a", "e", "i", "o", "u"]
+const tilde_variants= ["á", "é", "í", "ó", "ú"]
 var won = false
 
 const SnowmanGame = ({ wordPair, getNewWord, updateHighscore }) => {
