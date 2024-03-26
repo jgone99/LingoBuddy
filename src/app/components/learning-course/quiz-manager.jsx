@@ -60,7 +60,7 @@ export default function QuizManager({
           await updateUserProgress({
             userId,
             levelId,
-            sectionId: 1,
+            sectionId: sectionId,
             score: newCorrectAnswers,
             passed,
           });

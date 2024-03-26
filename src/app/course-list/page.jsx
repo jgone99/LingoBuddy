@@ -8,14 +8,15 @@ async function updateUserProgress(userId, levelId, sectionId, score, passed) {
   console.log(userId, levelId, sectionId);
   await query(
     `UPDATE user_section_progress
-     SET score = $3, passed = $4
-     WHERE user_id = $1`,
+     SET score = $4, passed = $5
+     WHERE user_id = $1 AND level_id = $2 AND section_id = $3`,
     [userId, levelId, sectionId, score, passed]
   );
 }
 export async function action({ request }) {
   "use server";
   const { userId, levelId, sectionId, score, passed } = await request.json();
+  console.log(userId, levelId, sectionId); // Add this line
 
   if (!userId || !levelId || !sectionId || score === null || passed === null) {
     return new Response(
@@ -84,6 +85,7 @@ export default async function CourseListPage() {
       option_b: q.option_b,
       option_c: q.option_c,
       correct_answers: q.correct_answers,
+      sectionId: q.section_id,
     }));
   };
 
@@ -126,6 +128,7 @@ export default async function CourseListPage() {
               <LevelCard
                 key={sectionIndex}
                 levelId={level}
+                sectionId={questions[0].sectionId}
                 title={section}
                 questions={questions}
                 score={scores[index]}
