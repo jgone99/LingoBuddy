@@ -38,8 +38,8 @@ function LevelCard({
           questions={questions}
           userId={userId}
           levelId={levelId}
-          updateUserProgress={updateUserProgress}
           sectionId={sectionId}
+          updateUserProgress={updateUserProgress}
         />
       ) : (
         <button
