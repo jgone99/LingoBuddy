@@ -58,3 +58,11 @@ button {
     background: rgb(255,170,43);
     color: black;
 }
+
+.games-modal {
+    z-index: 30;
+}
+
+.snowman-box {
+    z-index: 10;
+}

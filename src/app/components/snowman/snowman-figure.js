@@ -4,7 +4,7 @@ import './snowman.css'
 const SnowmanFigure = ({ errors }) => {
     return (
         <>
-            <div className="snowman-box">
+            <div className="snowman-box relative">
                 <div className="body">
                     <div className={`head-container ${errors > 3 && 'animate-[head-fall1_1.2s_linear_forwards,head-fall2_1.5s_ease-in-out_forwards,head-fall3_0.8s_ease-in_0.4s_forwards]'}`}>
                     <div className={"head"}>

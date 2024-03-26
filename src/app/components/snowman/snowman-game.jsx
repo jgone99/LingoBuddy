@@ -2,12 +2,14 @@
 
 import { useState, useEffect } from 'react'
 import SnowmanFigure from "./snowman-figure"
+import Modal from '../matching/modal'
 
 const alphabetArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "ñ", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", 'á', 'é', 'í', 'ó', 'ú']
 const tilde_letters = ['a', 'e', 'i', 'o', 'u']
 const tilde_variants= ['á', 'é', 'í', 'ó', 'ú']
+var won = false
 
-const SnowmanGame = ({ wordPair, getNewWord }) => {
+const SnowmanGame = ({ wordPair, getNewWord, updateHighscore }) => {
     const [ firstRender, setFirstRender ] = useState(true)
     const [ loading, setLoading ] = useState(true)
     const [ word, setWord ] = useState()
@@ -16,7 +18,9 @@ const SnowmanGame = ({ wordPair, getNewWord }) => {
     const [ errorCount, setErrorCount ] = useState(0)
     const [ gamesWon, setGamesWon ] = useState(0)
     const [ correctLetterCount, setCorrectLetterCount ] = useState(0)
+    const [ showModal, setShowModal ] = useState(false)
     var testLoading = false
+    
 
     useEffect(() => {
         if(firstRender) {
@@ -42,8 +46,15 @@ const SnowmanGame = ({ wordPair, getNewWord }) => {
     
     const playAgain = () => {
         testLoading = true
+        if (won) {
+            setGamesWon(gamesWon+1)
+        }
+        else {
+            setGamesWon(0)
+        }
+        setCorrectLetterCount(0)
         getNewWord().then(result => {
-            console.log(loading)
+            console.log(loading)   
             setWord(result)
             setErrorCount(0)
             setGameOver(false)
@@ -71,7 +82,8 @@ const SnowmanGame = ({ wordPair, getNewWord }) => {
         })
     
         if(correctLetterCount+emptyBoxes.length >= word['spanish'].length) {
-            endOfGame(true)
+            won = true
+            setShowModal(true)
             return
         }
     
@@ -93,37 +105,43 @@ const SnowmanGame = ({ wordPair, getNewWord }) => {
     const errorMade = () => {
         setErrorCount(errorCount+1)
         if (errorCount+1 >= maxErrors) {
-            endOfGame(false)
+            won = false
+            setShowModal(true)
         }
+    }
+
+    const resetAll = () => {
+        playAgain()
+    }
+
+    const modalContinue = () => {
+        resetAll()
+        setShowModal(false)
     }
     
     return loading || testLoading ? 'Loading...' : (
         <>
-            <div className="text-center">SCORE: {gamesWon}</div>
-            <div className='text-center mb-20'>
-                <h4>WORD: {word['english'].toUpperCase()}</h4>
-            </div>
-            <div className="flex m-20">
-                <div className='mr-10'>
-                    <div className=''>
-                        <SnowmanFigure errors={ errorCount } />
-                    </div>
+            <div>
+                {showModal && <Modal won={won} modalContinue={modalContinue} />}
+                <div className="text-center">SCORE: {gamesWon}</div>
+                <div className='text-center mb-20'>
+                    <h4>WORD: {word['english'].toUpperCase()}</h4>
                 </div>
-                <div className='w-96 ml-80 mt-40'>
-                    <div className='mb-20 flex justify-center'>
-                        {guessBoxes()}
+                <div className="flex m-20">
+                    <div className='mr-10'>
+                        <div className=''>
+                            <SnowmanFigure errors={ errorCount } />
+                        </div>
                     </div>
-                    <div className="h-full">
-                        {gameOver ? (
-                            <div className='flex justify-center'>
-                                <button onClick={playAgain} className='bg-cyan-500 rounded text-white w-28 h-8 hover:bg-cyan-800'>Play Again</button> 
+                    <div className='w-96 ml-80 mt-40'>
+                        <div className='mb-20 flex justify-center'>
+                            {guessBoxes()}
+                        </div>
+                        <div className="h-full">
+                            <div className='grid grid-cols-9 justify-items-center'>
+                                {alphabetButtons()}
                             </div>
-                            ) : (
-                                <div className='grid grid-cols-9 justify-items-center'>
-                                    {alphabetButtons()}
-                                </div>
-                            )
-                        }
+                        </div>
                     </div>
                 </div>
             </div>
