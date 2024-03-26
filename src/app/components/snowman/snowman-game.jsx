@@ -28,7 +28,7 @@ const SnowmanGame = ({ wordPair, getNewWord, updateHighscore }) => {
             setFirstRender(false)
         }
         setLoading(false)
-    })
+    }, [firstRender, wordPair])
     
     const guessBoxes = () => {
         return String(word['spanish']).split('').map((letter, index) => {
