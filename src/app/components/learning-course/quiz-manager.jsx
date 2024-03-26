@@ -2,17 +2,19 @@
 import React, { useState } from "react";
 import QuestionCard from "./question-card";
 import Modal from "./modal";
-import axios from "axios";
 
-export default function QuizManager({ questions, userId, levelId }) {
+export default function QuizManager({
+  questions,
+  userId,
+  levelId,
+  updateUserProgress,
+}) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [userAnswers, setUserAnswers] = useState([]);
   const [showResults, setShowResults] = useState(false);
   const [isAnswering, setIsAnswering] = useState(false);
   const totalQuestions = questions.length;
-
-  // QuizManager component
 
   const handleAnswerSelected = async (selectedAnswer) => {
     if (isAnswering) return;
@@ -43,45 +45,32 @@ export default function QuizManager({ questions, userId, levelId }) {
     if (currentQuestionIndex < totalQuestions - 1) {
       setTimeout(() => {
         setCurrentQuestionIndex(currentQuestionIndex + 1);
-        setIsAnswering(false); // Set isAnswering to false after currentQuestionIndex is incremented
-      }, 1000); // 1 second delay
+        setIsAnswering(false);
+      }, 1000);
     } else {
-      if (correctAnswers >= 4) {
-        console.log("Section Passed");
+      setShowResults(true);
+      const passed = correctAnswers >= 4;
+
+      // Call the server action directly if it's provided
+      if (updateUserProgress) {
         try {
-          const response = await axios.post("/api/update-progress", {
-            userId: userId,
-            levelId: levelId,
-            sectionId: sectionId, // This should be provided to QuizManager as a prop
+          await updateUserProgress({
+            userId,
+            levelId,
             score: correctAnswers,
-            passed: correctAnswers >= 4,
+            passed,
           });
-          console.log(response.data);
         } catch (error) {
-          console.error(error);
-        }
-      } else {
-        console.log("Section Failed");
-        // Update user progress here
-        try {
-          const response = await axios.post("/api/update-progress", {
-            userId: "your-user-id", // replace with actual user id
-            levelId: "your-level-id", // replace with actual level id
-            score: correctAnswers,
-            passed: false,
-          });
-          console.log(response.data);
-        } catch (error) {
-          console.error(error);
+          console.error("Failed to update user progress:", error);
         }
       }
       console.log("Quiz Finished", userAnswers);
       setShowResults(true);
-      // change the state to show results
     }
   };
 
   console.log(questions);
+  console.log("levelId:", levelId);
   if (
     !questions ||
     typeof questions === "undefined" ||
@@ -107,7 +96,6 @@ export default function QuizManager({ questions, userId, levelId }) {
     }
   });
 
-  // Render the question card for the current question
   return (
     <div>
       <QuestionCard

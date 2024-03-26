@@ -6,11 +6,55 @@ import { auth } from "@clerk/nextjs";
 export default async function CourseListPage() {
   const { userId } = auth();
 
+  async function updateUserProgress(userId, levelId, sectionId, score, passed) {
+    "use server";
+    await query(
+      `INSERT INTO user_section_progress (user_id, level_id, section_id, score, passed)
+     VALUES ($1, $2, $3, $4, $5)
+     ON CONFLICT (user_id, level_id, section_id)
+     DO UPDATE SET score = EXCLUDED.score, passed = EXCLUDED.passed`,
+      [userId, levelId, sectionId, score, passed]
+    );
+  }
+
+  // Server action to handle the user's quiz submission
+  async function action({ request }) {
+    "use server";
+    const { userId, levelId, sectionId, score, passed } = await request.json();
+
+    // Check that all necessary properties are not null
+    if (
+      !userId ||
+      !levelId ||
+      !sectionId ||
+      score === null ||
+      passed === null
+    ) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          message: "Missing or null parameter",
+        }),
+        {
+          status: 400,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    } else {
+      await updateUserProgress(userId, levelId, sectionId, score, passed);
+      return new Response(JSON.stringify({ success: true }), {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    }
+  }
+
   // Insert a row for a new user or update the level_id for an existing user
-  await query(
-    "INSERT INTO user_section_progress (user_id, level_id, section_id, score, passed) VALUES ($1, $2, $3, $4, $5) ON CONFLICT (user_id) DO UPDATE SET level_id = $2, section_id = $3, score = $4, passed = $5",
-    [userId, 1, 1, 0, false]
-  );
+  await updateUserProgress(userId, 1, 1, 0, false);
 
   const fetchScore = async (levelId) => {
     const res = await query(
@@ -85,6 +129,7 @@ export default async function CourseListPage() {
                 questions={questions}
                 score={scores[index]}
                 userId={userId}
+                updateUserProgress={updateUserProgress}
               />
             )
           )}

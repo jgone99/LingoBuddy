@@ -2,7 +2,14 @@
 import React, { useState } from "react";
 import QuizManager from "./quiz-manager";
 
-function LevelCard({ levelId, questions, title, score, userId }) {
+function LevelCard({
+  levelId,
+  questions,
+  title,
+  score,
+  userId,
+  updateUserProgress,
+}) {
   const [startQuiz, setStartQuiz] = useState(false);
   console.log("Score:", score);
 
@@ -26,7 +33,12 @@ function LevelCard({ levelId, questions, title, score, userId }) {
         {title ? title : `Checkpoint ${levelId}`}
       </h2>
       {startQuiz ? (
-        <QuizManager questions={questions} />
+        <QuizManager
+          questions={questions}
+          userId={userId}
+          levelId={levelId}
+          updateUserProgress={updateUserProgress}
+        />
       ) : (
         <button
           onClick={handleStartClick}
