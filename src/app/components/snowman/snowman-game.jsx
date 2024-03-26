@@ -3,7 +3,10 @@
 import { useState, useEffect } from 'react'
 import SnowmanFigure from "./snowman-figure"
 
-const alphabetArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "ñ", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+const alphabetArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "ñ", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", 'á', 'é', 'í', 'ó', 'ú']
+const tilde_letters = ['a', 'e', 'i', 'o', 'u']
+const tilde_variants= ['á', 'é', 'í', 'ó', 'ú']
+
 const word_bank = { 
     0: ["purple", "morado"], 
     1: ["horse", "caballo"], 
@@ -11,7 +14,7 @@ const word_bank = {
     3: ["beans", "frijoles"],
 }
 
-const SnowmanGame = () => {
+const SnowmanGame = ({ wordPair, getNewWord }) => {
     const [ firstRender, setFirstRender ] = useState(true)
     const [ loading, setLoading ] = useState(true)
     const [ word, setWord ] = useState()
@@ -20,18 +23,18 @@ const SnowmanGame = () => {
     const [ errorCount, setErrorCount ] = useState(0)
     const [ gamesWon, setGamesWon ] = useState(0)
     const [ correctLetterCount, setCorrectLetterCount ] = useState(0)
+    var testLoading = false
 
     useEffect(() => {
         if(firstRender) {
-            const index = Math.floor(Math.random()*(Object.keys(word_bank).length))
-            setWord({"englishWord":word_bank[index][0], "spanishWord":word_bank[index][1]})
+            setWord(wordPair)
             setFirstRender(false)
         }
         setLoading(false)
-    },[firstRender])
+    })
     
     const guessBoxes = () => {
-        return String(word['spanishWord']).split('').map((letter, index) => {
+        return String(word['spanish']).split('').map((letter, index) => {
             return <div key={letter+index} className={`flex mx-1 border-solid items-center justify-center rounded border-2 w-8 h-8 border-cyan-500 guessbox letter-${letter} is-empty`}></div>
         })
     }
@@ -45,21 +48,19 @@ const SnowmanGame = () => {
     }
     
     const chosenWord = () => {
-        return <h4>WORD: {word['englishWord'].toUpperCase()}</h4>
-    }
-    
-    const returnGamesWon = () => {
-        return <div className="text-center">GAMES WON: {gamesWon}</div>
+        return <h4>WORD: {word['english'].toUpperCase()}</h4>
     }
     
     const playAgain = () => {
-        setLoading(true)
-        setErrorCount(0)
-        const index = Math.floor(Math.random()*(Object.keys(word_bank).length))
-        setWord({"englishWord":word_bank[index][0], "spanishWord":word_bank[index][1]})
-        setGameOver(false)
-        resetGuessBoxes()
-        setLoading(false)
+        testLoading = true
+        getNewWord().then(result => {
+            console.log(loading)
+            setWord(result)
+            setErrorCount(0)
+            setGameOver(false)
+            resetGuessBoxes()
+            testLoading = false
+        })
     }
     
     const alphabetButtons = () => {
@@ -80,7 +81,7 @@ const SnowmanGame = () => {
             div.classList.remove('is-empty')
         })
     
-        if(correctLetterCount+emptyBoxes.length >= word['spanishWord'].length) {
+        if(correctLetterCount+emptyBoxes.length >= word['spanish'].length) {
             endOfGame(true)
             return
         }
@@ -107,11 +108,11 @@ const SnowmanGame = () => {
         }
     }
     
-    return loading ? 'Loading...' : (
+    return loading || testLoading ? 'Loading...' : (
         <>
-            <div className="text-center">GAMES WON: {gamesWon}</div>
+            <div className="text-center">SCORE: {gamesWon}</div>
             <div className='text-center mb-20'>
-                <h4>WORD: {word['englishWord'].toUpperCase()}</h4>
+                <h4>WORD: {word['english'].toUpperCase()}</h4>
             </div>
             <div className="flex m-20">
                 <div className='mr-10'>

@@ -3,7 +3,6 @@ import { UserButton, auth, SignedIn, SignInButton, SignedOut } from '@clerk/next
 import GamesDropdown from './snowman/games-dropdown';
 
 const Header = () => {
-	const { userId } = auth();
 
 	return (
 		<>
@@ -26,7 +25,7 @@ const Header = () => {
 				<div className="flex-1 text-center">
 					<Link
 						href="/chatbot"
-						className="text-white mx-2 hover:text-gray-300 cursor-pointer"
+						className="mx-2 hover:text-gray-300 cursor-pointer"
 					>
 						ChatBot
 					</Link>

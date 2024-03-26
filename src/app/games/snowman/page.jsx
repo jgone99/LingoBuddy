@@ -1,20 +1,20 @@
+'use server'
 
 import SnowmanGame from '../../components/snowman/snowman-game';
 import { query } from '../../db/queries';
 
-const SnowmanPage = () => {
-    
-    const getLearningLevel = async() => {
-        const ans = await query("SELECT question_text FROM checkpoint_questions where level_id = 1 order by question_id")
+const SnowmanPage = async() => {
+    const getWordPair = async() => {
+        'use server'
+        const ans = (await query("SELECT * FROM word_pairs ORDER BY RANDOM() LIMIT 1"))[0]
         console.log(ans)
-        return <div>learning level: {ans[1]['question_text']}</div>
+        return ans
     }
 
     return (
         <>
-            {/* {getLearningLevel()} */}
             <div className='text-center'>TEST PAGE</div>
-            <SnowmanGame />
+            <SnowmanGame wordPair={await getWordPair()} getNewWord={getWordPair}/>
         </>
     )
 };
