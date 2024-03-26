@@ -122,14 +122,22 @@ export default async function CourseListPage() {
                 userId={userId}
                 updateUserProgress={updateUserProgress}
                 passed={passedStatuses[index]}
+                isLastSection={
+                  sectionIndex ===
+                  Object.entries(groupedQuestions[index]).length - 1
+                }
+                hasPassedSectionTwo={passedStatuses[index]}
               />
             )
           )}
+
           <LevelCard
             key={index + 10}
             levelId={level}
             title={`Checkpoint Level ${level}`}
             questions={questions[index]}
+            hasPassedSectionTwo={passedStatuses[index]} // assuming that section 2 is at index 1
+            isCheckpoint={true}
           />
         </React.Fragment>
       ))}
