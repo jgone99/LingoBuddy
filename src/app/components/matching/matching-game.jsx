@@ -7,6 +7,7 @@ import Connection from '../../components/matching/lines'
 const english_lang = 'english'
 const spanish_lang = 'spanish'
 const matchTypeClasses = ['unmatched','selected','wrong-match','matched']
+var currentScore = 0;
 
 const MatchingGame = ({ matches, orders, getMoreMatches }) => {
     const [ loading, setLoading ] = useState(false)
@@ -29,9 +30,10 @@ const MatchingGame = ({ matches, orders, getMoreMatches }) => {
 
     }
 
-    const closeModal = () => {
+    const modalContinue = () => {
         fetchNewWordBatch()
         resetAll()
+        currentScore += 1
         setShowModal(false)
     }
 
@@ -147,8 +149,10 @@ const MatchingGame = ({ matches, orders, getMoreMatches }) => {
     return loading || isLoading ? 'Loading...' : (
         <>
             <div className="container mx-auto my-8" >
+                <div>Highest Score:{}</div>
+                <div>Current Score:{currentScore}</div>
                 <svg id='connections'></svg>
-                {showModal && <Modal closeModal={closeModal} />}
+                {showModal && <Modal closeModal={modalContinue} />}
                 <div className="grid grid-cols-4 gap-4">
                     {matchCards()}
                 </div>
