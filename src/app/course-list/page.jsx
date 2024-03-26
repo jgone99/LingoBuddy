@@ -3,58 +3,59 @@ import { query } from "../db/queries";
 import LevelCard from "../components/learning-course/level-card";
 import { auth } from "@clerk/nextjs";
 
-export default async function CourseListPage() {
-  const { userId } = auth();
+async function updateUserProgress(userId, levelId, sectionId, score, passed) {
+  "use server";
+  console.log(userId, levelId, sectionId);
+  await query(
+    `UPDATE user_section_progress
+     SET score = $3, passed = $4
+     WHERE user_id = $1`,
+    [userId, levelId, sectionId, score, passed]
+  );
+}
+export async function action({ request }) {
+  "use server";
+  const { userId, levelId, sectionId, score, passed } = await request.json();
 
-  async function updateUserProgress(userId, levelId, sectionId, score, passed) {
-    "use server";
-    await query(
-      `INSERT INTO user_section_progress (user_id, level_id, section_id, score, passed)
-     VALUES ($1, $2, $3, $4, $5)
-     ON CONFLICT (user_id, level_id, section_id)
-     DO UPDATE SET score = EXCLUDED.score, passed = EXCLUDED.passed`,
-      [userId, levelId, sectionId, score, passed]
-    );
-  }
-
-  // Server action to handle the user's quiz submission
-  async function action({ request }) {
-    "use server";
-    const { userId, levelId, sectionId, score, passed } = await request.json();
-
-    // Check that all necessary properties are not null
-    if (
-      !userId ||
-      !levelId ||
-      !sectionId ||
-      score === null ||
-      passed === null
-    ) {
-      return new Response(
-        JSON.stringify({
-          success: false,
-          message: "Missing or null parameter",
-        }),
-        {
-          status: 400,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-    } else {
-      await updateUserProgress(userId, levelId, sectionId, score, passed);
-      return new Response(JSON.stringify({ success: true }), {
-        status: 200,
+  if (!userId || !levelId || !sectionId || score === null || passed === null) {
+    return new Response(
+      JSON.stringify({
+        success: false,
+        message: "Missing or null parameter",
+      }),
+      {
+        status: 400,
         headers: {
           "Content-Type": "application/json",
         },
-      });
-    }
+      }
+    );
+  } else {
+    await updateUserProgress(userId, levelId, sectionId, score, passed);
+    return new Response(JSON.stringify({ success: true }), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   }
+}
 
-  // Insert a row for a new user or update the level_id for an existing user
-  await updateUserProgress(userId, 1, 1, 0, false);
+export default async function CourseListPage() {
+  const { userId } = auth();
+
+  const existingProgress = await query(
+    "SELECT * FROM user_section_progress WHERE user_id = $1",
+    [userId]
+  );
+
+  if (existingProgress.length === 0) {
+    await query(
+      `INSERT INTO user_section_progress (user_id, level_id, section_id, score, passed)
+       VALUES ($1, $2, $3, $4, $5)`,
+      [userId, 1, 1, 0, false]
+    );
+  }
 
   const fetchScore = async (levelId) => {
     const res = await query(

@@ -9,6 +9,7 @@ function LevelCard({
   score,
   userId,
   updateUserProgress,
+  sectionId,
 }) {
   const [startQuiz, setStartQuiz] = useState(false);
   console.log("Score:", score);
@@ -38,6 +39,7 @@ function LevelCard({
           userId={userId}
           levelId={levelId}
           updateUserProgress={updateUserProgress}
+          sectionId={sectionId}
         />
       ) : (
         <button

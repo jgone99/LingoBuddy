@@ -8,6 +8,7 @@ export default function QuizManager({
   userId,
   levelId,
   updateUserProgress,
+  sectionId,
 }) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
@@ -33,8 +34,10 @@ export default function QuizManager({
         selectedAnswerKey
       );
 
+    let newCorrectAnswers = correctAnswers;
     if (isCorrect) {
-      setCorrectAnswers((prevCorrectAnswers) => prevCorrectAnswers + 1);
+      newCorrectAnswers = correctAnswers + 1;
+      setCorrectAnswers(newCorrectAnswers);
     }
 
     setUserAnswers((prevAnswers) => [
@@ -49,7 +52,7 @@ export default function QuizManager({
       }, 1000);
     } else {
       setShowResults(true);
-      const passed = correctAnswers >= 4;
+      const passed = newCorrectAnswers >= 4;
 
       // Call the server action directly if it's provided
       if (updateUserProgress) {
@@ -57,7 +60,8 @@ export default function QuizManager({
           await updateUserProgress({
             userId,
             levelId,
-            score: correctAnswers,
+            sectionId: 1,
+            score: newCorrectAnswers,
             passed,
           });
         } catch (error) {
