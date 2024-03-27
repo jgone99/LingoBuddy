@@ -38,7 +38,7 @@ export default async function CourseListPage() {
   const fetchPassedStatus = async (levelId, sectionId) => {
     const res = await query(
       "SELECT passed FROM user_section_progress WHERE user_id = $1 AND level_id = $2 AND section_id = $3",
-      [userId, levelId, sectionId - 1]
+      [userId, levelId, sectionId]
     );
     return res[0] ? res[0].passed : false;
   };
@@ -88,14 +88,14 @@ export default async function CourseListPage() {
   };
 
   const levels = Array.from({ length: 10 }, (_, i) => i + 1);
-  const levelQuestions_one = await Promise.all(levels.map(fetchLevelQuestions));
-  const questions = await Promise.all(levels.map(fetchQuestions));
+  const levelQuestions = await Promise.all(levels.map(fetchLevelQuestions));
+  const checkpointQuestions = await Promise.all(levels.map(fetchQuestions));
   const scores = await Promise.all(levels.map(fetchScore));
   const passedStatuses = await Promise.all(
     levels.map((level) => fetchPassedStatus(level, 2))
   );
 
-  const groupedQuestions = levelQuestions_one.map((levelQuestions) =>
+  const groupedQuestions = levelQuestions.map((levelQuestions) =>
     levelQuestions.reduce((groups, question) => {
       const key = question.section_text;
       if (!groups[key]) {
@@ -135,7 +135,7 @@ export default async function CourseListPage() {
             key={index + 10}
             levelId={level}
             title={`Checkpoint Level ${level}`}
-            questions={questions[index]}
+            questions={checkpointQuestions[index]}
             hasPassedSectionTwo={passedStatuses[index]} // assuming that section 2 is at index 1
             isCheckpoint={true}
           />
