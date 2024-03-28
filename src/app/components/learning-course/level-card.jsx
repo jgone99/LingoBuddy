@@ -10,30 +10,22 @@ function LevelCard({
   userId,
   updateUserProgress,
   sectionId,
-  passed,
-  isLastSection,
-  hasPassedSectionTwo,
-  isCheckpoint,
+  isDisabled,
+  unlockNextSection
 }) {
   const [startQuiz, setStartQuiz] = useState(false);
-  console.log("Score:", score);
-
-  const isDisabled = isCheckpoint
-    ? !hasPassedSectionTwo
-    : !(levelId === 1 && sectionId === 1) && !(isLastSection && passed);
 
   const handleStartClick = () => {
     if (!isDisabled) {
       setStartQuiz(true);
     }
   };
-  console.log("Is Disabled:", isDisabled);
 
-  console.log(title);
-  console.log("levelId:", levelId);
-  console.log("sectionId:", sectionId);
-  console.log("isLastSection:", isLastSection);
-  console.log("passed:", passed);
+  // console.log(title);
+  // console.log("levelId:", levelId);
+  // console.log("sectionId:", sectionId);
+  // console.log("isLastSection:", isLastSection);
+  // console.log("passed:", passed);
   return (
     <div
       className={`border border-gray-300 rounded p-4 mb-4 shadow-md transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 ${
@@ -45,11 +37,13 @@ function LevelCard({
       </h2>
       {startQuiz ? (
         <QuizManager
+          key={'qmanager-'+levelId+'-'+sectionId}
           questions={questions}
           userId={userId}
           levelId={levelId}
           sectionId={sectionId}
           updateUserProgress={updateUserProgress}
+          unlockNextSection={unlockNextSection}
         />
       ) : (
         <button

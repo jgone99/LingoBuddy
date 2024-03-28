@@ -19,20 +19,14 @@ export default async function CourseListPage() {
 			[userId, 1, 1, 0, false]
 		);
 	}
-	async function updateUserProgress({
-		userId,
-		levelId,
-		sectionId,
-		score,
-		passed,
-	}) {
+	async function updateUserProgress(levelId, sectionId) {
 		"use server";
-		console.log(userId, levelId, sectionId, score);
+		console.log(userId, levelId, sectionId);
 		await query(
-			`UPDATE user_section_progress
-       SET score = $4, passed = $5
-       WHERE user_id = $1 AND level_id = $2 AND section_id = $3`,
-			[userId, levelId, sectionId, score, passed]
+			`UPDATE course_progress
+			SET level_id = $2, section_id = $3
+			WHERE user_id = $1`,
+			[userId, levelId, sectionId]
 		);
 	}
 
@@ -53,10 +47,10 @@ export default async function CourseListPage() {
 	};
 
 	// Fetch the user's current level and section
-	const userProgress = await query(
-		"SELECT level_id, section_id FROM user_section_progress WHERE user_id = $1",
-		[userId]
-	);
+	// const userProgress = await query(
+	// 	"SELECT level_id, section_id FROM user_section_progress WHERE user_id = $1",
+	// 	[userId]
+	// );
 
 	const fetchLevelQuestions = async (levelId) => {
 		const res = await query(
@@ -88,6 +82,22 @@ export default async function CourseListPage() {
 		}));
 	};
 
+	const fetchAllQuestions = async() => {
+		const res = await query(
+			"SELECT * FROM all_questions ORDER BY level_id, section_id"
+		);
+		return res
+	}
+
+	const fetchUserProgress = async() => {
+		'use server'
+		const res = await query(
+			"SELECT * FROM course_progress WHERE user_id=$1",
+			[userId]
+		);
+		return res[0]
+	}
+
 	const levels = Array.from({ length: 10 }, (_, i) => i + 1);
 	const questionsByLevel = await Promise.all(levels.map(fetchLevelQuestions));
 	const checkpointQuestions = await Promise.all(levels.map(fetchQuestions));
@@ -96,19 +106,23 @@ export default async function CourseListPage() {
 		levels.map((level) => fetchPassedStatus(level, 2))
 	);
 
-	const groups = questionsByLevel.map((levelQuestions, index) => {
-		{
-			index: 
-			{
-				{
-					index: 1
-				},
-				{
-					index: 2
-				}
+	const userProgress = await fetchUserProgress()
+
+	const allQuestions = await fetchAllQuestions()
+
+	const questionsByLevelAndSection = allQuestions.reduce((groups, question) => {
+		const key1 = question.level_id;
+		const key2 = question.section_id;
+		if (!groups[key1]) {
+			groups[key1] = {
+				1: [],
+				2: [],
+				3: [],
 			}
 		}
-	})
+		groups[key1][key2].push(question);
+		return groups;
+	}, {})
 
 	const groupedQuestions = questionsByLevel.map((levelQuestions) =>
 		levelQuestions.reduce((groups, question) => {
@@ -123,7 +137,8 @@ export default async function CourseListPage() {
 
 	return (
 		<>
-			<CourseListComponent />
+			{console.log(userProgress)}
+			<CourseListComponent initUserProgress={userProgress} fetchUserProgress={fetchUserProgress} questionsByLevelAndSection={questionsByLevelAndSection} updateUserProgress={updateUserProgress} />
 		</>
 	);
 }
