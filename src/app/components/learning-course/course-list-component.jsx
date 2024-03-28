@@ -1,6 +1,6 @@
 
 
-const LevelCardContainer = () => {
+const CourseListComponent = () => {
     return (
         <>
             <div>
@@ -41,3 +41,5 @@ const LevelCardContainer = () => {
         </>
     )
 }
+
+export default CourseListComponent;
