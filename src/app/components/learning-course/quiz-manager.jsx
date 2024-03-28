@@ -1,17 +1,23 @@
 "use client";
 import React, { useState } from "react";
 import QuestionCard from "./question-card";
-import CloseButton from "./close-button";
 import Modal from "./modal";
 
-export default function QuizManager({ questions }) {
+export default function QuizManager({
+  questions,
+  userId,
+  levelId,
+  updateUserProgress,
+  sectionId,
+}) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [correctAnswers, setCorrectAnswers] = useState(0);
   const [userAnswers, setUserAnswers] = useState([]);
   const [showResults, setShowResults] = useState(false);
   const [isAnswering, setIsAnswering] = useState(false);
   const totalQuestions = questions.length;
 
-  const handleAnswerSelected = (selectedAnswer) => {
+  const handleAnswerSelected = async (selectedAnswer) => {
     if (isAnswering) return;
 
     setIsAnswering(true);
@@ -28,9 +34,11 @@ export default function QuizManager({ questions }) {
         selectedAnswerKey
       );
 
-    console.log("selectedAnswer:", selectedAnswer);
-    console.log("selectedAnswerKey:", selectedAnswerKey);
-    console.log("isCorrect:", isCorrect);
+    let newCorrectAnswers = correctAnswers;
+    if (isCorrect) {
+      newCorrectAnswers = correctAnswers + 1;
+      setCorrectAnswers(newCorrectAnswers);
+    }
 
     setUserAnswers((prevAnswers) => [
       ...prevAnswers,
@@ -40,16 +48,33 @@ export default function QuizManager({ questions }) {
     if (currentQuestionIndex < totalQuestions - 1) {
       setTimeout(() => {
         setCurrentQuestionIndex(currentQuestionIndex + 1);
-        setIsAnswering(false); // Set isAnswering to false after currentQuestionIndex is incremented
-      }, 1000); // 1 second delay
+        setIsAnswering(false);
+      }, 1000);
     } else {
+      setShowResults(true);
+      const passed = newCorrectAnswers >= 4;
+
+      // Call the server action directly if it's provided
+      if (updateUserProgress) {
+        try {
+          await updateUserProgress({
+            userId,
+            levelId,
+            sectionId: sectionId,
+            score: newCorrectAnswers,
+            passed,
+          });
+        } catch (error) {
+          console.error("Failed to update user progress:", error);
+        }
+      }
       console.log("Quiz Finished", userAnswers);
       setShowResults(true);
-      // navigate to a results page or change the state to show results
     }
   };
 
   console.log(questions);
+  console.log("levelId:", levelId);
   if (
     !questions ||
     typeof questions === "undefined" ||
@@ -75,7 +100,6 @@ export default function QuizManager({ questions }) {
     }
   });
 
-  // Render the question card for the current question
   return (
     <div>
       <QuestionCard
@@ -89,13 +113,11 @@ export default function QuizManager({ questions }) {
         onAnswerSelected={handleAnswerSelected}
         currentQuestionIndex={currentQuestionIndex}
         totalQuestions={totalQuestions}
-        isAnswering={isAnswering} // Pass isAnswering as a prop
+        isAnswering={isAnswering}
       />
       {showResults && (
         <Modal isOpen={showResults} onClose={() => setShowResults(false)}>
-          {/* Here you can display the results */}
           <h2>Quiz Results</h2>
-          {/* Display the user's answers and whether they were correct */}
           {userAnswers.map((answer, index) => (
             <p key={index}>
               Question {index + 1}: {answer.answer} -{" "}
