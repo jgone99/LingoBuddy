@@ -24,6 +24,9 @@ nav {
 
 button {
     background: #614AEB;
+    color: white;
+    border-radius: 0.25rem;
+    width: 120px;
 }
 
 .guessbox {

@@ -51,17 +51,6 @@ const QuestionCard = ({
           );
         })}
       </div>
-      {isAnswered && (
-        <div
-          className={`text-lg mt-4 font-semibold ${
-            correctAnswer.includes(selectedAnswer)
-              ? "text-green-500"
-              : "text-red-500"
-          }`}
-        >
-          {correctAnswer.includes(selectedAnswer) ? "Correct!" : "Incorrect"}{" "}
-        </div>
-      )}
     </div>
   );
 };

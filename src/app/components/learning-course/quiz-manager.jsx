@@ -115,8 +115,8 @@
 			<h2>Quiz Results</h2>
 			{userAnswers.map((answer, index) => (
 				<p key={index}>
-				Question {index + 1}: {answer.answer} -{" "}
-				{answer.isCorrect ? "Correct" : "Incorrect"}
+				Question {index + 1}:
+				{answer.isCorrect ? "\tCorrect" : "\tIncorrect"}
 				</p>
 			))}
 			</Modal>

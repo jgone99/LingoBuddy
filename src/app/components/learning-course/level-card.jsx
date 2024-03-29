@@ -11,7 +11,8 @@ function LevelCard({
   updateUserProgress,
   sectionId,
   isDisabled,
-  unlockNextSection
+  unlockNextSection,
+  isPending
 }) {
   const [startQuiz, setStartQuiz] = useState(false);
 
@@ -55,7 +56,7 @@ function LevelCard({
               : "bg-green-500 text-white hover:bg-green-700"
           }`}
         >
-          Start
+          {isPending ? 'Pending' : 'Start'}
         </button>
       )}
     </div>

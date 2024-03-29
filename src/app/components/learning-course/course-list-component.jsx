@@ -1,23 +1,40 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useTransition } from 'react'
 import LevelCard from './level-card'
 
 import { useAuth } from '@clerk/nextjs'
 
 var loading = false
 
-const CourseListComponent = ({ initUserProgress, fetchUserProgress, questionsByLevelAndSection, updateUserProgress }) => {
+const CourseListComponent = ({ 
+    initUserProgress, 
+    fetchUserProgress, 
+    questionsByLevelAndSection, 
+    updateUserProgress,
+
+    // FOR TESTING
+    resetUserProgress
+}) => {
     const [ userProgress, setUserProgress ] = useState(initUserProgress)
+    const [ isPending, startTransistion ] = useTransition()
 
     const { userId } = useAuth()
 
     const unlockNextSection = (levelId, sectionId) => {
         loading = true
-        fetchUserProgress().then(result => {
-            setUserProgress(result)
-            loading = false
+        startTransistion(() => {
+            fetchUserProgress().then(result => {
+                setUserProgress(result)
+                loading = false
+            })
         })
+    }
+
+    const resetUser = () => {
+        if(resetUserProgress) {
+            resetUserProgress()
+        }
     }
 
     const makelevelCards = () => {
@@ -44,6 +61,7 @@ const CourseListComponent = ({ initUserProgress, fetchUserProgress, questionsByL
                         updateUserProgress={updateUserProgress}
                         isDisabled={(currentLevel < level) || (currentLevel == level && currentSection < section)}
                         unlockNextSection={unlockNextSection}
+                        isPending={isPending}
                         />
                     </>
                 )
@@ -55,7 +73,13 @@ const CourseListComponent = ({ initUserProgress, fetchUserProgress, questionsByL
 
     return (
         <>
+            {/* FOR TESTING */}
             <div>
+                <button onClick={resetUser}>RESET USER (TESTING)</button>
+            </div>
+
+            <div>
+                {console.log(isPending)}
                 {makelevelCards()}
             </div>
         </>
