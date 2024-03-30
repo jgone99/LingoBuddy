@@ -1,4 +1,3 @@
-
 import SnowmanGame from '../../components/games/snowman/snowman-game';
 import { query } from '../../db/queries';
 import { mutate } from '../../db/mutations';
