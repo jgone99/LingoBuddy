@@ -10,13 +10,18 @@
 	},
 	"dependencies": {
 		"@clerk/nextjs": "^4.29.9",
+<<<<<<< HEAD
 		"axios": "^1.6.8",
+=======
+		"@google-cloud/translate": "^8.1.0",
+>>>>>>> 59017e290c0f54f5dc50e7a0a7212735d30bbc65
 		"dotenv": "^16.4.5",
 		"next": "14.1.1",
-		"openai": "^4.28.4",
+		"openai": "^4.29.2",
 		"pg": "^8.11.3",
 		"react": "^18",
-		"react-dom": "^18"
+		"react-dom": "^18",
+		"svix": "^1.21.0"
 	},
 	"devDependencies": {
 		"@types/node": "20.11.24",
