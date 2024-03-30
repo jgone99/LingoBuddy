@@ -29,6 +29,10 @@ button {
     width: 120px;
 }
 
+button.isPending {
+    background-color: rgb(107 114 128);
+}
+
 .guessbox {
     border-color: #614AEB;
 }

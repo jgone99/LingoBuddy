@@ -3,8 +3,6 @@
 import { useState, useTransition } from 'react'
 import LevelCard from './level-card'
 
-import { useAuth } from '@clerk/nextjs'
-
 var loading = false
 
 const CourseListComponent = ({ 
@@ -15,6 +13,7 @@ const CourseListComponent = ({
 
     // FOR TESTING
     resetUserProgress
+    // FOR TESTING
 }) => {
     const [ userProgress, setUserProgress ] = useState(initUserProgress)
     const [ isPending, startTransistion ] = useTransition()
@@ -29,11 +28,13 @@ const CourseListComponent = ({
         })
     }
 
+    // FOR TESTING
     const resetUser = () => {
         if(resetUserProgress) {
             resetUserProgress()
         }
     }
+    // FOR TESTING
 
     const makelevelCards = () => {
         const currentLevel = userProgress.level_id
@@ -75,9 +76,9 @@ const CourseListComponent = ({
             <div>
                 <button onClick={resetUser}>RESET USER (TESTING)</button>
             </div>
+            {/* FOR TESTING */}
 
             <div>
-                {console.log(isPending)}
                 {makelevelCards()}
             </div>
         </>

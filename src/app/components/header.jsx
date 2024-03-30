@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { UserButton, auth, SignedIn, SignInButton, SignedOut } from '@clerk/nextjs';
-import GamesDropdown from './snowman/games-dropdown';
+import GamesDropdown from './games/snowman/games-dropdown';
 
 const Header = () => {
 

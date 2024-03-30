@@ -4,15 +4,15 @@ import Link from "next/link";
 import { useState } from "react";
 
 const GamesDropdown = () => {
-    const [ visible, setVisible ] = useState(false)
+    const [visible, setVisible] = useState(false)
 
     const handleMouseEnter = () => {
         setVisible(true);
-      };
-    
-      const handleMouseLeave = () => {
+    };
+
+    const handleMouseLeave = () => {
         setVisible(false);
-      };
+    };
 
     return (
         <div className='flex-1 bg-inherit games-tab text-center h-full' onMouseLeave={handleMouseLeave}>
@@ -21,8 +21,8 @@ const GamesDropdown = () => {
             </button>
             {visible && (
                 <>
-                <div className="flex flex-col bg-inherit items-center">
-                    <div className="games-dropdown absolute bg-inherit rounded-b">
+                    <div className="flex flex-col bg-inherit items-center">
+                        <div className="games-dropdown absolute bg-inherit rounded-b">
                             <ul className="m-2">
                                 <li>
                                     <Link href="/games/snowman">

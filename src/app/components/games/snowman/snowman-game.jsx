@@ -2,33 +2,31 @@
 
 import { useState, useEffect, useTransition } from 'react'
 import SnowmanFigure from "./snowman-figure"
-import Modal from '../matching/modal'
+import Modal from '../modal'
 
 const alphabetArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "ñ", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "á", "é", "í", "ó", "ú"]
 var won = false
-var gamesWonActual = 0
+var gamesWon = 0
 var testLoading = false
+const maxErrors = 4
 
-const SnowmanGame = ({ highscore, getHighscore, wordPair, getNewWord, updateHighscore }) => {
-    const [ firstRender, setFirstRender ] = useState(true)
-    const [ loading, setLoading ] = useState(true)
+const SnowmanGame = ({ 
+    highscore, 
+    getHighscore, 
+    wordPair, 
+    getNewWord, 
+    updateHighscore,
+    
+    // FOR TESTING
+    resetUserProgress
+    // FOR TESTING 
+}) => {
     const [ word, setWord ] = useState(wordPair)
-    const [ gameOver, setGameOver ] = useState(false)
-    const [ maxErrors ] = useState(4)
     const [ errorCount, setErrorCount ] = useState(0)
-    const [ gamesWon, setGamesWon ] = useState(0)
     const [ correctLetterCount, setCorrectLetterCount ] = useState(0)
     const [ showModal, setShowModal ] = useState(false)
     const [ currentHighscore, setCurrentHighscore ] = useState(highscore)
     const [ isPending, startTransition ] = useTransition()
-    
-
-    useEffect(() => {
-        if(firstRender) {
-            setFirstRender(false)
-        }
-        setLoading(false)
-    }, [firstRender])
     
     const guessBoxes = () => {
         return String(word['spanish']).split('').map((letter, index) => {
@@ -50,10 +48,9 @@ const SnowmanGame = ({ highscore, getHighscore, wordPair, getNewWord, updateHigh
         Promise.all([getHighscore(), getNewWord()]).then(result => {
             setCurrentHighscore(result[0])
             setWord(result[1])
-            setGamesWon(won ? gamesWon+1 : 0)
+            gamesWon += 1
             setCorrectLetterCount(0)
             setErrorCount(0)
-            setGameOver(false)
             resetGuessBoxes()
             testLoading = false
         })
@@ -72,19 +69,20 @@ const SnowmanGame = ({ highscore, getHighscore, wordPair, getNewWord, updateHigh
             return
         }
         const emptyBoxes = document.querySelectorAll(`.letter-${letter}.is-empty`)
+
+        testLoading = true
         emptyBoxes.forEach((div) => {
             div.innerHTML=letter.toUpperCase()
             div.classList.remove('is-empty')
         })
+        testLoading = false
     
         if(correctLetterCount+emptyBoxes.length >= word['spanish'].length) {
             won = true
-            gamesWonActual += 1
-            console.log(gamesWonActual)
-            if (gamesWonActual > currentHighscore) {
+            if (gamesWon + 1 > currentHighscore) {
                 startTransition(() => {
-                    updateHighscore(gamesWonActual).then(result => {
-                        console.log(result.length)
+                    updateHighscore(gamesWon + 1).then(result => {
+                        console.log('CLIENT: user updated')
                     })
                 })
             }
@@ -93,18 +91,6 @@ const SnowmanGame = ({ highscore, getHighscore, wordPair, getNewWord, updateHigh
         }
     
         setCorrectLetterCount(correctLetterCount+emptyBoxes.length)
-    }
-    
-    const endOfGame = (won) => {
-        setGameOver(true)
-        
-        if(won) {
-            setGamesWon(gamesWon+1)
-        } else {
-            setGamesWon(0)
-        }
-    
-        setCorrectLetterCount(0)
     }
     
     const errorMade = () => {
@@ -120,7 +106,16 @@ const SnowmanGame = ({ highscore, getHighscore, wordPair, getNewWord, updateHigh
         setShowModal(false)
     }
     
-    return loading || testLoading ? 'Loading...' : (
+
+    // FOR TESTING
+    const resetUser = () => {
+        if(resetUserProgress) {
+            resetUserProgress()
+        }
+    }
+    // FOR TESTING
+
+    return  testLoading ? 'Loading...' : (
         <>
             <div>
                 {showModal && <Modal won={won} isPending={isPending} modalContinue={modalContinue} />}
@@ -135,6 +130,13 @@ const SnowmanGame = ({ highscore, getHighscore, wordPair, getNewWord, updateHigh
                             <SnowmanFigure errors={ errorCount } />
                         </div>
                     </div>
+
+                    {/* FOR TESTING */}
+                    <div>
+                        <button onClick={resetUser}>RESET USER (TESTING)</button>
+                    </div>
+                    {/* FOR TESTING */}
+
                     <div className='w-96 ml-80 mt-40'>
                         <div className='mb-20 flex justify-center'>
                             {guessBoxes()}

@@ -1,10 +1,14 @@
 
-import MatchingGame from '../../components/matching/matching-game'
+import { auth } from '@clerk/nextjs'
+import MatchingGame from '../../components/games/matching/matching-game'
 import { query } from '../../db/queries'
+import { mutate } from '../../db/mutations'
 
 const matchCount = 5
 var wordMatches = []
 var wordOrder = []
+
+const { userId } = auth()
 
 const queryWords = async() => {
     'use server'
@@ -52,12 +56,45 @@ const queryWords = async() => {
     }
 }
 
+const getHighscore = async() => {
+    'use server'
+
+    const queryUserProgress =
+    `SELECT matching_highscore FROM games_progress WHERE user_id = $1`
+
+    try {
+        const res = await query(queryUserProgress, [userId])
+        console.log(`SERVER: successfully fetched highscore for ${userId}`)
+        return res[0].matching_highscore
+    } catch (error) {
+        console.log(`SERVER: failed to fetch highscore for ${userId}`)
+        throw error
+    }
+}
+
+const updateHighscore = async(highscore) => {
+    'use server'
+
+    const updateScoreQuery = 
+    `UPDATE games_progress
+    SET matching_highscore = $2
+    WHERE user_id = $1`
+
+    try {
+        await mutate(updateScoreQuery, [userId, highscore])
+        console.log(`SERVER: successfully updated ${userId}`)
+    } catch (error) {
+        console.log(`SERVER: failed to update ${userId}`)
+        throw error
+    }
+}
+
 const matchOrder = await queryWords()
 
 const MatchingPage = async() => {
     return (
         <>
-            <MatchingGame matches={matchOrder['matches']} orders={matchOrder['order']} getMoreMatches={queryWords}/>
+            <MatchingGame matches={matchOrder['matches']} orders={matchOrder['order']} getMoreMatches={queryWords} highscore={await getHighscore()} getHighscore={getHighscore} updateHighscore={updateHighscore}/>
         </>
     )
 }
