@@ -2,6 +2,9 @@
 import SnowmanGame from '../../components/snowman/snowman-game';
 import { query } from '../../db/queries';
 import { mutate } from '../../db/mutations';
+import { auth } from '@clerk/nextjs';
+
+const { userId } = auth()
 
 const getWordPair = async() => {
     'use server'
@@ -10,20 +13,35 @@ const getWordPair = async() => {
     return ans
 }
 
-const updateHighscore = async(userId, highscore) => {
+const getHighscore = async() => {
     'use server'
-    mutate(`
-    UPDATE games_progress
-    SET snowman_highscore=${highscore}
-    WHERE user_id=${userId}
-    `)
+
+    const queryUserProgress =
+    `SELECT snowman_highscore FROM games_progress WHERE user_id=$1`
+
+    const res = await query(queryUserProgress, [userId])
+    return res[0].snowman_highscore
 }
+
+const updateHighscore = async(highscore) => {
+    'use server'
+
+    const updateScoreQuery = 
+    `UPDATE games_progress
+    SET snowman_highscore=$2
+    WHERE user_id=$1`
+
+    await mutate(updateScoreQuery, [userId, highscore])
+}
+
+console.log(userId)
+
+const highscore = await getHighscore()
 
 const SnowmanPage = async() => {
     return (
         <>
-            <div className='text-center'>TEST PAGE</div>
-            <SnowmanGame wordPair={await getWordPair()} getNewWord={getWordPair} updateHighscore={updateHighscore}/>
+            <SnowmanGame highscore={highscore} getHighscore={getHighscore} wordPair={await getWordPair()} getNewWord={getWordPair} updateHighscore={updateHighscore}/>
         </>
     )
 };

@@ -19,8 +19,6 @@ const CourseListComponent = ({
     const [ userProgress, setUserProgress ] = useState(initUserProgress)
     const [ isPending, startTransistion ] = useTransition()
 
-    const { userId } = useAuth()
-
     const unlockNextSection = (levelId, sectionId) => {
         loading = true
         startTransistion(() => {

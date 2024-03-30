@@ -1,5 +1,6 @@
 import React from "react";
 import { query } from "../db/queries";
+import { mutate } from "../db/mutations";
 import LevelCard from "../components/learning-course/level-card";
 import { auth } from "@clerk/nextjs";
 import CourseListComponent from "../components/learning-course/course-list-component";
@@ -12,12 +13,11 @@ export default async function CourseListPage() {
 	async function updateUserProgress(levelId, sectionId) {
 		"use server";
 		console.log('updating user');
-		await query(
+		const updateUserQuery = 
 			`UPDATE course_progress
 			SET level_id = $2, section_id = $3
-			WHERE user_id = $1`,
-			[userId, levelId, sectionId]
-		);
+			WHERE user_id = $1`;
+		await mutate(updateUserQuery, [userId, levelId, sectionId])
 	}
 
 	// FOR TESTING

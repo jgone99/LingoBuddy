@@ -8,27 +8,27 @@ const alphabetArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l
 const tilde_letters = ["a", "e", "i", "o", "u"]
 const tilde_variants= ["á", "é", "í", "ó", "ú"]
 var won = false
+var gamesWonActual = 0
 
-const SnowmanGame = ({ wordPair, getNewWord, updateHighscore }) => {
+const SnowmanGame = ({ highscore, getHighscore, wordPair, getNewWord, updateHighscore }) => {
     const [ firstRender, setFirstRender ] = useState(true)
     const [ loading, setLoading ] = useState(true)
-    const [ word, setWord ] = useState()
+    const [ word, setWord ] = useState(wordPair)
     const [ gameOver, setGameOver ] = useState(false)
     const [ maxErrors ] = useState(4)
     const [ errorCount, setErrorCount ] = useState(0)
     const [ gamesWon, setGamesWon ] = useState(0)
     const [ correctLetterCount, setCorrectLetterCount ] = useState(0)
     const [ showModal, setShowModal ] = useState(false)
+    const [ currentHighscore, setCurrentHighscore ] = useState(highscore)
     var testLoading = false
-    
 
     useEffect(() => {
         if(firstRender) {
-            setWord(wordPair)
             setFirstRender(false)
         }
         setLoading(false)
-    }, [firstRender, wordPair])
+    }, [firstRender])
     
     const guessBoxes = () => {
         return String(word['spanish']).split('').map((letter, index) => {
@@ -83,6 +83,10 @@ const SnowmanGame = ({ wordPair, getNewWord, updateHighscore }) => {
     
         if(correctLetterCount+emptyBoxes.length >= word['spanish'].length) {
             won = true
+            gamesWonActual += 1
+            if (gamesWonActual > currentHighscore) {
+                updateHighscore(gamesWonActual)
+            }
             setShowModal(true)
             return
         }
@@ -116,6 +120,9 @@ const SnowmanGame = ({ wordPair, getNewWord, updateHighscore }) => {
 
     const modalContinue = () => {
         resetAll()
+        getHighscore().then(result => {
+            setCurrentHighscore(result)
+        })
         setShowModal(false)
     }
     
@@ -123,6 +130,7 @@ const SnowmanGame = ({ wordPair, getNewWord, updateHighscore }) => {
         <>
             <div>
                 {showModal && <Modal won={won} modalContinue={modalContinue} />}
+                <div className="text-center">HIGHSCORE: {currentHighscore}</div>
                 <div className="text-center">SCORE: {gamesWon}</div>
                 <div className='text-center mb-20'>
                     <h4>WORD: {word['english'].toUpperCase()}</h4>
