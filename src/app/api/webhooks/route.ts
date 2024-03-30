@@ -1,7 +1,7 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
-import { handleUserCreationEvent } from "./webhookHandler.js";
+import { handleUserCreationEvent, handleSessionCreationEvent } from "./webhookHandler.js";
 
 export async function POST(req: Request) {
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the webhook
@@ -62,6 +62,9 @@ export async function POST(req: Request) {
   try {
     if (eventType === "user.created") {
       await handleUserCreationEvent(payload);
+    }
+    else if(eventType === "session.created") {
+      await handleSessionCreationEvent(payload)
     }
   } catch (err) {
     console.error("Error handling webhook:", err);
