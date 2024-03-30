@@ -38,10 +38,10 @@ const Header = () => {
 						</div>
 					</SignedIn>
 					<SignedOut>
-						<Link href='sign-in' className='hover:text-white mr-4'>
+						<Link href='/sign-in' className='hover:text-white mr-4'>
 							Sign In
 						</Link>
-						<Link href='sign-up' className='hover:text-white mr-4'>
+						<Link href='/sign-up' className='hover:text-white mr-4'>
 							Sign Up
 						</Link>
 					</SignedOut>
