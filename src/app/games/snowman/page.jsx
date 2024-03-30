@@ -20,6 +20,7 @@ const getHighscore = async() => {
     `SELECT snowman_highscore FROM games_progress WHERE user_id=$1`
 
     const res = await query(queryUserProgress, [userId])
+    console.log(res[0].snowman_highscore)
     return res[0].snowman_highscore
 }
 
@@ -31,7 +32,8 @@ const updateHighscore = async(highscore) => {
     SET snowman_highscore=$2
     WHERE user_id=$1`
 
-    await mutate(updateScoreQuery, [userId, highscore])
+    const res = await mutate(updateScoreQuery, [userId, highscore])
+    return res;
 }
 
 console.log(userId)
