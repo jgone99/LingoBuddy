@@ -33,47 +33,19 @@ button.isPending {
     background-color: rgb(107 114 128);
 }
 
-.guessbox {
-    border-color: #614AEB;
-}
-
-.word-card {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    width: 10rem;
-    height: 4rem;
-}
-
-.word-card.unmatched {
-    background: #614AEB;
-    color: white;
-}
-
-.word-card.matched {
-    background: #4aeb60;
-    color: black;
-}
-
-.word-card.wrong-match {
-    background: #e62e2e;
-    color: white;
-}
-
-.word-card.selected {
-    background: rgb(255,170,43);
-    color: black;
-}
-
 .games-modal {
     z-index: 30;
 }
 
-.snowman-box {
-    z-index: 10;
-}
-
 .games-tab {
     color: black;
+}
+
+nav {
+    height: 64px;
+    width: 100vw;
+}
+
+.main-page {
+    padding-top: 64px;
 }

@@ -45,7 +45,7 @@ const MatchingGame = ({
             setWordOrder(result[0]['order'])
             setCurrentHighscore(result[1])
             resetAll()
-            currentScore += 1
+            currentScore += won ? 1 : 0
             isLoading = false
         })
     }

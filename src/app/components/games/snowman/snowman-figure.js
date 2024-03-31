@@ -1,5 +1,5 @@
 import React from "react"
-import './snowman.css'
+import './snowman-figure.css'
 
 const SnowmanFigure = ({ errors }) => {
     return (

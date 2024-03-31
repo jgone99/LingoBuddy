@@ -6,7 +6,7 @@ const Header = () => {
 
 	return (
 		<>
-			<nav className="h-16 px-6 flex items-center justify-between relative">
+			<nav className="px-6 flex items-center justify-between absolute">
 				<div className="flex items-center title">
 					<Link href="/home-page">
 						<div>
