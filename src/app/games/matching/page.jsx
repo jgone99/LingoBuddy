@@ -7,12 +7,12 @@ const MatchingPage = async() => {
 
     const { userId } = auth();
 
-    const matchCount = 5
-    var wordMatches = []
-    var wordOrder = []
-
     const queryWords = async() => {
         'use server'
+
+        const matchCount = 5
+        var wordMatches = []
+        var wordOrder = []
         
         wordMatches.length = 0;
         wordOrder.length = 0;
@@ -46,7 +46,7 @@ const MatchingPage = async() => {
         RIGHT JOIN
         spanish_rand c
         ON a.num = c.num`
-        
+
         const ans = await query(newWords, [matchCount])
         
         ans.forEach((match) => {
