@@ -1,280 +1,74 @@
-
-
-.snowman-box {
+.game-container {
+    width: 100vw;
+    height: 100%;
     background: #2c3e50;
-    height: 550px;
-    width: 600px;
-    left: 100px;
-    right: 200px;
-    top: 300px;
-    position: absolute;
-    display: inline-block;
-    border-radius: 25px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
 }
 
-.body {
-    height: 200px;
-    width: 200px;
-    background: #ecf0f1;
-    box-shadow: -13px -8px 0px rgba(0,0,0,0.1) inset;
-    border-radius: 50%;
-    position: absolute;
-    left: 200px;
-    right: 200px;
-    top: 55%;
-    z-index: 20;
+.word-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    width: 10rem;
+    height: 4rem;
 }
 
-.body::after {
-    height: 160px;
-    width: 160px;
-    background: #ecf0f1;
-    box-shadow: -7px -5px 0px rgba(0,0,0,0.1) inset;
-    border-radius: 50%;
-    display: inline-block;
-    content: '';
-    position: relative;
-    top: -97px;
-    left: 20px;
+.word-card.unmatched {
+    background: #614AEB;
+    color: white;
 }
 
-.nose {
-    height: 0px;
-    width: 0px;
-    border-style: solid;
-    border-width: 8px 41px 8px 0px;
-    border-color: transparent #fa9a20 transparent transparent;
-    position: absolute;
-    top: -145px;
-    display: inline-block;
-    left: 50px;
-    transform: rotate(10deg);
-    box-shadow: 0px 43px rgba(0,0,0,0.2) inset;
-    z-index: 30;
+.word-card.matched {
+    background: #4aeb60;
+    color: black;
 }
 
-.head {
-    height: 100px;
-    width: 100px;
-    background: #ecf0f1;
-    box-shadow: -5px 0px 0px rgba(0,0,0,0.1) inset;
-    border-radius: 50%;
-    display: inline-block;
-    content: '';
-    position: absolute;
-    top: -191px;
-    left: 46px;
+.word-card.wrong-match {
+    background: #e62e2e;
+    color: white;
 }
 
-.eyes {
-    content: '';
-    position: absolute;
-    height: 12px;
-    width: 12px;
-    border-radius: 50%;
-    background: #2c3e50;
-    display: inline-block;
-    top: 32px;
-    left: 27px;
-    z-index: 30;
+.word-card.selected {
+    background: rgb(255,170,43);
+    color: black;
 }
 
-.eyes::after {
-    content: '';
-    position: absolute;
-    height: 12px;
-    width: 12px;
-    border-radius: 50%;
-    background: #2c3e50;
-    display: inline-block;
-    top: 1px;
-    left: 20px;
+.guessbox {
+    border-color: #614AEB;
 }
 
-.scarf {
-    height: 0;
-    position: absolute;
-    border-bottom: 21px solid rgb(243, 77, 77);
-    border-left: 18px solid transparent;
-    border-right: 29px solid transparent;
-    width: 104px;
-    top: -101px;
-    z-index: 30;
-    left: 50px;
-    border-radius: 0px 100% 5px 10px;
+.main-comps {
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    align-items: center;
 }
 
-.scarf::after {
-    height: 17px;
-    width: 74px;
-    transform: rotate(86deg);
-    background: rgb(243, 77, 77);
-    display: inline-block;
-    content: '';
-    position: absolute;
-    top: 34px;
-    left: 15px;
-    border-radius: 50% 0% 50% 50%;
-    box-shadow: -4px 0px rgba(0,0,0,0.1) inset;
+.figure {
+    transform: scale(1.2);
+    margin-right: max(10vw, 80px);
 }
 
-.left-hand{
-    position: absolute;
-    top: -30px;
-    left: -10px;
-    transform: rotate(15deg);
-    border-bottom: 6px solid rgba(151, 102, 13, 1);
-    border-left: 2px solid transparent;
-    border-right: 0 solid transparent;
-    height: 0;
-    width: 36px;
+.interactive {
+    margin-left: max(10vw, 80px);
 }
 
-.left-hand::before{
-    content: '';
-    width: 81px;
-    left: -78px;
-    position: absolute;
-    display: inline-block;
-    transform: rotate(-12deg);
-    top: 8px;
-    border-bottom: 7px solid rgba(128, 84, 6, 1);
-    border-left: 3px solid transparent;
-    border-right: 3px solid transparent;
-    height: 0;
-    z-index: 30;
-}
-
-.left-hand::after {
-    content: '';
-    position: absolute;
-    height: 0;
-    width: 47px;
-    left: -84px;
-    display: inline-block;
-    top: 3px;
-    transform: rotate(17deg);
-    border-bottom: 4px solid rgba(128, 84, 6, 1);
-    border-left: 3px solid transparent;
-    border-right: 3px solid transparent;
-    border-radius: 20px 50% 10% 20%;
-}
-
-.right-hand{
-    position: absolute;
-    top: -30px;
-    left: 150px;
-    transform: rotate(-12deg);
-    border-bottom: 6px solid rgba(151, 102, 13, 1);
-    border-left: 2px solid transparent;
-    border-right: 0 solid transparent;
-    height: 0;
-    width: 66px;
-}
-
-.right-hand::before{
-    content: '';
-    width: 80px;
-    left: 60px;
-    position: absolute;
-    display: inline-block;
-    transform: rotate(10deg);
-    top: 7px;
-    border-bottom: 6px solid rgba(128, 84, 6, 1);
-    border-left: 3px solid transparent;
-    border-right: 3px solid transparent;
-    height: 0;
-    z-index: 30;
-}
-
-.right-hand::after {
-    content: '';
-    position: absolute;
-    height: 0;
-    width: 47px;
-    left: 60px;
-    display: inline-block;
-    top: -6px;
-    transform: rotate(-16deg);
-    border-bottom: 4px solid rgba(128, 84, 6, 1);
-    border-left: 3px solid transparent;
-    border-right: 3px solid transparent;
-    border-radius: 20px 50% 10% 20%;
-}
-
-.hat {
-    position: absolute;
-    top: -62px;
-    left:30px;
-    transform: rotate(10deg);
-    border-radius: 0;
-    border-top: 56px solid rgb(37 37 37);
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    height: 0;
-    width: 60px;
-    border-bottom: 27px solid rgb(246, 62, 62);
-    z-index: -1;
-}
-
-@keyframes left-hand-fall {
-    from {
-        top: -30px;
-        transform: rotate(15deg);
+@media only screen and (max-width: 600px) {
+    .figure {
+        transform: scale(0.5);
+        margin: 0;
     }
-    to {
-        top: 190px;
-        transform: rotate(-12deg);
-    }
-}
 
-@keyframes right-hand-fall {
-    from {
-        top: -30px;
-        transform: rotate(-12deg);
+    .interactive {
+        margin: 0;
     }
-    to {
-        top: 190px;
-        transform: rotate(15deg);
-    }
-}
 
-@keyframes nose-fall {
-    from {
-        top: -145px;
-        transform: rotate(10deg);
+    .main-comps {
+        flex-direction: column;
     }
-    to {
-        top: 210px;
-        transform: rotate(170deg);
-    }
-}
-
-@keyframes hat-fall {
-    from {
-        top: -253px;
-        transform: rotate(10deg);
-    }
-    to {
-        top: 130px;
-        transform: rotate(90deg);
-    }
-}
-
-@keyframes head-fall1 {
-    to {
-        transform: rotate(96deg);
-    }
-}
-
-@keyframes head-fall2 {
-    to {
-        translate: 10px;
-    }
-}
-
-@keyframes head-fall3 {
-    to {
-        translate: 10px 150px;
-    }
-}
+  }
