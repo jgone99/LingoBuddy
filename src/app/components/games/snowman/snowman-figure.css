@@ -41,6 +41,21 @@
     z-index: 30;
 }
 
+/* .nose2 {
+    height: 0px;
+    width: 0px;
+    border-style: solid;
+    border-width: 8px 41px 8px 0px;
+    border-color: transparent #fa9a20 transparent transparent;
+    position: absolute;
+    top: 210px;
+    display: inline-block;
+    left: 50px;
+    transform: rotate(170deg);
+    box-shadow: 0px 43px rgba(0,0,0,0.2) inset;
+    z-index: 30;
+} */
+
 .head {
     height: 100px;
     width: 100px;
@@ -205,6 +220,52 @@
     z-index: -1;
 }
 
+.left-hand-fall {
+    animation: left-hand-fall 0.7s ease-in 0s 1 forwards;
+}
+
+.left-hand-fall-back {
+    animation: left-hand-fall-back 0.7s ease-in 0s 1 forwards;
+}
+
+.right-hand-fall {
+    animation: right-hand-fall 0.7s ease-in 0s 1 forwards ;
+}
+
+.right-hand-fall-back {
+    animation: right-hand-fall-back 0.7s ease-in 0s 1 forwards ;
+}
+
+.nose-fall {
+    animation-name: nose-fall; 
+    animation-duration: 0.7s;
+    animation-timing-function: ease-in;
+    animation-fill-mode: forwards;
+}
+
+.nose-fall-back {
+    animation-name: nose-fall-back; 
+    animation-duration: 0.7s;
+    animation-timing-function: ease-in;
+    animation-fill-mode: forwards;
+}
+
+.head-fall {
+    animation-name: head-fall1, head-fall2, head-fall3;
+    animation-duration: 1.2s, 1.2s, 0.8s;
+    animation-timing-function: linear, ease-in-out, ease-in;
+    animation-delay: 0s, 0s, 0.4s;
+    animation-fill-mode: forwards, forwards, forwards;
+}
+
+.head-fall-back {
+    animation-name: head-fall1-back, head-fall2-back, head-fall3-back;
+    animation-duration: 1.2s, 1.2s, 0.8s;
+    animation-timing-function: linear, ease-in-out, ease-in;
+    animation-delay: 0s, 0s, 0s;
+    animation-fill-mode: forwards, forwards, forwards;
+}
+
 @keyframes left-hand-fall {
     from {
         top: -30px;
@@ -213,6 +274,17 @@
     to {
         top: 190px;
         transform: rotate(-12deg);
+    }
+}
+
+@keyframes left-hand-fall-back {
+    from {
+        top: 190px;
+        transform: rotate(-12deg);
+    }
+    to {
+        top: -30px;
+        transform: rotate(15deg);
     }
 }
 
@@ -227,6 +299,17 @@
     }
 }
 
+@keyframes right-hand-fall-back {
+    from {
+        top: 190px;
+        transform: rotate(15deg);
+    }
+    to {
+        top: -30px;
+        transform: rotate(-12deg);
+    }
+}
+
 @keyframes nose-fall {
     from {
         top: -145px;
@@ -238,20 +321,32 @@
     }
 }
 
-@keyframes hat-fall {
+@keyframes nose-fall-back {
     from {
-        top: -253px;
-        transform: rotate(10deg);
+        top: 210px;
+        transform: rotate(170deg);
     }
     to {
-        top: 130px;
-        transform: rotate(90deg);
+        top: -145px;
+        transform: rotate(10deg);
     }
 }
 
 @keyframes head-fall1 {
+    from {
+        transform: rotate(0deg);
+    }
     to {
         transform: rotate(96deg);
+    }
+}
+
+@keyframes head-fall1-back {
+    from {
+        transform: rotate(96deg);
+    }
+    to {
+        transform: rotate(0deg);
     }
 }
 
@@ -261,8 +356,26 @@
     }
 }
 
+@keyframes head-fall2-back {
+    from {
+        translate: 10px;
+    }
+    to {
+        translate: 0px;
+    }
+}
+
 @keyframes head-fall3 {
     to {
         translate: 10px 150px;
+    }
+}
+
+@keyframes head-fall3-back {
+    from {
+        translate: 10px 150px;
+    }
+    to {
+        translate: 0px 0px;
     }
 }
