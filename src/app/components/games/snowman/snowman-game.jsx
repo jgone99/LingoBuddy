@@ -4,14 +4,10 @@ import { useState, useEffect, useTransition } from 'react'
 import SnowmanFigure from "./snowman-figure"
 import style from '../../../components/games/snowman/snowman.css'
 import Modal from '../modal'
-import { getEventListeners } from 'events'
 
 const alphabetArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "ñ", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "á", "é", "í", "ó", "ú"]
 var won = false
 var gamesWon = 0
-var testLoading = false
-var dataFadeOutDone = false
-var gbFadeOutDone = false
 const maxErrors = 4
 
 const SnowmanGame = ({
@@ -215,7 +211,8 @@ const SnowmanGame = ({
 
     return (
         <>
-            <div className='game-container bg-black'>
+            <div className='game-container'>
+                
                 {showModal && <Modal won={won} isPending={isPending} modalContinue={modalContinue} />}
                 <div id='data'>
                     <div>HIGHSCORE: {currentHighscore}</div>
