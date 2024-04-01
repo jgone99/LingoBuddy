@@ -188,10 +188,13 @@ const SnowmanGame = ({
         const leftHand = document.querySelector('#left-hand')
         const rightHand = document.querySelector('#right-hand')
         const head = document.querySelector('#head')
-        nose.classList.add('nose-fall-back')
-        leftHand.classList.add('left-hand-fall-back')
-        rightHand.classList.add('right-hand-fall-back')
-        head.classList.add('head-fall-back')
+        
+        switch (errorCount) {
+            case 4: head.classList.add('head-fall-back')
+            case 3: nose.classList.add('nose-fall-back')
+            case 2: rightHand.classList.add('right-hand-fall-back')
+            case 1: leftHand.classList.add('left-hand-fall-back')
+        }
     }
 
     const modalContinue = () => {
