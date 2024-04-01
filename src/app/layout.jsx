@@ -3,6 +3,7 @@ import "./globals.css";
 import { ClerkProvider, ClerkLoaded } from "@clerk/nextjs";
 import Header from "./components/header";
 
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
