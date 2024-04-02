@@ -84,7 +84,7 @@ const SnowmanGame = ({
 
     const alphabetButtons = () => {
         return alphabetArray.map((letter, index) => {
-            return <button key={'btn-' + letter + index} onClick={() => { buttonClicked(letter) }} className='m-1 text-white w-8 h-8 rounded hover:bg-cyan-800' value={letter}>{letter.toUpperCase()}</button>
+            return <button key={'btn-' + letter + index} onClick={() => { buttonClicked(letter) }} className='alpha-button' value={letter}>{letter.toUpperCase()}</button>
         })
     }
 
@@ -235,7 +235,7 @@ const SnowmanGame = ({
                                 {guessBoxes()}
                             </div>
                             <div className="h-full">
-                                <div className='grid grid-cols-9 justify-items-center'>
+                                <div className='flex flex-wrap justify-center'>
                                     {alphabetButtons()}
                                 </div>
                             </div>
