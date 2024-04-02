@@ -3,6 +3,8 @@
 @tailwind utilities;
 
 nav {
+    height: 64px;
+    width: 100vw;
     background: rgb(255,170,43);
     border-color: black;
     border-width: 1px;
@@ -12,7 +14,6 @@ nav {
     z-index: 30;
     font-family: cursive;
     position: absolute;
-    overflow: hidden;
     width: 100vw;
     justify-content: space-between;
 }
@@ -77,15 +78,26 @@ button.isPending {
     }
 }
 
-.games-tab {
-    color: black;
-}
-
-nav {
-    height: 64px;
-    width: 100vw;
-}
-
 .main-page {
     padding-top: 64px;
+}
+
+.header-tab {
+    width: 120px;
+    background: inherit;
+    justify-content: center;
+}
+
+.games-tab {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.games-dropdown {
+    position: absolute;
+    border-radius: 4px;
+    margin-top: 130px;
 }

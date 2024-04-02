@@ -9,6 +9,7 @@
     align-items: center;
     overflow: hidden;
     justify-content: start;
+    z-index: 10;
 }
 
 .guessbox {

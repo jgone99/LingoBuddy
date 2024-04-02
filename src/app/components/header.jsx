@@ -14,18 +14,18 @@ const Header = () => {
 						</div>
 					</Link>
 				</div>
-				<div className="flex text-center">
+				<div className="header-tab flex text-center">
 					<Link
 						href="/course-list"
-						className="mx-2 hover:text-gray-300 cursor-pointer"
+						className="hover:text-gray-300 cursor-pointer"
 					>
 						Learning Courses
 					</Link>
 				</div>
-				<div className="flex text-center">
+				<div className="header-tab flex text-center">
 					<Link
 						href="/chatbot"
-						className="mx-2 hover:text-gray-300 cursor-pointer"
+						className="hover:text-gray-300 cursor-pointer"
 					>
 						ChatBot
 					</Link>
