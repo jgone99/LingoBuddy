@@ -37,19 +37,10 @@
     transform: rotate(10deg);
     box-shadow: 0px 43px rgba(0,0,0,0.2) inset;
     z-index: 30;
-}
-
-.head {
-    height: 100px;
-    width: 100px;
-    background: #ecf0f1;
-    box-shadow: -5px 0px 0px rgba(0,0,0,0.1) inset;
-    border-radius: 50%;
-    display: inline-block;
-    content: '';
-    position: absolute;
-    top: -191px;
-    left: 46px;
+    transition: top, transform;
+    transition-duration: 1.2s;
+    transition-timing-function: ease-out;
+    transition-delay: 0s;
 }
 
 .eyes {
@@ -114,6 +105,10 @@
     border-right: 0 solid transparent;
     height: 0;
     width: 36px;
+    transition: top, transform;
+    transition-duration: 1.2s;
+    transition-timing-function: ease-out;
+    transition-delay: 0s;
 }
 
 .left-hand::before{
@@ -156,6 +151,10 @@
     border-right: 0 solid transparent;
     height: 0;
     width: 66px;
+    transition: top, transform;
+    transition-duration: 1.2s;
+    transition-timing-function: ease-out;
+    transition-delay: 0s;
 }
 
 .right-hand::before{
@@ -203,162 +202,52 @@
     z-index: -1;
 }
 
-.left-hand-fall {
-    animation: left-hand-fall 0.7s ease-in 0s 1 forwards;
+.left-hand.left-hand-fall {
+    transition: top, transform;
+    transition-duration: 0.7s;
+    transition-timing-function: ease-in;
+    transition-delay: 0s;
+    top: 190px;
+    transform: rotate(-12deg);
 }
 
-.left-hand-fall-back {
-    animation: left-hand-fall-back 1.2s ease-in 0s 1 forwards;
+.right-hand.right-hand-fall {
+    transition: top, transform;
+    transition-duration: 0.7s;
+    transition-timing-function: ease-in;
+    transition-delay: 0s;
+    top: 190px;
+    transform: rotate(15deg);
 }
 
-.right-hand-fall {
-    animation: right-hand-fall 0.7s ease-in 0s 1 forwards ;
+.nose.nose-fall {
+    transition: top, transform;
+    transition-duration: 0.7s;
+    transition-timing-function: ease-in;
+    transition-delay: 0s;
+    top: 210px;
+    transform: rotate(170deg);
 }
 
-.right-hand-fall-back {
-    animation: right-hand-fall-back 1.2s ease-in 0s 1 forwards ;
+#head {
+    transition: transform 1.2s linear 0s, translate 1.2s ease-in-out 0.4s, translate 0.8s ease-out 0s;
 }
 
-.nose-fall {
-    animation-name: nose-fall; 
-    animation-duration: 0.7s;
-    animation-timing-function: ease-in;
-    animation-fill-mode: forwards;
+.head {
+    height: 100px;
+    width: 100px;
+    background: #ecf0f1;
+    box-shadow: -5px 0px 0px rgba(0,0,0,0.1) inset;
+    border-radius: 50%;
+    display: inline-block;
+    content: '';
+    position: absolute;
+    top: -191px;
+    left: 46px;
 }
 
-.nose-fall-back {
-    animation-name: nose-fall-back; 
-    animation-duration: 1.2s;
-    animation-timing-function: ease-in;
-    animation-fill-mode: forwards;
-}
-
-.head-fall {
-    animation-name: head-fall1, head-fall2, head-fall3;
-    animation-duration: 1.2s, 1.2s, 0.8s;
-    animation-timing-function: linear, ease-in-out, ease-in;
-    animation-delay: 0s, 0s, 0.4s;
-    animation-fill-mode: forwards, forwards, forwards;
-}
-
-.head-fall-back {
-    animation-name: head-fall1-back, head-fall2-back, head-fall3-back;
-    animation-duration: 1.2s, 1.2s, 0.8s;
-    animation-timing-function: linear, ease-in-out, ease-in;
-    animation-delay: 0s, 0s, 0s;
-    animation-fill-mode: forwards, forwards, forwards;
-}
-
-@keyframes left-hand-fall {
-    from {
-        top: -30px;
-        transform: rotate(15deg);
-    }
-    to {
-        top: 190px;
-        transform: rotate(-12deg);
-    }
-}
-
-@keyframes left-hand-fall-back {
-    from {
-        top: 190px;
-        transform: rotate(-12deg);
-    }
-    to {
-        top: -30px;
-        transform: rotate(15deg);
-    }
-}
-
-@keyframes right-hand-fall {
-    from {
-        top: -30px;
-        transform: rotate(-12deg);
-    }
-    to {
-        top: 190px;
-        transform: rotate(15deg);
-    }
-}
-
-@keyframes right-hand-fall-back {
-    from {
-        top: 190px;
-        transform: rotate(15deg);
-    }
-    to {
-        top: -30px;
-        transform: rotate(-12deg);
-    }
-}
-
-@keyframes nose-fall {
-    from {
-        top: -145px;
-        transform: rotate(10deg);
-    }
-    to {
-        top: 210px;
-        transform: rotate(170deg);
-    }
-}
-
-@keyframes nose-fall-back {
-    from {
-        top: 210px;
-        transform: rotate(170deg);
-    }
-    to {
-        top: -145px;
-        transform: rotate(10deg);
-    }
-}
-
-@keyframes head-fall1 {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(96deg);
-    }
-}
-
-@keyframes head-fall1-back {
-    from {
-        transform: rotate(96deg);
-    }
-    to {
-        transform: rotate(0deg);
-    }
-}
-
-@keyframes head-fall2 {
-    to {
-        translate: 10px;
-    }
-}
-
-@keyframes head-fall2-back {
-    from {
-        translate: 10px;
-    }
-    to {
-        translate: 0px;
-    }
-}
-
-@keyframes head-fall3 {
-    to {
-        translate: 10px 150px;
-    }
-}
-
-@keyframes head-fall3-back {
-    from {
-        translate: 10px 150px;
-    }
-    to {
-        translate: 0px 0px;
-    }
+#head.head-fall {
+    transition: transform 1.2s linear 0s, translate 1.2s ease-in-out 0s, translate 0.8s ease-in 0.4s;
+    transform: rotate(96deg);
+    translate: 10px 150px;
 }
