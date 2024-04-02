@@ -79,7 +79,7 @@ const SnowmanGame = ({
             guessboxes.removeEventListener(e.type, func)
             fetchAll()
         }, null)
-        
+
     }
 
     const alphabetButtons = () => {
@@ -182,7 +182,7 @@ const SnowmanGame = ({
         const leftHand = document.querySelector('#left-hand')
         const rightHand = document.querySelector('#right-hand')
         const head = document.querySelector('#head')
-        
+
         switch (errorCount) {
             case 4: head.classList.add('head-fall-back')
             case 3: nose.classList.add('nose-fall-back')
@@ -209,8 +209,10 @@ const SnowmanGame = ({
 
     return (
         <>
+            {/* FOR TESTING */}
+            <button className='absolute' onClick={resetUser}>RESET USER (TESTING)</button>
+            {/* FOR TESTING */}
             <div className='game-container'>
-                
                 {showModal && <Modal won={won} isPending={isPending} modalContinue={modalContinue} />}
                 <div id='data'>
                     <div>HIGHSCORE: {currentHighscore}</div>
@@ -220,9 +222,7 @@ const SnowmanGame = ({
                     </div>
                 </div>
 
-                {/* FOR TESTING */}
-                <button onClick={resetUser}>RESET USER (TESTING)</button>
-                {/* FOR TESTING */}
+
                 <div className='main-comps'>
                     <div id='figure-id' className='figure'>
                         <div>
@@ -230,8 +230,8 @@ const SnowmanGame = ({
                         </div>
                     </div>
                     <div id='interactive' className='interactive'>
-                        <div className='w-96 mt-20'>
-                            <div id='guess-boxes' className='mb-20 flex justify-center guess-boxes'>
+                        <div className='w-96'>
+                            <div id='guess-boxes' className='flex justify-center guess-boxes'>
                                 {guessBoxes()}
                             </div>
                             <div className="h-full">

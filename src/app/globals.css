@@ -11,6 +11,10 @@ nav {
     font-weight: bold;
     z-index: 30;
     font-family: cursive;
+    position: absolute;
+    overflow: hidden;
+    width: 100vw;
+    justify-content: space-between;
 }
 
 .travel-div {
