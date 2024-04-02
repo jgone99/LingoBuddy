@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 export function HomePageComponent({translateText}) {
     const [inputText, setInputText] = useState('');
@@ -18,11 +18,11 @@ export function HomePageComponent({translateText}) {
     return (
         <div>
           <div>
-            <div className="h-full bg-blue-400">
-                <div className="travel-div bg-cover bg-center w-screen h-1/2 flex items-center justify-center relative">
+            <div className="bg-blue-400">
+                <div className="bg-cover bg-center w-screen h-1/2 flex items-center justify-center relative">
                     <img src="/travelbanner.jpg" alt="Banner" className="h-1/2 w-full object-cover opacity-95" />
                     <div className="absolute top-1/3 transform -translate-y-1/2 text-center">
-                        <h1 className="text-4xl font-bold text-black" style={{ fontFamily: 'Comic Sans MS, Comic Sans, cursive' }}>Your Best Friend For Spanish Learning!</h1>
+                    <h1 className="text-4xl font-bold text-black" style={{ fontFamily: 'Comic Sans MS, Comic Sans, cursive', textShadow: '0 0 10px #FFA500, 0 0 20px #FFA500, 0 0 30px #FFA500, 0 0 40px #FFA500, 0 0 50px #FFA500, 0 0 60px #FFA500, 0 0 70px #FFA500' }}>Your Best Friend For Spanish Learning!</h1>
                     </div>
                     <div className="absolute top-1/2 transform -translate-y-1/2 text-center">
                         <div className="relative">
@@ -75,7 +75,7 @@ export function HomePageComponent({translateText}) {
         <li>Track your progress with a high score and aim to outdo yourself with each round.</li>
       </ul>
       <p className="text-2xl font-bold text-black text-left">Matching</p>
-      <ul className="text-2xl space-y-1 text-black list-disc list-inside">
+      <ul class="text-2xl space-y-1 text-black list-disc list-inside">
         <li>Race against the clock in a thrilling matching game. Match Spanish words to their English definitions within a 1-minute deadline.</li>
         <li>Earn 1+ point for every correct match, and track your progress with a high score.</li>
         <li>Words are not reused to give the user a wide range of vocabulary to train with!</li>
