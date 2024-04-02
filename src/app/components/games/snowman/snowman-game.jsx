@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useTransition } from 'react'
 import SnowmanFigure from "./snowman-figure"
-import style from '../../../components/games/snowman/snowman.css'
+import './snowman.css'
 import Modal from '../modal'
 
 const alphabetArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "ñ", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "á", "é", "í", "ó", "ú"]
@@ -96,12 +96,10 @@ const SnowmanGame = ({
         }
         const emptyBoxes = document.querySelectorAll(`.letter-${letter}.is-empty`)
 
-        testLoading = true
         emptyBoxes.forEach((div) => {
             div.innerHTML = letter.toUpperCase()
             div.classList.remove('is-empty')
         })
-        testLoading = false
 
         if (correctLetterCount + emptyBoxes.length >= word['spanish'].length) {
             won = true

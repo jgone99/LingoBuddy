@@ -1,7 +1,5 @@
 
 
-
-
 .body {
     height: 200px;
     width: 200px;
@@ -9,7 +7,7 @@
     box-shadow: -13px -8px 0px rgba(0,0,0,0.1) inset;
     border-radius: 50%;
     position: relative;
-    top: 25vh;
+    top: 20vh;
     z-index: 20;
 }
 
@@ -40,21 +38,6 @@
     box-shadow: 0px 43px rgba(0,0,0,0.2) inset;
     z-index: 30;
 }
-
-/* .nose2 {
-    height: 0px;
-    width: 0px;
-    border-style: solid;
-    border-width: 8px 41px 8px 0px;
-    border-color: transparent #fa9a20 transparent transparent;
-    position: absolute;
-    top: 210px;
-    display: inline-block;
-    left: 50px;
-    transform: rotate(170deg);
-    box-shadow: 0px 43px rgba(0,0,0,0.2) inset;
-    z-index: 30;
-} */
 
 .head {
     height: 100px;
