@@ -11,10 +11,18 @@ nav {
     font-weight: bold;
     z-index: 30;
     font-family: cursive;
+    position: absolute;
+    overflow: hidden;
+    width: 100vw;
+    justify-content: space-between;
 }
 
 .travel-div {
     z-index: 10;
+}
+
+.container {
+    width: 100vw;
 }
 
 .title {
@@ -35,6 +43,38 @@ button.isPending {
 
 .games-modal {
     z-index: 30;
+}
+
+.fade-in {
+    animation: fadeIn ease 1.5s;
+    animation-fill-mode: forwards;
+}
+
+.fade-out {
+    animation: fadeOut ease 1.5s;
+    animation-fill-mode: forwards;
+}
+
+.hide {
+    display: none !important;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }
 
 .games-tab {

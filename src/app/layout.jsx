@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
           <ClerkLoaded>
           <Header />
           <main className="container">
-            <div className="flex item-start justify-center min-h-screen">
+            <div className="w-full flex item-start justify-center min-h-screen">
               <div className="main-page">{children}</div>
             </div>
           </main>
