@@ -73,9 +73,9 @@ const CourseListComponent = ({
     return (
         <>
             {/* FOR TESTING */}
-            <div>
+            {/* <div>
                 <button onClick={resetUser}>RESET USER (TESTING)</button>
-            </div>
+            </div> */}
             {/* FOR TESTING */}
 
             <div>
