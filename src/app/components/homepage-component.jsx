@@ -60,7 +60,7 @@ export function HomePageComponent({translateText}) {
 
   <div className="flex justify-left bg-green-300" ref={teacherRef}>
   <div className="p-2 mr-4 w-1/2 border-8 border-orange-300 p-8 rounded-lg">
-    <img src="Teacher.jpg" alt="Left Image1" className="w-full h-full object-cover flex items-center justify-center" />
+    <img src="teacher.jpg" alt="Left Image1" className="w-full h-full object-cover flex items-center justify-center" />
   </div>
   <div className="p-2 mr-4 w-1/2 border-8 border-orange-300 p-8 rounded-lg space-y-8">
       <h2 className="text-4xl font-bold text-black text-center">Learning Courses</h2>
@@ -91,14 +91,14 @@ export function HomePageComponent({translateText}) {
       </ul>
     </div>
     <div className="p-2 mr-2 w-1/2 border-8 border-green-400 rounded-lg">
-  <img src="Games.png" alt="Left Image" className="w-full h-full object-cover flex items-center justify-center" />
+  <img src="games.png" alt="Left Image" className="w-full h-full object-cover flex items-center justify-center" />
   </div>
     </div>
        
            
     <div className="flex justify-left bg-teal-400" ref={aiRef}>
   <div className="p-2 mr-4 w-1/2 border-8 border-red-500 p-8 rounded-lg">
-    <img src="AI.png" alt="Left Image2" className="w-full h-full object-cover flex items-center justify-center" />
+    <img src="aI.png" alt="Left Image2" className="w-full h-full object-cover flex items-center justify-center" />
   </div>
   <div className="p-2 mr-4 w-1/2 border-8 border-red-500 p-8 rounded-lg space-y-8">
       <h2 className="text-4xl font-bold text-black text-center">AI Chat</h2>
