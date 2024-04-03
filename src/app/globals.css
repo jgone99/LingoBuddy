@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
 nav {
     height: 64px;
     width: 100vw;
@@ -12,7 +14,6 @@ nav {
     font-size: 20px;
     font-weight: bold;
     z-index: 30;
-    font-family: cursive;
     position: absolute;
     width: 100vw;
     justify-content: space-between;
@@ -80,6 +81,10 @@ button.isPending {
 
 .main-page {
     padding-top: 64px;
+}
+
+* {
+    font-family: "Comic Sans MS";
 }
 
 .header-tab {
