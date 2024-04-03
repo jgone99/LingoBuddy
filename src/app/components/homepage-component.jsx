@@ -64,7 +64,6 @@ export function HomePageComponent({translateText}) {
   </div>
   <div className="p-2 mr-4 w-1/2 border-8 border-orange-300 p-8 rounded-lg space-y-8">
       <h2 className="text-4xl font-bold text-black text-center">Learning Courses</h2>
-      <h2 className="text-4xl font-bold text-black text-center">Learning Courses</h2>
       <p className="text-2xl font-bold text-black text-left">Embark on an exciting journey of language mastery with our Learning Courses! Dive into a structured curriculum designed to take you through 10 immersive levels of learning. 
                                   Progression is earned through mastery, where each section demands a flawless 5/5 performance and every checkpoint requires an impressive 8/10. But no problem, any missteps along the way will be revisited to ensure full comprehension.</p>
       <p className="text-2xl font-bold text-black text-left"> Navigating through our railroad-style layout, you'll find yourself seamlessly guided, with a convenient "Continue" button to pick up right where you left off. Keep track of your progress effortlessly, as your current level is always at your fingertips. 
@@ -75,7 +74,6 @@ export function HomePageComponent({translateText}) {
                   
   <div className="flex justify-right bg-violet-400" ref={gamesRef}>
   <div className="p-2 mr-4 w-1/2 border-8 border-green-400 p-8 rounded-lg space-y-8">
-      <h2 className="text-4xl font-bold text-black text-center">Mini-Games</h2>
       <h2 className="text-4xl font-bold text-black text-center">Mini-Games</h2>
       <p className="text-2xl font-bold text-black text-left">Test your new skills with our collection of two simple yet effective games designed to reinforce spelling and word recognition skills! </p>
       <p className="text-2xl font-bold text-black text-left">Hangman</p>
@@ -103,7 +101,6 @@ export function HomePageComponent({translateText}) {
     <img src="AI.png" alt="Left Image2" className="w-full h-full object-cover flex items-center justify-center" />
   </div>
   <div className="p-2 mr-4 w-1/2 border-8 border-red-500 p-8 rounded-lg space-y-8">
-      <h2 className="text-4xl font-bold text-black text-center">AI Chat</h2>
       <h2 className="text-4xl font-bold text-black text-center">AI Chat</h2>
       <p className="text-2xl font-bold text-black text-left">Engage in conversational-style interactions with our AI companion with the new language skills you have developed. The AI will continuously remind you to speak in Spanish to enhance your language skills.</p>
       <p className="text-2xl font-bold text-black text-left">You can freely converse with the AI without any constraints. Whether you want to practice greetings, discuss your day, or explore various topics, the AI is ready to engage in conversation.</p>
