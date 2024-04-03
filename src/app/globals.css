@@ -3,7 +3,9 @@
 @tailwind utilities;
 
 nav {
-    background: rgb(255,170,43);
+    height: 64px;
+    width: 100vw;
+    background: rgba(255,170,43);
     border-color: black;
     border-width: 1px;
     color: black;
@@ -11,10 +13,17 @@ nav {
     font-weight: bold;
     z-index: 30;
     font-family: cursive;
+    position: absolute;
+    width: 100vw;
+    justify-content: space-between;
 }
 
 .travel-div {
     z-index: 10;
+}
+
+.container {
+    width: 100vw;
 }
 
 .title {
@@ -37,16 +46,38 @@ button.isPending {
     z-index: 30;
 }
 
-.games-tab {
-    color: black;
+.fade-in {
+    animation: fadeIn ease 1.5s;
+    animation-fill-mode: forwards;
 }
 
-nav {
-    height: 64px;
-    width: 100vw;
+.fade-out {
+    animation: fadeOut ease 1.5s;
+    animation-fill-mode: forwards;
+}
+
+.hide {
+    display: none !important;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }
 
 .main-page {
     padding-top: 64px;
 }
-

@@ -6,7 +6,7 @@ const Header = () => {
 
 	return (
 		<>
-			<nav className="px-6 flex items-center justify-between absolute">
+			<nav className="px-6 flex items-center">
 				<div className="flex items-center title">
 					<Link href="/home-page">
 						<div>
@@ -14,18 +14,18 @@ const Header = () => {
 						</div>
 					</Link>
 				</div>
-				<div className="flex-1 text-center">
+				<div className="header-tab flex text-center">
 					<Link
 						href="/course-list"
-						className="mx-2 hover:text-gray-300 cursor-pointer"
+						className="hover:text-gray-300 cursor-pointer"
 					>
 						Learning Courses
 					</Link>
 				</div>
-				<div className="flex-1 text-center">
+				<div className="header-tab flex text-center">
 					<Link
 						href="/chatbot"
-						className="mx-2 hover:text-gray-300 cursor-pointer"
+						className="hover:text-gray-300 cursor-pointer"
 					>
 						ChatBot
 					</Link>

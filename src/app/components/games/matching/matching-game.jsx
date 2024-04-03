@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useTransition } from 'react'
 import Modal from '../modal'
+import './matching.css'
 
 const english_lang = 'english'
 const spanish_lang = 'spanish'
