@@ -45,7 +45,7 @@ async function translateText(text) {
   return translateData.data.translations[0].translatedText;
 }
 
-export async function HomePage(){
+async function HomePage(){
   return (
     <>
     <HomePageComponent translateText = {translateText}/>
