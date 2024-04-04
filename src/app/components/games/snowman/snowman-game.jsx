@@ -57,7 +57,7 @@ const SnowmanGame = ({
         })
     }
 
-    const fetchAll = () => {
+    const fetchAll = (data) => {
         Promise.all([getHighscore(), getNewWord()]).then(result => {
             setCurrentHighscore(result[0])
             setWord(result[1])
@@ -71,13 +71,13 @@ const SnowmanGame = ({
     }
 
     const playAgain = () => {
-        const data = document.querySelector('#data')
+        const data = document.querySelector('.data')
         const guessboxes = document.querySelector('#guess-boxes')
         setFade(data, true, false, null, null)
         setFade(guessboxes, true, true, function callFetchAll(args, e, func) {
             console.log(e)
             guessboxes.removeEventListener(e.type, func)
-            fetchAll()
+            fetchAll(data)
         }, null)
 
     }
@@ -215,7 +215,7 @@ const SnowmanGame = ({
             {/* FOR TESTING */}
             <div className='game-container'>
                 {showModal && <Modal won={won} isPending={isPending} modalContinue={modalContinue} />}
-                <div id='data'>
+                <div className='data'>
                     <div>HIGHSCORE: {currentHighscore}</div>
                     <div>SCORE: {gamesWon}</div>
                     <div className='my-10'>
