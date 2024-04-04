@@ -215,7 +215,7 @@ const SnowmanGame = ({
             {/* FOR TESTING */}
             <div className='game-container'>
                 {showModal && <Modal won={won} isPending={isPending} modalContinue={modalContinue} />}
-                <div id='data'>
+                <div className='data'>
                     <div>HIGHSCORE: {currentHighscore}</div>
                     <div>SCORE: {gamesWon}</div>
                     <div className='my-10'>
