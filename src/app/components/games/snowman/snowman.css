@@ -12,6 +12,10 @@
     z-index: 10;
 }
 
+#data {
+    margin-top: 50px;
+}
+
 .guessbox {
     border-color: #614AEB;
 }
@@ -36,7 +40,7 @@ button.alpha-button:hover {
     flex-direction: row;
     justify-items: center;
     align-items: center;
-    margin-top: 150px;
+    margin-top: 80px;
 }
 
 .figure {
@@ -46,6 +50,10 @@ button.alpha-button:hover {
 
 .interactive {
     margin-left: max(10vw, 80px);
+}
+
+.daylight {
+    background: radial-gradient(circle at 0%);
 }
 
 @media only screen and (max-width: 600px) {
