@@ -29,7 +29,6 @@ const MatchingGame = ({
     const [isPending, startTransistion] = useTransition()
 
     const wordCount = matches.length
-    var isLoading = false
 
     const resetAll = () => {
         document.querySelectorAll('.word-card').forEach((wordCard) => {
@@ -40,20 +39,44 @@ const MatchingGame = ({
     }
 
     const playAgain = () => {
-        isLoading = true
+        const data = document.querySelector('.data')
+        const cards = document.querySelector('.word-cards')
+        setFade(data, true, false, null, null);
+        setFade(cards, true, true, function callFetchAll(args, e, func) {
+            cards.removeEventListener(e.type, func)
+            fetchAll(data, cards)
+        }, null)
+    }
+
+    const fetchAll = (data, cards) => {
         Promise.all([getMoreMatches(), getHighscore()]).then(result => {
             setWordPairs(result[0]['matches'])
             setWordOrder(result[0]['order'])
             setCurrentHighscore(result[1])
             resetAll()
             currentScore += won ? 1 : 0
-            isLoading = false
+            setFade(data, false, false, null, null)
+            setFade(cards, false, false, null, null)
         })
     }
 
+    const modalFade = (toFadeOut) => {
+        const modal = document.querySelector('.games-modal')
+        console.log(modal)
+        modal.addEventListener('animationend', (e) => {
+            console.log('animationend')
+            console.log(e)
+            if (e.animationName == 'fadeOut') {
+                console.log('fade out ended')
+                setShowModal(false)
+            }
+        })
+        setFade(modal, toFadeOut)
+    }
+
     const modalContinue = () => {
+        modalFade(true)
         playAgain()
-        setShowModal(false)
     }
 
     const setToMatched = (element) => {
@@ -196,7 +219,7 @@ const MatchingGame = ({
         toFadeOut ? fadeOut(element) : fadeIn(element)
     }
 
-    return isLoading ? 'Loading...' : (
+    return (
         <>
             <div className="game-container" >
                 {showModal && <Modal won={won} modalContinue={modalContinue} isPending={isPending} />}
@@ -205,8 +228,10 @@ const MatchingGame = ({
                     <div>Current Score: {currentScore}</div>
                 </div>
                 <div className='main-comps'>
-                    <div className="grid grid-cols-4 gap-4">
-                        {matchCards()}
+                    <div className='word-cards'>
+                        <div className="grid grid-cols-4 gap-4">
+                            {matchCards()}
+                        </div>
                     </div>
                 </div>
 
