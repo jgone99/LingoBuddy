@@ -5,6 +5,7 @@
     font-size: 20px;
     width: 10rem;
     height: 4rem;
+    border-width: 0;
 }
 
 .word-card.unmatched {
@@ -23,7 +24,7 @@
 }
 
 .word-card.selected {
-    background: rgb(255,170,43);
+    background: rgba(255,170,43);
     color: black;
 }
 
@@ -39,7 +40,6 @@
     margin-top: 80px;
 }
 
-
 .game-container {
     width: 100vw;
     height: 100%;
@@ -50,6 +50,10 @@
     justify-items: center;
     align-items: center;
     overflow: hidden;
-    justify-content: start;
+    justify-content: flex-start;
     z-index: 10;
+}
+
+#connections {
+    position: absolute;
 }

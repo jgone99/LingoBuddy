@@ -8,7 +8,7 @@
     justify-items: center;
     align-items: center;
     overflow: hidden;
-    justify-content: start;
+    justify-content: flex-start;
     z-index: 10;
 }
 
@@ -50,10 +50,6 @@ button.alpha-button:hover {
 
 .interactive {
     margin-left: max(10vw, 80px);
-}
-
-.daylight {
-    background: radial-gradient(circle at 0%);
 }
 
 @media only screen and (max-width: 600px) {
