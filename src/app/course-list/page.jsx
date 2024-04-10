@@ -1,77 +1,78 @@
 import React from "react";
 import { query } from "../db/queries";
+import { mutate } from "../db/mutations";
 import LevelCard from "../components/learning-course/level-card";
+import { auth } from "@clerk/nextjs";
+import CourseListComponent from "../components/learning-course/course-list-component";
+
+const userProgressTableName = 'course_progress'
 
 export default async function CourseListPage() {
-  const fetchLevelQuestions = async (levelId) => {
-    const res = await query(
-      "SELECT section_id, section_text, question_text, option_a, option_b, option_c, correct_answers FROM level_questions WHERE level_id = $1 ORDER BY section_id, question_id",
-      [levelId]
-    );
-    return res.map((q) => ({
-      section_id: q.section_id,
-      section_text: q.section_text,
-      question_text: q.question_text,
-      option_a: q.option_a,
-      option_b: q.option_b,
-      option_c: q.option_c,
-      correct_answers: q.correct_answers,
-    }));
-  };
+	const { userId } = auth();
 
-  const fetchQuestions = async (levelId) => {
-    const res = await query(
-      "SELECT * FROM checkpoint_questions WHERE level_id = $1 ORDER BY question_id",
-      [levelId]
-    );
-    return res.map((a) => ({
-      section_id: a.section_id,
-      section_text: a.section_text,
-      question_text: a.question_text,
-      option_a: a.option_a,
-      option_b: a.option_b,
-      option_c: a.option_c,
-      correct_answers: a.correct_answers,
-    }));
-  };
+	async function updateUserProgress(levelId, sectionId) {
+		"use server";
+		console.log('updating user');
+		const updateUserQuery = 
+			`UPDATE course_progress
+			SET level_id = $2, section_id = $3
+			WHERE user_id = $1`;
+		await mutate(updateUserQuery, [userId, levelId, sectionId])
+	}
 
-  const levels = Array.from({ length: 10 }, (_, i) => i + 1);
-  const levelQuestions_one = await Promise.all(levels.map(fetchLevelQuestions));
-  const questions = await Promise.all(levels.map(fetchQuestions));
+	// FOR TESTING
+	const resetUserProgress = async() => {
+		'use server'
+		await query("UPDATE course_progress SET level_id = 1, section_id = 1 WHERE user_id = $1",
+		[userId])
+	}
 
-  const groupedQuestions = levelQuestions_one.map((levelQuestions) =>
-    levelQuestions.reduce((groups, question) => {
-      const key = question.section_text;
-      if (!groups[key]) {
-        groups[key] = [];
-      }
-      groups[key].push(question);
-      return groups;
-    }, {})
-  );
+	const fetchAllQuestions = async() => {
+		const res = await query(
+			"SELECT * FROM all_questions ORDER BY level_id, section_id"
+		);
+		return res
+	}
 
-  return (
-    <div>
-      {levels.map((level, index) => (
-        <React.Fragment key={index}>
-          {Object.entries(groupedQuestions[index]).map(
-            ([section, questions], sectionIndex) => (
-              <LevelCard
-                key={sectionIndex}
-                levelId={level}
-                title={section}
-                questions={questions}
-              />
-            )
-          )}
-          <LevelCard
-            key={index + 10}
-            levelId={level}
-            title={`Checkpoint Level ${level}`}
-            questions={questions[index]}
-          />
-        </React.Fragment>
-      ))}
-    </div>
-  );
+	const fetchUserProgress = async() => {
+		'use server'
+		const res = await query(
+			"SELECT * FROM course_progress WHERE user_id=$1",
+			[userId]
+		);
+		return res[0]
+	}
+
+	const userProgress = await fetchUserProgress()
+
+	const allQuestions = await fetchAllQuestions()
+
+	const questionsByLevelAndSection = allQuestions.reduce((groups, question) => {
+		const key1 = question.level_id;
+		const key2 = question.section_id;
+		if (!groups[key1]) {
+			groups[key1] = {
+				1: [],
+				2: [],
+				3: [],
+			}
+		}
+		groups[key1][key2].push(question);
+		return groups;
+	}, {})
+
+	return (
+		<>
+			{console.log(userProgress)}
+			<CourseListComponent 
+			initUserProgress={userProgress} 
+			fetchUserProgress={fetchUserProgress} 
+			questionsByLevelAndSection={questionsByLevelAndSection} 
+			updateUserProgress={updateUserProgress}
+
+			// FOR TESTING
+			resetUserProgress={resetUserProgress}
+			 />
+		</>
+	);
 }

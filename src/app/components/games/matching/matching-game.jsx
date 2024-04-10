@@ -1,15 +1,24 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import Modal from '../matching/modal'
-import Connection from '../../components/matching/lines'
+import { useEffect, useState, useTransition } from 'react'
+import Modal from '../modal'
+import './matching.css'
 
 const english_lang = 'english'
 const spanish_lang = 'spanish'
 const matchTypeClasses = ['unmatched','selected','wrong-match','matched']
+var currentScore = 0;
+var won = false
 
-const MatchingGame = ({ matches, orders, getMoreMatches }) => {
-    const [ loading, setLoading ] = useState(false)
+const MatchingGame = ({ 
+    matches, 
+    orders, 
+    getMoreMatches,
+    highscore,
+    getHighscore,
+    updateHighscore
+}) => {
+    const [ currentHighscore, setCurrentHighscore ] = useState(highscore)
     const [ firstWord, setFirstWord ] = useState(null)
     const [ matchesFound, setMatchesFound ] = useState(0)
     const [ wrong, setWrong ] = useState(false)
@@ -17,6 +26,8 @@ const MatchingGame = ({ matches, orders, getMoreMatches }) => {
     const [ showModal, setShowModal ] = useState(false)
     const [ wordPairs, setWordPairs ] = useState(matches)
     const [ wordOrder, setWordOrder ] = useState(orders)
+    const [ isPending, startTransistion ] = useTransition()
+
     const wordCount = matches.length
     var isLoading = false
 
@@ -26,23 +37,23 @@ const MatchingGame = ({ matches, orders, getMoreMatches }) => {
             setButtonActive(wordCard, true)
         })
         setMatchesFound(0)
-
     }
 
-    const closeModal = () => {
-        fetchNewWordBatch()
-        resetAll()
-        setShowModal(false)
-    }
-
-    const fetchNewWordBatch = () => {
+    const playAgain = () => {
         isLoading = true
-        getMoreMatches().then(result => {
-            setWordPairs(result['matches'])
-            setWordOrder(result['order'])
-            console.log('wordsset')
+        Promise.all([getMoreMatches(), getHighscore()]).then(result => {
+            setWordPairs(result[0]['matches'])
+            setWordOrder(result[0]['order'])
+            setCurrentHighscore(result[1])
+            resetAll()
+            currentScore += won ? 1 : 0
             isLoading = false
         })
+    }
+
+    const modalContinue = () => {
+        playAgain()
+        setShowModal(false)
     }
 
     const setToMatched = (element) => {
@@ -116,6 +127,14 @@ const MatchingGame = ({ matches, orders, getMoreMatches }) => {
                     console.log(matchesFound+1)
                     console.log(wordCount)
                     if(matchesFound+1>=wordCount) {
+                        won = true
+                        if (currentScore + 1 > currentHighscore) {
+                            startTransistion(() => {
+                                updateHighscore(currentScore + 1).then(result => {
+                                    console.log('CLIENT: updated user')
+                                })
+                            })
+                        }
                         setShowModal(true)
                     }
                     setMatchesFound(matchesFound+1)
@@ -144,11 +163,13 @@ const MatchingGame = ({ matches, orders, getMoreMatches }) => {
         }
     }
 
-    return loading || isLoading ? 'Loading...' : (
+    return isLoading ? 'Loading...' : (
         <>
             <div className="container mx-auto my-8" >
+                <div>Highest Score: {currentHighscore}</div>
+                <div>Current Score: {currentScore}</div>
                 <svg id='connections'></svg>
-                {showModal && <Modal closeModal={closeModal} />}
+                {showModal && <Modal won={won} modalContinue={modalContinue} isPending={isPending} />}
                 <div className="grid grid-cols-4 gap-4">
                     {matchCards()}
                 </div>

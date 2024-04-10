@@ -1,0 +1,66 @@
+.game-container {
+    width: 100vw;
+    height: 100%;
+    background: #2c3e50;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    overflow: hidden;
+    justify-content: start;
+    z-index: 10;
+}
+
+.guessbox {
+    border-color: #614AEB;
+}
+
+button.alpha-button {
+    margin: 0.25rem;
+    color: white;
+    width: 2rem;
+    height: 2rem;
+}
+
+button.alpha-button:hover {
+    background: rgba(255,170,43);
+}
+
+#guess-boxes {
+    margin: 20px 0px 40px 0px;
+}
+
+.main-comps {
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    align-items: center;
+    margin-top: 150px;
+}
+
+.figure {
+    transform: scale(1.2);
+    margin-right: max(10vw, 80px);
+}
+
+.interactive {
+    margin-left: max(10vw, 80px);
+}
+
+@media only screen and (max-width: 600px) {
+    .figure {
+        transform: scale(0.5);
+        margin: 0px 0px 10px 0px;
+    }
+
+    .interactive {
+        margin: 0;
+        width: auto;
+    }
+
+    .main-comps {
+        flex-direction: column;
+        margin-top: 0px;
+    }
+}

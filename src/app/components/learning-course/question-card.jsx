@@ -13,7 +13,6 @@ const QuestionCard = ({
   totalQuestions,
   isAnswering, // New prop
 }) => {
-  console.log(correctAnswer);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [isAnswered, setIsAnswered] = useState(false);
 
@@ -40,9 +39,6 @@ const QuestionCard = ({
       <h2 className="block text-gray-700 text-xl font-bold mb-2">{question}</h2>
       <div className="mt-4">
         {answers.map((answer, index) => {
-          console.log("Answer:", answer);
-          console.log("Correct Answer:", correctAnswer);
-          console.log("Includes:", correctAnswer.includes(answer));
           return (
             <AnswerButton
               key={index}
@@ -55,17 +51,6 @@ const QuestionCard = ({
           );
         })}
       </div>
-      {isAnswered && (
-        <div
-          className={`text-lg mt-4 font-semibold ${
-            correctAnswer.includes(selectedAnswer)
-              ? "text-green-500"
-              : "text-red-500"
-          }`}
-        >
-          {correctAnswer.includes(selectedAnswer) ? "Correct!" : "Incorrect"}{" "}
-        </div>
-      )}
     </div>
   );
 };

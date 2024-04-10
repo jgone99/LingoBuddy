@@ -4,11 +4,12 @@ const nextConfig = {
         return [
             {
                 source: '/',
-                destination: '/home-page',
+                destination: '/home-page/',
                 permanent: true,
             }
         ]
-    }
+    },
+    trailingSlash: false
 };
 
 export default nextConfig;
