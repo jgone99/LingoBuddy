@@ -4,23 +4,6 @@ import QuestionCard from "./question-card";
 import Modal from "./modal";
 
 export default function QuizManager({
-<<<<<<< HEAD
-  questions,
-  userId,
-  levelId,
-  updateUserProgress,
-  sectionId,
-}) {
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [correctAnswers, setCorrectAnswers] = useState(0);
-  const [userAnswers, setUserAnswers] = useState([]);
-  const [showResults, setShowResults] = useState(false);
-  const [isAnswering, setIsAnswering] = useState(false);
-  const totalQuestions = questions.length;
-
-  const handleAnswerSelected = async (selectedAnswer) => {
-    if (isAnswering) return;
-=======
 	questions,
 	userId,
 	levelId,
@@ -37,7 +20,6 @@ export default function QuizManager({
 
 	const handleAnswerSelected = async (selectedAnswer) => {
 		if (isAnswering) return;
->>>>>>> 59017e290c0f54f5dc50e7a0a7212735d30bbc65
 
 		setIsAnswering(true);
 
@@ -53,66 +35,17 @@ export default function QuizManager({
 				selectedAnswerKey
 			);
 
-<<<<<<< HEAD
-    let newCorrectAnswers = correctAnswers;
-    if (isCorrect) {
-      newCorrectAnswers = correctAnswers + 1;
-      setCorrectAnswers(newCorrectAnswers);
-    }
-=======
 		let newCorrectAnswers = correctAnswers;
 		if (isCorrect) {
 			newCorrectAnswers = correctAnswers + 1;
 			setCorrectAnswers(newCorrectAnswers);
 		}
->>>>>>> 59017e290c0f54f5dc50e7a0a7212735d30bbc65
 
 		setUserAnswers((prevAnswers) => [
 			...prevAnswers,
 			{ answer: selectedAnswer, isCorrect },
 		]);
 
-<<<<<<< HEAD
-    if (currentQuestionIndex < totalQuestions - 1) {
-      setTimeout(() => {
-        setCurrentQuestionIndex(currentQuestionIndex + 1);
-        setIsAnswering(false);
-      }, 1000);
-    } else {
-      setShowResults(true);
-      const passed = newCorrectAnswers >= 4;
-
-      // Call the server action directly if it's provided
-      if (updateUserProgress) {
-        try {
-          await updateUserProgress({
-            userId,
-            levelId,
-            sectionId: sectionId,
-            score: newCorrectAnswers,
-            passed,
-          });
-        } catch (error) {
-          console.error("Failed to update user progress:", error);
-        }
-      }
-      console.log("Quiz Finished", userAnswers);
-      setShowResults(true);
-    }
-  };
-
-  console.log(questions);
-  console.log("levelId:", levelId);
-  if (
-    !questions ||
-    typeof questions === "undefined" ||
-    questions.length === 0 ||
-    currentQuestionIndex >= questions.length
-  ) {
-    return <div>Loading questions or no questions found...</div>;
-  }
-  console.log(questions[currentQuestionIndex].correct_answers);
-=======
 		if (currentQuestionIndex < totalQuestions - 1) {
 			setTimeout(() => {
 				setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -136,7 +69,6 @@ export default function QuizManager({
 			setShowResults(true);
 		}
 	};
->>>>>>> 59017e290c0f54f5dc50e7a0a7212735d30bbc65
 
 	if (
 		!questions ||
@@ -147,36 +79,6 @@ export default function QuizManager({
 		return <div>Loading questions or no questions found...</div>;
 	}
 
-<<<<<<< HEAD
-  return (
-    <div>
-      <QuestionCard
-        question={questions[currentQuestionIndex].question_text}
-        answers={[
-          questions[currentQuestionIndex].option_a,
-          questions[currentQuestionIndex].option_b,
-          questions[currentQuestionIndex].option_c,
-        ]}
-        correctAnswer={correctAnswerTexts}
-        onAnswerSelected={handleAnswerSelected}
-        currentQuestionIndex={currentQuestionIndex}
-        totalQuestions={totalQuestions}
-        isAnswering={isAnswering}
-      />
-      {showResults && (
-        <Modal isOpen={showResults} onClose={() => setShowResults(false)}>
-          <h2>Quiz Results</h2>
-          {userAnswers.map((answer, index) => (
-            <p key={index}>
-              Question {index + 1}: {answer.answer} -{" "}
-              {answer.isCorrect ? "Correct" : "Incorrect"}
-            </p>
-          ))}
-        </Modal>
-      )}
-    </div>
-  );
-=======
 	const correctAnswerTexts = questions[
 		currentQuestionIndex
 	].correct_answers.map((answerKey) => {
@@ -221,5 +123,4 @@ export default function QuizManager({
 			)}
 		</div>
 	);
->>>>>>> 59017e290c0f54f5dc50e7a0a7212735d30bbc65
 }
