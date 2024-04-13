@@ -1,6 +1,6 @@
-import CloseButton from "./close-button"
-
-const Modal = ({ children, isOpen, onClose }) => {
+import CloseButton from "./close-button";
+import TryAgainButton from "./tryagain-Button";
+const Modal = ({ children, isOpen, onClose, onTryAgain }) => {
   if (!isOpen) return null;
 
   return (
@@ -8,6 +8,7 @@ const Modal = ({ children, isOpen, onClose }) => {
       <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
         <div className="mt-3 text-center">
           {children}
+          <TryAgainButton onTryAgain={onTryAgain} />
           <CloseButton onClose={onClose} />
         </div>
       </div>
