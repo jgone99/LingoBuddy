@@ -17,7 +17,12 @@ export default async function CourseListPage() {
 			`UPDATE course_progress
 			SET level_id = $2, section_id = $3
 			WHERE user_id = $1`;
-		await mutate(updateUserQuery, [userId, levelId, sectionId])
+		try {
+			await mutate(updateUserQuery, [userId, levelId, sectionId])
+		} catch (error) {
+			console.log('failed to update user', error)
+		}
+		
 	}
 
 	// FOR TESTING

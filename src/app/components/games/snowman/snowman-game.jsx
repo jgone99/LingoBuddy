@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useTransition } from 'react'
+import { useState, useTransition } from 'react'
 import SnowmanFigure from "./snowman-figure"
 import './snowman.css'
 import Modal from '../modal'
@@ -84,7 +84,7 @@ const SnowmanGame = ({
 
     const alphabetButtons = () => {
         return alphabetArray.map((letter, index) => {
-            return <button key={'btn-' + letter + index} onClick={() => { buttonClicked(letter) }} className='alpha-button' value={letter}>{letter.toUpperCase()}</button>
+            return <button key={'btn-' + letter + index} onClick={() => { buttonClicked(letter) }} className='alpha-button games-button' value={letter}>{letter.toUpperCase()}</button>
         })
     }
 

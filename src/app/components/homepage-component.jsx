@@ -84,7 +84,7 @@ export function HomePageComponent({translateText}) {
         <li>Track your progress with a high score and aim to outdo yourself with each round.</li>
       </ul>
       <p className="text-2xl font-bold text-black text-left">Matching</p>
-      <ul class="text-2xl space-y-1 text-black list-disc list-inside">
+      <ul className="text-2xl space-y-1 text-black list-disc list-inside">
         <li>Race against the clock in a thrilling matching game. Match Spanish words to their English definitions within a 1-minute deadline.</li>
         <li>Earn 1+ point for every correct match, and track your progress with a high score.</li>
         <li>Words are not reused to give the user a wide range of vocabulary to train with!</li>

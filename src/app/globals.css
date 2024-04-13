@@ -28,14 +28,14 @@ nav {
     font-weight: bold;
 }
 
-button {
+.games-button {
     background: #614AEB;
     color: white;
     border-radius: 0.25rem;
     width: 120px;
 }
 
-button.isPending {
+.games-button.isPending {
     background-color: rgb(107 114 128);
 }
 
