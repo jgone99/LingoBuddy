@@ -1,5 +1,5 @@
 import CloseButton from "./close-button";
-import TryAgainButton from "./tryagain-Button";
+import TryAgainButton from "./tryagain-button";
 const Modal = ({ children, isOpen, onClose, onTryAgain }) => {
   if (!isOpen) return null;
 
