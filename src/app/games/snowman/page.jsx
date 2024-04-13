@@ -3,11 +3,11 @@ import { query } from '../../db/queries';
 import { mutate } from '../../db/mutations';
 import { auth } from '@clerk/nextjs';
 
-const SnowmanPage = async() => {
+const SnowmanPage = async () => {
 
     const { userId } = auth()
 
-    const getWordPair = async() => {
+    const getWordPair = async () => {
         'use server'
 
         const queryWord = `SELECT * FROM word_pairs ORDER BY RANDOM() LIMIT 1`
@@ -21,14 +21,14 @@ const SnowmanPage = async() => {
             throw error
         }
 
-        
+
     }
 
-    const getHighscore = async() => {
+    const getHighscore = async () => {
         'use server'
 
         const queryUserProgress =
-        `SELECT snowman_highscore FROM games_progress WHERE user_id=$1`
+            `SELECT snowman_highscore FROM games_progress WHERE user_id=$1`
 
         try {
             const res = await query(queryUserProgress, [userId])
@@ -40,11 +40,18 @@ const SnowmanPage = async() => {
         }
     }
 
-    const updateHighscore = async(highscore) => {
+    const updateHighscore = async (highscore) => {
         'use server'
 
-        const updateScoreQuery = 
-        `UPDATE games_progress
+        const ans = await getHighscore()
+
+        if (ans >= highscore) {
+            console.log('did not update. saved progression is ahead')
+            return
+        }
+
+        const updateScoreQuery =
+            `UPDATE games_progress
         SET snowman_highscore=$2
         WHERE user_id=$1`
 
@@ -58,25 +65,25 @@ const SnowmanPage = async() => {
     }
 
     // FOR TESTING
-    const resetUserProgress = async() => {
+    const resetUserProgress = async () => {
         'use server'
         await query("UPDATE games_progress SET matching_highscore = 0, snowman_highscore = 0 WHERE user_id = $1",
-        [userId])
+            [userId])
         console.log(`RESET: ${userId}`)
     }
     // FOR TESTING
 
     return (
         <>
-            <SnowmanGame 
-            highscore={await getHighscore()} 
-            getHighscore={getHighscore} 
-            wordPair={await getWordPair()} 
-            getNewWord={getWordPair} 
-            updateHighscore={updateHighscore}
+            <SnowmanGame
+                highscore={await getHighscore()}
+                getHighscore={getHighscore}
+                wordPair={await getWordPair()}
+                getNewWord={getWordPair}
+                updateHighscore={updateHighscore}
 
-            // FOR TESTING
-            resetUserProgress={resetUserProgress}
+                // FOR TESTING
+                resetUserProgress={resetUserProgress}
             // FOR TESTING
             />
         </>

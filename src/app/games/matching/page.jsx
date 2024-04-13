@@ -78,6 +78,13 @@ const MatchingPage = async() => {
     const updateHighscore = async(highscore) => {
         'use server'
 
+        const ans = await getHighscore()
+
+        if (ans >= highscore) {
+            console.log('did not update. saved progression is ahead')
+            return
+        }
+
         const updateScoreQuery = 
         `UPDATE games_progress
         SET matching_highscore = $2
