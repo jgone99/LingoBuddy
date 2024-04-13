@@ -1,6 +1,7 @@
 "use server"
 
 import { HomePageComponent } from '../components/homepage-component';
+import Footer from "../components/footer";
 
 async function translateText(text) {
   "use server"
@@ -44,10 +45,11 @@ async function translateText(text) {
   return translateData.data.translations[0].translatedText;
 }
 
-export async function HomePage(){
+async function HomePage(){
   return (
     <>
     <HomePageComponent translateText = {translateText}/>
+    <Footer />
     </>
   );
 }

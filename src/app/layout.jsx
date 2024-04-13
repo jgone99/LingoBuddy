@@ -3,6 +3,7 @@ import "./globals.css";
 import { ClerkProvider, ClerkLoaded } from "@clerk/nextjs";
 import Header from "./components/header";
 
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -18,8 +19,8 @@ export default function RootLayout({ children }) {
           <ClerkLoaded>
           <Header />
           <main className="container">
-            <div className="flex item-start justify-center min-h-screen">
-              <div className="mt-0">{children}</div>
+            <div className="w-full flex item-start justify-center min-h-screen">
+              <div className="main-page">{children}</div>
             </div>
           </main>
           </ClerkLoaded>

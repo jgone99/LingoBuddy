@@ -4,36 +4,36 @@ import Link from "next/link";
 import { useState } from "react";
 
 const GamesDropdown = () => {
-    const [ visible, setVisible ] = useState(false)
+    const [visible, setVisible] = useState(false)
 
     const handleMouseEnter = () => {
         setVisible(true);
-      };
-    
-      const handleMouseLeave = () => {
+    };
+
+    const handleMouseLeave = () => {
         setVisible(false);
-      };
+    };
 
     return (
-        <div className='flex-1 bg-inherit games-tab text-center h-full' onMouseLeave={handleMouseLeave}>
-            <button className="h-full text-inherit hover:text-gray-300 cursor-pointer bg-inherit" onMouseEnter={handleMouseEnter}>
+        <div className='games-tab header-tab' onMouseLeave={handleMouseLeave}>
+            <div className="h-full content-center text-inherit hover:text-gray-300 cursor-pointer" onMouseEnter={handleMouseEnter}>
                 Games
-            </button>
+            </div>
             {visible && (
                 <>
-                <div className="flex flex-col bg-inherit items-center">
-                    <div className="games-dropdown absolute bg-inherit rounded-b">
+                    <div className="games-dropdown bg-inherit text-inherit">
+                        <div className="bg-inherit">
                             <ul className="m-2">
                                 <li>
                                     <Link href="/games/snowman">
-                                        <div className="h-full hover:text-gray-300 cursor-pointer mb-2">
+                                        <div className="h-full hover:text-gray-300 cursor-pointer">
                                             Snowman
                                         </div>
                                     </Link>
                                 </li>
                                 <li>
                                     <Link href="/games/matching">
-                                        <div className="h-full hover:text-gray-300 cursor-pointer mt-2">
+                                        <div className="h-full hover:text-gray-300 cursor-pointer">
                                             Matching
                                         </div>
                                     </Link>

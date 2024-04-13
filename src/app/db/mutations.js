@@ -12,4 +12,5 @@ export const mutate = async (text, params) => {
     const client = await pool.connect()
     const res = await client.query(text, params)
     client.release()
+    return res.rows
 }

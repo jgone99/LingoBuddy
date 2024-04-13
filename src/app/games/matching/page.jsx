@@ -1,23 +1,29 @@
-
-import MatchingGame from '../../components/matching/matching-game'
+import MatchingGame from '../../components/games/matching/matching-game'
 import { query } from '../../db/queries'
+import { mutate } from '../../db/mutations'
+import { auth } from '@clerk/nextjs'
 
-const matchCount = 5
-var wordMatches = []
-var wordOrder = []
+const MatchingPage = async() => {
 
-const queryWords = async() => {
-    'use server'
-    wordMatches.length = 0;
-    wordOrder.length = 0;
-    const ans = await query(
+    const { userId } = auth();
+
+    const queryWords = async() => {
+        'use server'
+
+        const matchCount = 5
+        var wordMatches = []
+        var wordOrder = []
+        
+        wordMatches.length = 0;
+        wordOrder.length = 0;
+        const newWords = 
         `WITH words_num AS (
             SELECT *, ROW_NUMBER() OVER(ORDER BY RANDOM()) AS num
             FROM (
                 SELECT *
                 FROM word_pairs 
                 ORDER BY RANDOM()
-                LIMIT ${matchCount}
+                LIMIT $1
             ) words
         ), english_rand AS (
             SELECT *, ROW_NUMBER() OVER(ORDER BY RANDOM()) AS num
@@ -39,25 +45,58 @@ const queryWords = async() => {
         ON a.num = b.num
         RIGHT JOIN
         spanish_rand c
-        ON a.num = c.num;`
-    )
-    
-    ans.forEach((match) => {
-        wordMatches.push([match['english'], match['spanish']])
-        wordOrder.push([match['english_rand'], match['spanish_rand']])
-    });
-    return {
-        'matches': wordMatches,
-        'order': wordOrder,
+        ON a.num = c.num`
+
+        const ans = await query(newWords, [matchCount])
+        
+        ans.forEach((match) => {
+            wordMatches.push([match['english'], match['spanish']])
+            wordOrder.push([match['english_rand'], match['spanish_rand']])
+        });
+        return {
+            'matches': wordMatches,
+            'order': wordOrder,
+        }
     }
-}
 
-const matchOrder = await queryWords()
+    const getHighscore = async() => {
+        'use server'
 
-const MatchingPage = async() => {
+        const queryUserProgress =
+        `SELECT matching_highscore FROM games_progress WHERE user_id = $1`
+
+        try {
+            const res = await query(queryUserProgress, [userId])
+            console.log(`SERVER: successfully fetched highscore for ${userId}`)
+            return res[0].matching_highscore
+        } catch (error) {
+            console.log(`SERVER: failed to fetch highscore for ${userId}`)
+            throw error
+        }
+    }
+
+    const updateHighscore = async(highscore) => {
+        'use server'
+
+        const updateScoreQuery = 
+        `UPDATE games_progress
+        SET matching_highscore = $2
+        WHERE user_id = $1`
+
+        try {
+            await mutate(updateScoreQuery, [userId, highscore])
+            console.log(`SERVER: successfully updated ${userId}`)
+        } catch (error) {
+            console.log(`SERVER: failed to update ${userId}`)
+            throw error
+        }
+    }
+
+    const matchOrder = await queryWords()
+
     return (
         <>
-            <MatchingGame matches={matchOrder['matches']} orders={matchOrder['order']} getMoreMatches={queryWords}/>
+            <MatchingGame matches={matchOrder['matches']} orders={matchOrder['order']} getMoreMatches={queryWords} highscore={await getHighscore()} getHighscore={getHighscore} updateHighscore={updateHighscore}/>
         </>
     )
 }

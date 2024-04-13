@@ -1,0 +1,203 @@
+[33mcommit a6ad21cf8afe367700a67222ee846b50faead306[m[33m ([m[1;36mHEAD -> [m[1;32mTranslator[m[33m, [m[1;31morigin/Translator[m[33m)[m
+Author: Marcus W Thompson <82525986+Marcust64@users.noreply.github.com>
+Date:   Fri Mar 22 07:51:12 2024 -0400
+
+    Update
+
+[33mcommit 426a923f6f04f5a42f8dd517c9c95ed1dd4c5729[m
+Author: Marcus W Thompson <82525986+Marcust64@users.noreply.github.com>
+Date:   Thu Mar 21 14:47:12 2024 -0400
+
+    implemented translator
+
+[33mcommit bb9d8aa52c6e05e15c852cfd1c465da66550cdb8[m
+Author: Marcus Thompson <marcust64@gmail.com>
+Date:   Thu Mar 21 14:45:14 2024 -0400
+
+    Finished implementing translator
+
+[33mcommit fa5d5417b5248e5e3921775271f1e52d029a425d[m
+Author: Marcus Thompson <marcust64@gmail.com>
+Date:   Sat Mar 16 18:07:29 2024 -0400
+
+    Finished Rough Draft of Landing page
+
+[33mcommit 8716a6bbd3136c2813149cf0045a246fefb7c0df[m
+Author: Marcus Thompson <marcust64@gmail.com>
+Date:   Thu Mar 7 21:30:37 2024 -0500
+
+    started working on homepage
+
+[33mcommit 472d8c4558b04386494407e2ee25838904c17b06[m
+Author: ayacouba <96453820+ayacouba@users.noreply.github.com>
+Date:   Tue Mar 5 20:18:15 2024 -0500
+
+    '/'
+
+[33mcommit f20b0ebd4c42a705b0f52ff671d8107a7191035b[m
+Merge: d1f8448 2a3cc7c
+Author: ayacouba <96453820+ayacouba@users.noreply.github.com>
+Date:   Mon Mar 4 22:18:52 2024 -0500
+
+    Merge branch 'main' of https://github.com/McDubinUncg/LingoBuddy
+
+[33mcommit d1f8448d956c1739849bccc5d351d74aacda1f86[m
+Author: ayacouba <96453820+ayacouba@users.noreply.github.com>
+Date:   Mon Mar 4 22:18:46 2024 -0500
+
+    Added static data to try & test course page, ran into errors with linking to header, fix tmrw
+
+[33mcommit 2a3cc7c77019a4b432518ffb97669476e01e3f11[m
+Author: johnabdellmelk <johnabdellmelk@gmail.com>
+Date:   Mon Mar 4 11:11:59 2024 -0500
+
+    started working on chatbot
+
+[33mcommit 36cb79b9a54c167810b37de376a18829c631bc2c[m
+Author: ayacouba <96453820+ayacouba@users.noreply.github.com>
+Date:   Sun Mar 3 19:10:22 2024 -0500
+
+    beginning bone structure for learning course stuff
+
+[33mcommit 8c5a88dc6a6fb9a124e6f649a6220b04e0647e5d[m
+Author: joshh <joshuahinojognzlz@gmail.com>
+Date:   Sat Mar 2 15:02:37 2024 -0500
+
+    user auth
+
+[33mcommit d070995bfe8615c22375b4b548d8321b4088724d[m
+Author: johnabdellmelk <johnabdellmelk@gmail.com>
+Date:   Sat Mar 2 11:26:08 2024 -0500
+
+    restarted the enviornment
+
+[33mcommit 35f101631a21cab7916d2d0fb1f6f037c8fdeeab[m
+Author: johnabdellmelk <johnabdellmelk@gmail.com>
+Date:   Sat Mar 2 11:19:46 2024 -0500
+
+    restarting because of major issues
+
+[33mcommit 8857c11e78390fb75dd8b9f8a6f688ef95715422[m
+Merge: 624eb14 c490940
+Author: johnabdellmelk <johnabdellmelk@gmail.com>
+Date:   Sat Mar 2 11:00:38 2024 -0500
+
+    light adjustment
+
+[33mcommit 624eb14a70970e870f91d3dfa6023fb510f14796[m
+Author: johnabdellmelk <johnabdellmelk@gmail.com>
+Date:   Sat Mar 2 10:52:04 2024 -0500
+
+    removed nested folder
+
+[33mcommit 2226062e5d353bd5bdb5d30eba50711874666664[m
+Author: johnabdellmelk <johnabdellmelk@gmail.com>
+Date:   Sat Mar 2 10:48:26 2024 -0500
+
+    deleted docker
+
+[33mcommit d4bb8e92951cfa0ec10bd4a45d4566bd173ad1d4[m
+Author: johnabdellmelk <johnabdellmelk@gmail.com>
+Date:   Sat Mar 2 10:46:23 2024 -0500
+
+    made adjustments to the front end
+
+[33mcommit c490940ee8ff14f820a64774be576924e18b90ec[m
+Author: joshh <joshuahinojognzlz@gmail.com>
+Date:   Fri Mar 1 23:22:10 2024 -0500
+
+    clerk auth
+
+[33mcommit 98bc32f89d588a79435cc3751e51b6422ef1d2df[m
+Merge: ff6a9e6 7658002
+Author: johnabdellmelk <johnabdellmelk@gmail.com>
+Date:   Fri Mar 1 23:00:51 2024 -0500
+
+    Completed merge
+
+[33mcommit ff6a9e62fcf3b76f78e0fe359fcd1c434f28ab24[m
+Author: johnabdellmelk <johnabdellmelk@gmail.com>
+Date:   Thu Feb 29 22:43:39 2024 -0500
+
+    tested db, it works! starting on tables
+
+[33mcommit 27c5f0b5c6f039d0123f099db15d579769e49225[m
+Author: ayacouba <96453820+ayacouba@users.noreply.github.com>
+Date:   Thu Feb 29 22:02:09 2024 -0500
+
+    clerk stuff
+
+[33mcommit 765800223ba2837cde757b688581c042a3567f68[m
+Merge: e4920f3 3dc601c
+Author: John Abdellmelk <122630224+McDubinUncg@users.noreply.github.com>
+Date:   Thu Feb 29 21:56:51 2024 -0500
+
+    Merge pull request #5 from McDubinUncg/revert-2-main
+    
+    Revert "Merge pull request #1 from McDubinUncg/John-Abdellmelk"
+
+[33mcommit 3dc601c365a62a8401075d6b467b585fcbca3a39[m[33m ([m[1;31morigin/revert-2-main[m[33m)[m
+Author: John Abdellmelk <122630224+McDubinUncg@users.noreply.github.com>
+Date:   Thu Feb 29 21:56:38 2024 -0500
+
+    Revert "Merge pull request #1 from McDubinUncg/John-Abdellmelk"
+
+[33mcommit e4920f3ba711a21259178ac3d30d92019b2b83cd[m
+Merge: dfe6602 c2263d7
+Author: ayacouba <96453820+ayacouba@users.noreply.github.com>
+Date:   Thu Feb 29 21:54:03 2024 -0500
+
+    Merge pull request #2 from McDubinUncg/main
+    
+    Merge pull request #1 from McDubinUncg/John-Abdellmelk
+
+[33mcommit c2263d763e4acd6783107a086da030d9dfcd381e[m
+Merge: 36ff77e dfe6602
+Author: John Abdellmelk <122630224+McDubinUncg@users.noreply.github.com>
+Date:   Thu Feb 29 21:43:16 2024 -0500
+
+    Merge pull request #4 from McDubinUncg/John-Abdellmelk
+    
+    added database credentials and installed postgres
+
+[33mcommit dfe66025c82e597dda96bf4a2cab3d467c10066c[m
+Author: johnabdellmelk <johnabdellmelk@gmail.com>
+Date:   Thu Feb 29 21:42:32 2024 -0500
+
+    added database credentials and installed postgres
+
+[33mcommit 36ff77ea761c7dd0ec4f4c1b071ed0482fc22df7[m
+Merge: 912bfb3 2406b7b
+Author: John Abdellmelk <122630224+McDubinUncg@users.noreply.github.com>
+Date:   Thu Feb 29 21:17:35 2024 -0500
+
+    Merge pull request #3 from McDubinUncg/John-Abdellmelk
+    
+    pushed prereqs and steps into read me
+
+[33mcommit 2406b7b49bb14ccb1869f9128de676f921ea004c[m
+Author: johnabdellmelk <johnabdellmelk@gmail.com>
+Date:   Thu Feb 29 21:16:06 2024 -0500
+
+    pushed prereqs and steps into read me
+
+[33mcommit 912bfb33b70038566b5919c27e3928d14c1a8373[m
+Merge: 2710b3e 1489102
+Author: John Abdellmelk <122630224+McDubinUncg@users.noreply.github.com>
+Date:   Thu Feb 29 21:13:27 2024 -0500
+
+    Merge pull request #1 from McDubinUncg/John-Abdellmelk
+    
+    making foundational enviornment will now start on database
+
+[33mcommit 1489102836a2d650fe9f0f6930e2d22ecc35dd55[m
+Author: johnabdellmelk <johnabdellmelk@gmail.com>
+Date:   Thu Feb 29 21:10:44 2024 -0500
+
+    making foundational enviornment will now start on database
+
+[33mcommit 2710b3eb4d1597c3fe6755aaceb6dc7ad81bd465[m
+Author: John Abdellmelk <122630224+McDubinUncg@users.noreply.github.com>
+Date:   Thu Feb 15 13:36:10 2024 -0500
+
+    Initial commit
