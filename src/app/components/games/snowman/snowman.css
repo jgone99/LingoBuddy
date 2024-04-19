@@ -8,8 +8,12 @@
     justify-items: center;
     align-items: center;
     overflow: hidden;
-    justify-content: start;
+    justify-content: flex-start;
     z-index: 10;
+}
+
+.data {
+    margin-top: 50px;
 }
 
 .guessbox {
@@ -36,7 +40,7 @@ button.alpha-button:hover {
     flex-direction: row;
     justify-items: center;
     align-items: center;
-    margin-top: 150px;
+    margin-top: 80px;
 }
 
 .figure {

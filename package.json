@@ -12,6 +12,7 @@
 		"@clerk/nextjs": "^4.29.9",
 		"@google-cloud/translate": "^8.1.0",
 		"@types/gsap": "^3.0.0",
+		"canvas-confetti": "^1.9.2",
 		"dotenv": "^16.4.5",
 		"gsap": "^3.12.5",
 		"next": "14.1.1",

@@ -12,10 +12,12 @@ function LevelCard({
   sectionId,
   isDisabled,
   unlockNextSection,
-  isPending
+  isPending,
 }) {
   const [startQuiz, setStartQuiz] = useState(false);
-
+  const resetQuiz = () => {
+    setStartQuiz(false);
+  };
   const handleStartClick = () => {
     if (!isDisabled) {
       setStartQuiz(true);
@@ -38,13 +40,14 @@ function LevelCard({
       </h2>
       {startQuiz ? (
         <QuizManager
-          key={'qmanager-'+levelId+'-'+sectionId}
+          key={"qmanager-" + levelId + "-" + sectionId}
           questions={questions}
           userId={userId}
           levelId={levelId}
           sectionId={sectionId}
           updateUserProgress={updateUserProgress}
           unlockNextSection={unlockNextSection}
+          onTryAgain={resetQuiz}
         />
       ) : (
         <button
@@ -56,7 +59,7 @@ function LevelCard({
               : "bg-green-500 text-white hover:bg-green-700"
           }`}
         >
-          {isPending ? 'Pending' : 'Start'}
+          {isPending ? "Pending" : "Start"}
         </button>
       )}
     </div>
