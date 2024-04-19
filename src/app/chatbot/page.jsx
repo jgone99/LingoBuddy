@@ -30,30 +30,38 @@ const ChatbotUI = () => {
       });
       if (response.ok) {
         const data = await response.json();
-        const chars = data.response.split('');
+        const chars = data.response.split("");
         let partialMessage = "";
 
         const typeChar = () => {
-        if (chars.length) {
-          partialMessage += chars.shift(); // Add the next character to the partial message
-          setConversation(prevConvo => {
-            // Remove the last message if it's a partial typing message
-            const newConvo = prevConvo.length && prevConvo[prevConvo.length - 1].isTyping ? prevConvo.slice(0, -1) : prevConvo;
-            return [...newConvo, { text: partialMessage, from: "bot", isTyping: true }];
-          });
-          setTimeout(typeChar, 50); // Adjust typing speed here
-        } else {
-          // Once all characters are typed, update the conversation with the full message and remove the typing indicator
-          setConversation(prevConvo => {
-            const newConvo = prevConvo.slice(0, -1); // Remove the last partial message
-            return [...newConvo, { text: partialMessage, from: "bot", isTyping: false }];
-          });
-          setIsTyping(false);
-        }
-      };
+          if (chars.length) {
+            partialMessage += chars.shift(); // Add the next character to the partial message
+            setConversation((prevConvo) => {
+              // Remove the last message if it's a partial typing message
+              const newConvo =
+                prevConvo.length && prevConvo[prevConvo.length - 1].isTyping
+                  ? prevConvo.slice(0, -1)
+                  : prevConvo;
+              return [
+                ...newConvo,
+                { text: partialMessage, from: "bot", isTyping: true },
+              ];
+            });
+            setTimeout(typeChar, 50); // Adjust typing speed here
+          } else {
+            // Once all characters are typed, update the conversation with the full message and remove the typing indicator
+            setConversation((prevConvo) => {
+              const newConvo = prevConvo.slice(0, -1); // Remove the last partial message
+              return [
+                ...newConvo,
+                { text: partialMessage, from: "bot", isTyping: false },
+              ];
+            });
+            setIsTyping(false);
+          }
+        };
 
-      setTimeout(typeChar, 25);
-  
+        setTimeout(typeChar, 25);
       } else {
         console.error("Failed to send message:", response.statusText);
         setIsTyping(false);
@@ -68,13 +76,18 @@ const ChatbotUI = () => {
 
   return (
     <div className="chat-container">
+      <img
+        src="/OpenAI-logo-5.png"
+        alt="Powered by OpenAI"
+        className="openai-logo"
+      />
       <div className="conversation-area">
         {conversation.map((message, index) => (
           // eslint-disable-next-line react/jsx-no-comment-textnodes
           // eslint-disable-next-line @next/next/no-img-element, @next/next/no-img-element
           <div key={index} className={`message ${message.from}`}>
             <img
-              src={message.from === "user" ? userPfp : "/kissy.png"}
+              src={message.from === "user" ? userPfp : "/OpenAI.png"}
               alt="pfp"
               width={40}
               height={40}
@@ -115,7 +128,7 @@ const ChatbotUI = () => {
           flex-direction: column;
           height: 100vh;
           justify-content: flex-end;
-          align-items: left;          
+          align-items: left;
         }
         .typing-indicator {
           padding: 10px;
@@ -128,8 +141,7 @@ const ChatbotUI = () => {
           font-style: italic;
         }
         .conversation-area {
-          flex-grow: 1;
-          width: 100%;
+          width: 50%;
           padding: 30px;
           overflow-y: auto;
           position: fixed;
@@ -137,10 +149,16 @@ const ChatbotUI = () => {
           top: 50px;
           bottom: 50px;
         }
+        .openai-logo {
+          position: fixed;
+          right: 20px;
+          top: 20px;
+          width: 175px;
+        }
         .message {
           display: flex;
           align-items: center;
-          margin: 15px ;
+          margin: 15px;
         }
         .profile-pic-wrapper {
           width: 30px;
@@ -154,9 +172,7 @@ const ChatbotUI = () => {
           position: fixed;
           bottom: 20px;
           left: 50%;
-          transform: translateX(
-            -50%
-          );
+          transform: translateX(-50%);
           display: flex;
           align-items: center;
           justify-content: space-between;
