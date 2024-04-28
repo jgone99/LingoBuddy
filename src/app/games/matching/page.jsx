@@ -63,7 +63,7 @@ const MatchingPage = async() => {
         'use server'
 
         const queryUserProgress =
-        `SELECT matching_highscore FROM games_progress WHERE user_id = $1`
+        `SELECT matching_highscore FROM progress WHERE user_id = $1`
 
         try {
             const res = await query(queryUserProgress, [userId])
@@ -86,7 +86,7 @@ const MatchingPage = async() => {
         }
 
         const updateScoreQuery = 
-        `UPDATE games_progress
+        `UPDATE progress
         SET matching_highscore = $2
         WHERE user_id = $1`
 

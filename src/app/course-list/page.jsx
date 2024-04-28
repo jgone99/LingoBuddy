@@ -12,7 +12,7 @@ export default async function CourseListPage() {
 
   const fetchUserProgress = async () => {
     "use server";
-    const res = await query("SELECT * FROM course_progress WHERE user_id=$1", [
+    const res = await query("SELECT level_id, section_id FROM progress WHERE user_id=$1", [
       userId,
     ]);
     return res[0];
@@ -29,7 +29,7 @@ export default async function CourseListPage() {
       return
     }
 
-    const updateUserQuery = `UPDATE course_progress
+    const updateUserQuery = `UPDATE progress
 			SET level_id = $2, section_id = $3
 			WHERE user_id = $1`;
 		try {
@@ -44,7 +44,7 @@ export default async function CourseListPage() {
   const resetUserProgress = async () => {
     "use server";
     await query(
-      "UPDATE course_progress SET level_id = 1, section_id = 1 WHERE user_id = $1",
+      "UPDATE progress SET level_id = 1, section_id = 1 WHERE user_id = $1",
       [userId]
     );
   };

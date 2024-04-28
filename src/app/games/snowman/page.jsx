@@ -28,7 +28,7 @@ const SnowmanPage = async () => {
         'use server'
 
         const queryUserProgress =
-            `SELECT snowman_highscore FROM games_progress WHERE user_id=$1`
+            `SELECT snowman_highscore FROM progress WHERE user_id=$1`
 
         try {
             const res = await query(queryUserProgress, [userId])
@@ -51,7 +51,7 @@ const SnowmanPage = async () => {
         }
 
         const updateScoreQuery =
-            `UPDATE games_progress
+            `UPDATE progress
         SET snowman_highscore=$2
         WHERE user_id=$1`
 
@@ -67,7 +67,7 @@ const SnowmanPage = async () => {
     // FOR TESTING
     const resetUserProgress = async () => {
         'use server'
-        await query("UPDATE games_progress SET matching_highscore = 0, snowman_highscore = 0 WHERE user_id = $1",
+        await query("UPDATE progress SET matching_highscore = 0, snowman_highscore = 0 WHERE user_id = $1",
             [userId])
         console.log(`RESET: ${userId}`)
     }
