@@ -216,10 +216,10 @@ const SnowmanGame = ({
             <div className='game-container'>
                 {showModal && <Modal won={won} isPending={isPending} modalContinue={modalContinue} />}
                 <div className='data'>
-                    <div>HIGHSCORE: {currentHighscore}</div>
-                    <div>SCORE: {gamesWon}</div>
+                    <div>Highest Score: {currentHighscore}</div>
+                    <div>Current Score: {gamesWon}</div>
                     <div className='my-10'>
-                        <h4>WORD: {word['english'].toUpperCase()}</h4>
+                        <h4>English Word: {word['english'].toUpperCase()}</h4>
                     </div>
                 </div>
 
