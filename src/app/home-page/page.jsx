@@ -5,7 +5,7 @@ import Footer from "../components/footer";
 
 async function translateText(text) {
   "use server"
-  const apiKey = process.env.Translator_API;
+  const apiKey = process.env.TRANSLATOR_API_KEY;
 
   const detectResponse = await fetch(`https://translation.googleapis.com/language/translate/v2/detect?key=${apiKey}`, {
       method: 'POST',
