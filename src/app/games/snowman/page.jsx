@@ -32,6 +32,7 @@ const SnowmanPage = async () => {
 
         try {
             const res = await query(queryUserProgress, [userId])
+            console.log(res)
             console.log(`SERVER: successfully fetched highscore for ${userId}`)
             return res[0].snowman_highscore
         } catch (error) {
