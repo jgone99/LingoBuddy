@@ -105,6 +105,7 @@ export default function QuizManager({
     return <div>Loading questions or no questions found...</div>;
   }
 
+  console.log(questions)
   const correctAnswerTexts = questions[
     currentQuestionIndex
   ].correct_answers.map((answerKey) => {
