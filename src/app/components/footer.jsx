@@ -1,6 +1,6 @@
 const Footer = () => {
     return (
-        <footer style={{ backgroundColor: 'rgb(70,130,180)', color: 'black' }}>
+        <footer style={{ backgroundColor: 'rgb(70,130,180)', color: 'black'}} >
         <div style={{ padding: '20px 0', display: 'flex', justifyContent: 'space-between' }}>
           <div style={{marginLeft: '30px'}}>
             <h3 style={{ marginBottom: '10px', fontSize: '24px' }}>Follow Us</h3>

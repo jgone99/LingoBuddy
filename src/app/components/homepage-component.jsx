@@ -1,113 +1,134 @@
 "use client";
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useLayoutEffect, Component } from 'react';
 import { teacher, games, ai } from './homepage-animations';
+import Image from 'next/image';
 
-export function HomePageComponent({translateText}) {
-    const [inputText, setInputText] = useState('');
-    const [translatedText, setTranslatedText] = useState('');
+export function HomePageComponent({ translateText }) {
+  const [inputText, setInputText] = useState('');
+  const [translatedText, setTranslatedText] = useState('');
+  const [isLoading, setIsLoading] = useState(true)
+  const [bannerOpacity, setBannerOpacity] = useState('opacity-0')
 
-    const handleTranslate = async () => {
-        try {
-            const translation = await translateText(inputText, 'en'); 
-            setTranslatedText(translation);
-        } catch (error) {
-            console.error('Error translating text:', error);
-            setTranslatedText('Translation failed');
+      useLayoutEffect(() => {
+        const onPageLoad = () => {
+          setBannerOpacity('opacity-100')
+        };
+
+        if (document.readyState === 'complete') {
+          onPageLoad();
+        } else {
+          window.addEventListener('load', onPageLoad);
+          return () => window.removeEventListener('load', onPageLoad);
         }
-    };
-    const teacherRef = useRef(null);
-    const gamesRef = useRef(null);
-    const aiRef = useRef(null);
-    
-    useEffect(() => {
-      teacher(teacherRef.current);
-      games(gamesRef.current); 
-      ai(aiRef.current);
+      }, []);
+
+  const handleTranslate = async () => {
+    try {
+      const translation = await translateText(inputText, 'en');
+      setTranslatedText(translation);
+    } catch (error) {
+      console.error('Error translating text:', error);
+      setTranslatedText('Translation failed');
+    }
+  };
+
+  const rootRef = useRef(null)
+  const teacherRef = useRef(null);
+  const gamesRef = useRef(null);
+  const aiRef = useRef(null);
+
+  useEffect(() => {
+
+    teacher(teacherRef.current);
+    games(gamesRef.current);
+    ai(aiRef.current);
   }, []);
 
-    return (
-          <div>
-            <div className = "bg-blue-400">
-                <div className="bg-cover bg-center w-screen h-1/2 flex items-center justify-center relative">
-                    <img src="/travelbanner.jpg" alt="Banner" className="h-1/2 w-full object-cover opacity-95" />
-                    <div className="absolute top-1/3 transform -translate-y-1/2 text-center">
-                    <h1 className="text-4xl font-bold text-black" style={{ fontFamily: 'Comic Sans MS, Comic Sans, Roboto', textShadow: '0 0 10px #FFA500, 0 0 20px #FFA500, 0 0 30px #FFA500, 0 0 40px #FFA500, 0 0 50px #FFA500, 0 0 60px #FFA500, 0 0 70px #FFA500' }}>Your Best Friend For Spanish Learning!</h1>
-                    </div>
-                    <div className="absolute top-1/2 transform -translate-y-1/2 text-center">
-                        <div className="relative">
-                            <input
-                                type="text"
-                                placeholder="Translate Spanish or English"
-                                className="px-80 py-4 pl-10 border border-gray-300 rounded-full focus:outline-none w-full lg:w-auto text-left"
-                                value={inputText}
-                                onChange={(e) => setInputText(e.target.value)}
-                            />
-                            <button
-                                className="absolute inset-y-0 right-0 bg-blue-500 text-white px-4 py-2 rounded-full rounded-l-none hover:bg-blue-600 focus:outline-none"
-                                onClick={handleTranslate}
-                            >
-                                Translate
-                            </button>
-                        </div>
-                        {translatedText && (
-                          <div className="bg-gray-100 rounded-full p-4 mt-4">
-                          <h2 className="text-xl font-semibold mb-2">Translation:</h2>
-                          <p style={{ fontSize: '20px' }}>{translatedText}</p>
-                            </div>
-                        )}
-                    </div>
-                </div>
+  return (
+    
+    <div ref={rootRef} className='w-full h-full'>
+      <div className="bg-blue-400 w-full h-full">
+        <div className="flex items-center justify-center">
+          <div className={`relative w-full h-screen transition-opacity duration-1000 ${bannerOpacity}`}>
+            <Image src='/travelbanner.jpg' alt="Banner" fill={true} priority={true} fetchPriority='high' className="object-cover opacity-95" />
+          </div>
+          <div className="absolute top-1/3 transform -translate-y-1/2 text-center">
+            <h1 className="text-4xl font-bold text-black" style={{ fontFamily: 'Comic Sans MS, Comic Sans, Roboto', textShadow: '0 0 10px #FFA500, 0 0 20px #FFA500, 0 0 30px #FFA500, 0 0 40px #FFA500, 0 0 50px #FFA500, 0 0 60px #FFA500, 0 0 70px #FFA500' }}>Your Best Friend For Spanish Learning!</h1>
+          </div>
+          <div className="absolute top-1/2 transform -translate-y-1/2 text-center">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Translate Spanish or English"
+                className="px-80 py-4 pl-10 border border-gray-300 rounded-full focus:outline-none w-full lg:w-auto text-left"
+                value={inputText}
+                onChange={(e) => setInputText(e.target.value)}
+              />
+              <button
+                className="absolute inset-y-0 right-0 bg-blue-500 text-white px-4 py-2 rounded-full rounded-l-none hover:bg-blue-600 focus:outline-none"
+                onClick={handleTranslate}
+              >
+                Translate
+              </button>
+            </div>
+            {translatedText && (
+              <div className="bg-gray-100 rounded-full p-4 mt-4">
+                <h2 className="text-xl font-semibold mb-2">Translation:</h2>
+                <p style={{ fontSize: '20px' }}>{translatedText}</p>
+              </div>
+            )}
+          </div>
+        </div>
 
-  <div className="flex justify-left bg-green-300" ref={teacherRef}>
-  <div className="p-2 mr-4 w-1/2 border-8 border-orange-300 p-8 rounded-lg">
-    <img src="teacher.jpg" alt="Left Image1" className="w-full h-full object-cover flex items-center justify-center" />
-  </div>
-  <div className="p-2 mr-4 w-1/2 border-8 border-orange-300 p-8 rounded-lg space-y-8">
-      <h2 className="text-4xl font-bold text-black text-center">Learning Courses</h2>
-      <p className="text-2xl font-bold text-black text-left">Embark on an exciting journey of language mastery with our Learning Courses! Dive into a structured curriculum designed to take you through 10 immersive levels of learning. 
-                                  Progression is earned through mastery, where each section demands a flawless 5/5 performance and every checkpoint requires an impressive 8/10. But no problem, any missteps along the way will be revisited to ensure full comprehension.</p>
-      <p className="text-2xl font-bold text-black text-left"> Navigating through our railroad-style layout, you'll find yourself seamlessly guided, with a convenient "Continue" button to pick up right where you left off. Keep track of your progress effortlessly, as your current level is always at your fingertips. 
-                                  For those eager to gauge their proficiency, our proficiency test awaits. Simply attempt checkpoint questions, aiming for at least 8/10. Fail to reach the mark? No worries, you'll have the chance to reevaluate and improve before advancing.</p>
-      <p className="text-2xl font-bold text-black text-left">Join us on this educational adventure and unlock the full potential of your language skills! </p>
+        <div className="flex justify-left gap-5" ref={teacherRef}>
+          <div className="relative w-1/2 border-8 border-orange-300 p-8 rounded-lg">
+            <Image src="/teacher.jpg" alt="Left Image1" fill={true} priority={true} fetchPriority='high' className="object-cover" />
+          </div>
+          <div className="w-1/2 border-8 border-orange-300 bg-green-300 p-8 rounded-lg space-y-8">
+            <h2 className="text-4xl font-bold text-black text-center">Learning Courses</h2>
+            <p className="text-2xl font-bold text-black text-left">Embark on an exciting journey of language mastery with our Learning Courses! Dive into a structured curriculum designed to take you through 10 immersive levels of learning.
+              Progression is earned through mastery, where each section demands a flawless 5/5 performance and every checkpoint requires an impressive 8/10. But no problem, any missteps along the way will be revisited to ensure full comprehension.</p>
+            <p className="text-2xl font-bold text-black text-left"> Navigating through our railroad-style layout, you'll find yourself seamlessly guided, with a convenient "Continue" button to pick up right where you left off. Keep track of your progress effortlessly, as your current level is always at your fingertips.
+              For those eager to gauge their proficiency, our proficiency test awaits. Simply attempt checkpoint questions, aiming for at least 8/10. Fail to reach the mark? No worries, you'll have the chance to reevaluate and improve before advancing.</p>
+            <p className="text-2xl font-bold text-black text-left">Join us on this educational adventure and unlock the full potential of your language skills! </p>
+          </div>
+        </div>
+
+        <div className="flex gap-5 justify-right" ref={gamesRef}>
+          <div className="w-1/2 border-8 border-green-400 bg-violet-400 p-8 rounded-lg space-y-8">
+            <h2 className="text-4xl font-bold text-black text-center">Mini-Games</h2>
+            <p className="text-2xl font-bold text-black text-left">Test your new skills with our collection of two simple yet effective games designed to reinforce spelling and word recognition skills! </p>
+            <p className="text-2xl font-bold text-black text-left">Hangman</p>
+            <ul className="text-2xl space-y-1 text-black list-disc list-inside">
+              <li>Select a prompt from a bank of 20 words and test your spelling prowess. Fill in the blank with the correct spelling of the translated prompt to progress to the next level.</li>
+              <li>With the English word displayed at the top, guess the corresponding Spanish word to master vocabulary.</li>
+              <li>After the hangman drawing is completed you lose and prompted to take the survival challenge again. </li>
+              <li>Track your progress with a high score and aim to outdo yourself with each round.</li>
+            </ul>
+            <p className="text-2xl font-bold text-black text-left">Matching</p>
+            <ul className="text-2xl space-y-1 text-black list-disc list-inside">
+              <li>Race against the clock in a thrilling matching game. Match Spanish words to their English definitions within a 1-minute deadline.</li>
+              <li>Earn 1+ point for every correct match, and track your progress with a high score.</li>
+              <li>Words are not reused to give the user a wide range of vocabulary to train with!</li>
+            </ul>
+          </div>
+          <div className="relative w-1/2 border-8 border-green-400 rounded-lg">
+            <Image src="/games.png" alt="Left Image" fill={true} priority={true} fetchPriority='high' className="object-cover" />
+          </div>
+        </div>
+
+        <div className="flex gap-5 justify-left" ref={aiRef}>
+          <div className="relative w-1/2 border-8 border-red-500 p-8 rounded-lg">
+            <Image src="/aI.png" alt="Left Image2"fill={true} priority={true} fetchPriority='high'  className="object-cover" />
+          </div>
+          <div className="w-1/2 border-8 border-red-500 bg-teal-400 p-8 rounded-lg space-y-8">
+            <h2 className="text-4xl font-bold text-black text-center">AI Chat</h2>
+            <p className="text-2xl font-bold text-black text-left">Engage in conversational-style interactions with our AI companion with the new language skills you have developed. The AI will continuously remind you to speak in Spanish to enhance your language skills.</p>
+            <p className="text-2xl font-bold text-black text-left">You can freely converse with the AI without any constraints. Whether you want to practice greetings, discuss your day, or explore various topics, the AI is ready to engage in conversation.</p>
+            <p className="text-2xl font-bold text-black text-left">The AI companion is programmed to adapt to your speaking experience, ensuring that the conversation remains within your skill level. It will gauge your proficiency and respond with equal or slightly less complexity to match your comfort level. As the conversation progresses, the AI will gradually adjust the complexity, providing an optimal learning experience tailored to your needs.</p>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>       
-                  
-  <div className="flex justify-right bg-violet-400" ref={gamesRef}>
-  <div className="p-2 mr-4 w-1/2 border-8 border-green-400 p-8 rounded-lg space-y-8">
-      <h2 className="text-4xl font-bold text-black text-center">Mini-Games</h2>
-      <p className="text-2xl font-bold text-black text-left">Test your new skills with our collection of two simple yet effective games designed to reinforce spelling and word recognition skills! </p>
-      <p className="text-2xl font-bold text-black text-left">Hangman</p>
-      <ul className="text-2xl space-y-1 text-black list-disc list-inside">
-        <li>Select a prompt from a bank of 20 words and test your spelling prowess. Fill in the blank with the correct spelling of the translated prompt to progress to the next level.</li>
-        <li>With the English word displayed at the top, guess the corresponding Spanish word to master vocabulary.</li>
-        <li>After the hangman drawing is completed you lose and prompted to take the survival challenge again. </li>
-        <li>Track your progress with a high score and aim to outdo yourself with each round.</li>
-      </ul>
-      <p className="text-2xl font-bold text-black text-left">Matching</p>
-      <ul className="text-2xl space-y-1 text-black list-disc list-inside">
-        <li>Race against the clock in a thrilling matching game. Match Spanish words to their English definitions within a 1-minute deadline.</li>
-        <li>Earn 1+ point for every correct match, and track your progress with a high score.</li>
-        <li>Words are not reused to give the user a wide range of vocabulary to train with!</li>
-      </ul>
-    </div>
-    <div className="p-2 mr-2 w-1/2 border-8 border-green-400 rounded-lg">
-  <img src="games.png" alt="Left Image" className="w-full h-full object-cover flex items-center justify-center" />
-  </div>
-    </div>
-       
-           
-    <div className="flex justify-left bg-teal-400" ref={aiRef}>
-  <div className="p-2 mr-4 w-1/2 border-8 border-red-500 p-8 rounded-lg">
-    <img src="aI.png" alt="Left Image2" className="w-full h-full object-cover flex items-center justify-center" />
-  </div>
-  <div className="p-2 mr-4 w-1/2 border-8 border-red-500 p-8 rounded-lg space-y-8">
-      <h2 className="text-4xl font-bold text-black text-center">AI Chat</h2>
-      <p className="text-2xl font-bold text-black text-left">Engage in conversational-style interactions with our AI companion with the new language skills you have developed. The AI will continuously remind you to speak in Spanish to enhance your language skills.</p>
-      <p className="text-2xl font-bold text-black text-left">You can freely converse with the AI without any constraints. Whether you want to practice greetings, discuss your day, or explore various topics, the AI is ready to engage in conversation.</p>
-      <p className="text-2xl font-bold text-black text-left">The AI companion is programmed to adapt to your speaking experience, ensuring that the conversation remains within your skill level. It will gauge your proficiency and respond with equal or slightly less complexity to match your comfort level. As the conversation progresses, the AI will gradually adjust the complexity, providing an optimal learning experience tailored to your needs.</p>
-    </div>
-  </div>
-  </div>
-  </div>
-    )
+  )
 };

@@ -5,10 +5,13 @@ import {
   SignedIn,
   SignInButton,
   SignedOut,
+  useAuth,
 } from "@clerk/nextjs";
 import GamesDropdown from "./games/snowman/games-dropdown";
 
 const Header = () => {
+  const { isLoaded, isSignedIn } = useAuth
+
   return (
     <>
       <nav className="px-6 flex items-center">
@@ -34,7 +37,7 @@ const Header = () => {
         <div className="flex items-center">
           <SignedIn>
             <div className="ml-auto">
-              <UserButton afterSignOutUrl="/home-page" />
+              <UserButton />
             </div>
           </SignedIn>
           <SignedOut>
@@ -49,6 +52,6 @@ const Header = () => {
       </nav>
     </>
   );
-};
+}
 
 export default Header;

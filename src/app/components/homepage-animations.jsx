@@ -9,8 +9,8 @@ export const teacher = (element) => {
     { opacity: 1, x: 0, duration: 1,
       scrollTrigger: {
         trigger: element,
-        start: "top 50%",
-        end: "bottom",
+        start: "top 90%",
+        end: "top 10%",
         scrub: true,
       }
     }
@@ -23,8 +23,8 @@ export const games = (element) => {
     { opacity: 1, x: 0, duration: 1, 
       scrollTrigger: {
         trigger: element,
-        start: "top 70%",
-        end: "bottom",
+        start: "top 90%",
+        end: "top 10%",
         scrub: true,
       }
     }
@@ -38,7 +38,7 @@ export const ai = (element) => {
       scrollTrigger: {
         trigger: element,
         start: "top 90%",
-        end: "bottom 90%",
+        end: "top 10%",
         scrub: true,
       }
     }

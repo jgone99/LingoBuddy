@@ -13,19 +13,16 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider>
+    <ClerkProvider afterSignUpUrl="/home-page">
       <html lang="en">
         <head>
           <meta charSet="utf-8"></meta>
         </head>
-        <body className={inter.className}>
+        <body className={`${inter.className} flex flex-col min-h-screen`}>
           <ClerkLoaded>
-          <Header />
-          <main className="container">
-            <div className="w-full flex item-start justify-center min-h-screen">
-              <div className="main-page">{children}</div>
-            </div>
-          </main>
+            <Header />
+            <main className="main-page flex-grow">{children}
+            </main>
           </ClerkLoaded>
         </body>
       </html>
