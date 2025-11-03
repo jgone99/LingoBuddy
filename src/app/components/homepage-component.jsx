@@ -31,7 +31,6 @@ export function HomePageComponent({ translateText }) {
   }, []);
 
   return (
-    
     <div ref={rootRef} className='w-full h-full'>
       <div className="bg-blue-400 w-full h-full">
         <div className="flex items-center justify-center">
