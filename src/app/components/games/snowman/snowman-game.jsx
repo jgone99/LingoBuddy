@@ -213,7 +213,7 @@ const SnowmanGame = ({
             {/* <button className='absolute' onClick={resetUser}>RESET USER (TESTING)</button>
             <button className='absolute mt-32' onClick={() => {document.querySelector('#head').classList.toggle('head-fall-test')}}>(TESTING)</button> */}
             {/* FOR TESTING */}
-            <div className='game-container'>
+            <div className='game-container flex flex-grow'>
                 {showModal && <Modal won={won} isPending={isPending} modalContinue={modalContinue} />}
                 <div className='data'>
                     <div>Highest Score: {currentHighscore}</div>

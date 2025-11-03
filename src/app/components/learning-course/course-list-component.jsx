@@ -47,7 +47,6 @@ const CourseListComponent = ({
             Object.entries(questionsByLevel[1]).forEach((bySection, index) => {
                 const section = Number.parseInt(bySection[0])
                 const question = bySection[1]
-                console.log('bysection', bySection)
                 levelCards.push(
                     <>
                         <LevelCard

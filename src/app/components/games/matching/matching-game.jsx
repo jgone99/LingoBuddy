@@ -221,7 +221,7 @@ const MatchingGame = ({
 
     return (
         <>
-            <div className="game-container" >
+            <div className="game-container flex flex-grow" >
                 {showModal && <Modal won={won} modalContinue={modalContinue} isPending={isPending} />}
                 <div className='data'>
                     <div>Highest Score: {currentHighscore}</div>
