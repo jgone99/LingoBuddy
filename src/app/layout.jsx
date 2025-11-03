@@ -1,8 +1,9 @@
+
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider, ClerkLoaded } from "@clerk/nextjs";
 import Header from "./components/header";
-
+import ClerkWrapper from "./components/client-wrapper"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,7 +14,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider afterSignUpUrl="/home-page">
+    <ClerkWrapper>
       <html lang="en">
         <head>
           <meta charSet="utf-8"></meta>
@@ -26,6 +27,6 @@ export default function RootLayout({ children }) {
           </ClerkLoaded>
         </body>
       </html>
-    </ClerkProvider>
+    </ClerkWrapper>
   );
 }

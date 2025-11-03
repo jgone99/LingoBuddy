@@ -6,21 +6,7 @@ import Image from 'next/image';
 export function HomePageComponent({ translateText }) {
   const [inputText, setInputText] = useState('');
   const [translatedText, setTranslatedText] = useState('');
-  const [isLoading, setIsLoading] = useState(true)
   const [bannerOpacity, setBannerOpacity] = useState('opacity-0')
-
-      useLayoutEffect(() => {
-        const onPageLoad = () => {
-          setBannerOpacity('opacity-100')
-        };
-
-        if (document.readyState === 'complete') {
-          onPageLoad();
-        } else {
-          window.addEventListener('load', onPageLoad);
-          return () => window.removeEventListener('load', onPageLoad);
-        }
-      }, []);
 
   const handleTranslate = async () => {
     try {
@@ -50,7 +36,7 @@ export function HomePageComponent({ translateText }) {
       <div className="bg-blue-400 w-full h-full">
         <div className="flex items-center justify-center">
           <div className={`relative w-full h-screen transition-opacity duration-1000 ${bannerOpacity}`}>
-            <Image src='/travelbanner.jpg' alt="Banner" fill={true} priority={true} fetchPriority='high' className="object-cover opacity-95" />
+            <Image src='/travelbanner.jpg' alt="Banner" fill={true} priority fetchPriority='high' onLoadingComplete={() => setBannerOpacity('opacity-100')} className="object-cover opacity-95" />
           </div>
           <div className="absolute top-1/3 transform -translate-y-1/2 text-center">
             <h1 className="text-4xl font-bold text-black" style={{ fontFamily: 'Comic Sans MS, Comic Sans, Roboto', textShadow: '0 0 10px #FFA500, 0 0 20px #FFA500, 0 0 30px #FFA500, 0 0 40px #FFA500, 0 0 50px #FFA500, 0 0 60px #FFA500, 0 0 70px #FFA500' }}>Your Best Friend For Spanish Learning!</h1>
