@@ -37,7 +37,7 @@ const Header = () => {
         <div className="flex items-center">
           <SignedIn>
             <div className="ml-auto">
-              <UserButton />
+              <UserButton afterSignOutUrl="/home-page"/>
             </div>
           </SignedIn>
           <SignedOut>
