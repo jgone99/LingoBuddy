@@ -2,17 +2,21 @@
 
 import { Pool } from "pg"
 
-const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    max: 3,
-    ssl: {
-    rejectUnauthorized: false,
-  },
-})
+let pool
+
+if (!global.__pgPool) {
+  global.__pgPool = new Pool({
+      connectionString: process.env.DATABASE_URL,
+      max: 3,
+      ssl: {
+      rejectUnauthorized: false,
+    },
+  })
+}
+
+pool = global.__pgPool
 
 export const mutate = async (text, params) => {
-    const client = await pool.connect()
-    const res = await client.query(text, params)
-    client.release()
+    const res = await pool.query(text, params)
     return res.rows
 }
