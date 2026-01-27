@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useState, useEffect, useTransition } from 'react'
 import SnowmanFigure from "./snowman-figure"
 import './snowman.css'
 import Modal from '../modal'
@@ -42,7 +42,7 @@ const SnowmanGame = ({
     }
 
     useEffect(() => {
-    window.addEventListener("resize", resize)
+        window.addEventListener("resize", resize)
         return () => window.removeEventListener("resize", resize)
     }, [])
 
