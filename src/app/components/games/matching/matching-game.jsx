@@ -3,6 +3,7 @@
 import { useEffect, useState, useTransition } from 'react'
 import Modal from '../modal'
 import './matching.css'
+import { once } from 'events'
 
 const english_lang = 'english'
 const spanish_lang = 'spanish'
@@ -70,7 +71,7 @@ const MatchingGame = ({
                 console.log('fade out ended')
                 setShowModal(false)
             }
-        })
+        }, { once: true })
         setFade(modal, toFadeOut)
     }
 
@@ -213,7 +214,7 @@ const MatchingGame = ({
                     console.log(`${toFadeOut ? 'fadeOut' : 'fadeIn'} ended`)
                     func(args, e, callbackFunc)
                 }
-            })
+            }, { once: true })
         }
 
         toFadeOut ? fadeOut(element) : fadeIn(element)

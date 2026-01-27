@@ -41,7 +41,10 @@ const SnowmanGame = ({
         }
     }
 
+    useEffect(() => {
     window.addEventListener("resize", resize)
+        return () => window.removeEventListener("resize", resize)
+    }, [])
 
     const guessBoxes = () => {
         return String(word['spanish']).split('').map((letter, index) => {
@@ -157,7 +160,7 @@ const SnowmanGame = ({
                     console.log(`${toFadeOut ? 'fadeOut' : 'fadeIn'} ended`)
                     func(args, e, callbackFunc)
                 }
-            })
+            }, { once: true })
         }
 
         toFadeOut ? fadeOut(element) : fadeIn(element)
@@ -173,7 +176,7 @@ const SnowmanGame = ({
                 console.log('fade out ended')
                 setShowModal(false)
             }
-        })
+        }, { once: true })
         setFade(modal, toFadeOut)
     }
 
