@@ -35,36 +35,89 @@ button.alpha-button:hover {
     margin: 20px 0px 40px 0px;
 }
 
-.main-comps {
+.comps {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 300px;
+}
+
+.foreground {
     display: flex;
     flex-direction: row;
-    justify-items: center;
+    justify-content: center;
     align-items: center;
     margin-top: 80px;
+    height: 100%;
+    justify-content: space-evenly;
+}
+
+.signs {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.background {
+    margin-top: 220px;
+    display: flex;
 }
 
 .figure {
+    display: flex;
     transform: scale(1.2);
-    margin-right: max(10vw, 80px);
+}
+
+#snowfall-container {
+    z-index: -1;
+}
+
+#ground {
+    width: max-content;
+    height: max-content;
+    background-color: black;
 }
 
 .interactive {
-    margin-left: max(10vw, 80px);
+    margin-top: 120px;
+    margin-right: -30vw;
+    position: absolute;
+
 }
 
-@media only screen and (max-width: 600px) {
+.record-sign {
+    transform: translate(80px, 0px);
+}
+
+.score-sign {
+    transform: translate(-80px, 0px);
+}
+
+
+
+@media only screen and (max-width: 1000px) {
     .figure {
-        transform: scale(0.5);
+        display: none;
         margin: 0px 0px 10px 0px;
     }
 
     .interactive {
-        margin: 0;
-        width: auto;
+        bottom: 100px;
+        
+        margin: auto;
     }
 
-    .main-comps {
+    .comps {
         flex-direction: column;
+        justify-content: center;
+        align-items: center;
         margin-top: 0px;
+    }
+
+    .signs {
+        transform: scale(.8);
     }
 }

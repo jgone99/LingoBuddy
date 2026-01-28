@@ -2,8 +2,12 @@
 
 import { useState, useEffect, useTransition } from 'react'
 import SnowmanFigure from "./snowman-figure"
+import SnowyGround from "./snowy-ground"
+import SmallSignFigure from "./small-sign-figure"
+import BigSignFigure from "./big-sign-figure"
 import './snowman.css'
 import Modal from '../modal'
+import Snowfall from 'react-snowfall'
 
 const alphabetArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "ñ", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "á", "é", "í", "ó", "ú"]
 var won = false
@@ -31,20 +35,6 @@ const SnowmanGame = ({
     const maxScreenWidth = screen.width
     const maxScreenHeight = screen.height
 
-    const resize = () => {
-        const figureElement = document.querySelector('#figure-id')
-        const screenWidth = window.innerWidth
-        const screenHeight = window.innerHeight
-
-        if (screenWidth > 600) {
-            figureElement.style.transform = `scale(${1.2 * Math.min(screenWidth / maxScreenWidth, screenHeight / maxScreenHeight)})`
-        }
-    }
-
-    useEffect(() => {
-        window.addEventListener("resize", resize)
-        return () => window.removeEventListener("resize", resize)
-    }, [])
 
     const guessBoxes = () => {
         return String(word['spanish']).split('').map((letter, index) => {
@@ -60,7 +50,7 @@ const SnowmanGame = ({
         })
     }
 
-    const fetchAll = (data) => {
+    const fetchAll = () => {
         Promise.all([getHighscore(), getNewWord()]).then(result => {
             setCurrentHighscore(result[0])
             setWord(result[1])
@@ -69,18 +59,15 @@ const SnowmanGame = ({
             setErrorCount(0)
             resetGuessBoxes()
             guessboxesFade(false)
-            setFade(data, false, false, null, null)
         })
     }
 
     const playAgain = () => {
-        const data = document.querySelector('.data')
         const guessboxes = document.querySelector('#guess-boxes')
-        setFade(data, true, false, null, null)
         setFade(guessboxes, true, true, function callFetchAll(args, e, func) {
             console.log(e)
             guessboxes.removeEventListener(e.type, func)
-            fetchAll(data)
+            fetchAll()
         }, null)
 
     }
@@ -218,32 +205,43 @@ const SnowmanGame = ({
             {/* FOR TESTING */}
             <div className='game-container flex flex-grow'>
                 {showModal && <Modal won={won} isPending={isPending} modalContinue={modalContinue} />}
-                <div className='data'>
-                    <div>Highest Score: {currentHighscore}</div>
-                    <div>Current Score: {gamesWon}</div>
-                    <div className='my-10'>
-                        <h4>English Word: {word['english'].toUpperCase()}</h4>
+                <div id="snowfall-container">
+                    <Snowfall snowflakeCount={200} />
+                </div>
+
+                <div id='interactive' className='interactive'>
+                    <div className='w-96'>
+                        <div id='guess-boxes' className='flex justify-center guess-boxes'>
+                            {guessBoxes()}
+                        </div>
+                        <div className="h-full">
+                            <div className='flex flex-wrap justify-center'>
+                                {alphabetButtons()}
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-
-                <div className='main-comps'>
-                    <div id='figure-id' className='figure'>
-                        <div>
+                <div className='comps flex-1'>
+                    <div className='foreground'>
+                        <div id='figure-id' className='figure'>
                             <SnowmanFigure errors={errorCount} />
                         </div>
-                    </div>
-                    <div id='interactive' className='interactive'>
-                        <div className='w-96'>
-                            <div id='guess-boxes' className='flex justify-center guess-boxes'>
-                                {guessBoxes()}
+                        <div className='signs'>
+                            <div className='record-sign'>
+                                <SmallSignFigure word={`Record: ${highscore}`} />
                             </div>
-                            <div className="h-full">
-                                <div className='flex flex-wrap justify-center'>
-                                    {alphabetButtons()}
-                                </div>
+                            <div className='word-sign'>
+                                <BigSignFigure word={word['english'].toUpperCase()} />
+                            </div>
+                            <div className='score-sign'>
+                                <SmallSignFigure word={`Score: ${gamesWon}`} />
                             </div>
                         </div>
+
+                    </div>
+                    <div className='background flex flex-1'>
+                        <SnowyGround errors={errorCount} />
                     </div>
                 </div>
             </div>

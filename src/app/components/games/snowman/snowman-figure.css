@@ -104,7 +104,7 @@
     border-left: 2px solid transparent;
     border-right: 0 solid transparent;
     height: 0;
-    width: 36px;
+    width:36px;
     transition: top, transform;
     transition-duration: 1.2s;
     transition-timing-function: ease-out;

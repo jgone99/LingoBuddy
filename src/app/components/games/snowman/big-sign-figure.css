@@ -1,0 +1,55 @@
+
+.big-sign-box {
+    display: flex;
+    position: relative;
+    top: 65px;
+    left: 0px;
+    background: #3A1F04;
+    width: 300px;
+    height: 45px;
+    text-align: center;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(3deg);
+    border-left: 3px solid transparent;
+    font-size: 250%;
+}
+
+.big-sign-box::before {
+    content: '';
+    position: absolute;
+    top: -30px;
+    left: 0px;
+    background: #3F2409;
+    width: inherit;
+    height: inherit;
+    text-align: center;
+    align-content: center;
+    transform: rotate(-1deg);
+    z-index: -1;
+}
+
+.big-sign-box::after {
+    content: '';
+    position: absolute;
+    top: 30px;
+    left: 0px;
+    background: #3F2409;
+    width: inherit;
+    height: inherit;
+    text-align: center;
+    align-content: center;
+    transform: rotate(-1deg);
+    z-index: -1;
+}
+
+.big-stick {
+    top: 165px;
+    left: 40px;
+    position: absolute;
+    border-bottom: 12px solid black;
+    width: 220px;
+    transform: rotate(-95deg);
+    z-index: -2;
+}

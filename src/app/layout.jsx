@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
         <body className={`${inter.className} flex flex-col min-h-screen`}>
           <ClerkLoaded>
             <Header />
-            <main className="main-page flex-grow justify-center items-center flex flex-col">{children}
+            <main className="main-page flex-1 justify-center items-center flex flex-col">{children}
             </main>
           </ClerkLoaded>
         </body>
