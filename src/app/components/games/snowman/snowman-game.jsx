@@ -38,7 +38,7 @@ const SnowmanGame = ({
 
     const guessBoxes = () => {
         return String(word['spanish']).split('').map((letter, index) => {
-            return <div key={letter + index} className={`flex mx-1 border-solid items-center justify-center rounded border-2 w-8 h-8 border-cyan-500 guessbox letter-${letter} is-empty`}></div>
+            return <div key={letter + index} className={`flex mx-1 border-solid items-center justify-center rounded border-2 border-cyan-500 guessbox letter-${letter} is-empty`}></div>
         })
     }
 
@@ -210,7 +210,7 @@ const SnowmanGame = ({
                 </div>
 
                 <div id='interactive' className='interactive'>
-                    <div className='w-96'>
+                    <div className=''>
                         <div id='guess-boxes' className='flex justify-center guess-boxes'>
                             {guessBoxes()}
                         </div>

@@ -19,7 +19,7 @@
 .big-sign-box::before {
     content: '';
     position: absolute;
-    top: -30px;
+    top: -44px;
     left: 0px;
     background: #3F2409;
     width: inherit;
@@ -33,7 +33,7 @@
 .big-sign-box::after {
     content: '';
     position: absolute;
-    top: 30px;
+    top: 44px;
     left: 0px;
     background: #3F2409;
     width: inherit;

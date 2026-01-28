@@ -18,13 +18,15 @@
 
 .guessbox {
     border-color: #614AEB;
+    width: 2.5rem;
+    height: 2.5rem;
 }
 
 button.alpha-button {
     margin: 0.25rem;
     color: white;
-    width: 2rem;
-    height: 2rem;
+    width: 2.5rem;
+    height: 2.5rem;
 }
 
 button.alpha-button:hover {
@@ -85,7 +87,7 @@ button.alpha-button:hover {
     margin-top: 120px;
     margin-right: -30vw;
     position: absolute;
-
+    width: 550px;
 }
 
 .record-sign {
@@ -106,8 +108,12 @@ button.alpha-button:hover {
 
     .interactive {
         bottom: 100px;
-        
+        width: 90%;
         margin: auto;
+    }
+
+    .guess-boxes {
+        color: black;
     }
 
     .comps {
